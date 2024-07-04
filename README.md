@@ -11,3 +11,6 @@
 ![cards-pile-difference](git-assets/difference-display.jpg)
 
 Limit of cards visible by default is 52. If you have less than that, it will behave the same way as vanilla.
+
+## Customization
+In [settings.lua](settings.lua) file you can customize the limit of cards.
