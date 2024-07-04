@@ -9,4 +9,5 @@
 
 ## Showcase
 ![cards-pile-difference](git-assets/difference-display.jpg)
+
 Limit of cards visible by default is 52. If you have less than that, it will behave the same way as vanilla.
