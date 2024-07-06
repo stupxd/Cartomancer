@@ -13,7 +13,7 @@
 ![cards-pile-difference](git-assets/deck-pile.jpg)
 
 
-2. Stack identical playing cards in deck view menu. This modification additionally greatly increases performance of view deck menu.
+2. Stack identical playing cards in deck view menu, which looks much cleaner and improves performance.
 
 ![stackable-cards-difference](git-assets/stackable-cards.jpg)
 
