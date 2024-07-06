@@ -69,7 +69,7 @@ G.FUNCS.disable_quantity_display = function(e)
     e.states.visible = preview_card.quantity > 1
 end
 
-local X_COLOR = HEX('ed7575')
+local X_COLOR = HEX(Cartomancer.SETTINGS.stack_x_color)
 
 function StackedCard:create_quantity_display(copy)
     if not copy.children.stack_display and self.quantity > 1 then
@@ -105,7 +105,7 @@ function StackedCard:create_quantity_display(copy)
                 }
             },
             config = {
-                align = STACK_AMOUNT_POSITION .. 'm',
+                align = Cartomancer.SETTINGS.stack_amount_position .. 'm',
                 bond = 'Strong',
                 parent = copy
             },
