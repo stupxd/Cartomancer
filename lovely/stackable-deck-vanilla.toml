@@ -1,0 +1,101 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+#
+# Vanilla patches
+#
+
+# Overwrite how suits are added
+ 
+[[patches]] 
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "table.insert(SUITS[v.base.suit], v)"
+position = "at"
+payload = '''
+local greyed
+if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
+  greyed = true
+end
+local card_string = v:to_string()
+if greyed then
+  card_string = card_string .. "Greyed"
+end
+if not SUITS[v.base.suit][card_string] then
+      table.insert(SUITS_SORTED[v.base.suit], card_string)
+
+      local stacked_card = StackedCard:new()
+      stacked_card:init(v)
+      SUITS[v.base.suit][card_string] = stacked_card
+else
+  local stacked_card = SUITS[v.base.suit][card_string]
+  stacked_card:add(1)
+end'''
+match_indent = true
+ 
+[[patches]] 
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "if SUITS[suit_map[j]][1] then"
+position = "at"
+payload = "if SUITS_SORTED[suit_map[j]][1] then"
+match_indent = true
+ 
+[[patches]] 
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "local suit_map = {'Spades', 'Hearts', 'Clubs', 'Diamonds'}"
+position = "after"
+payload = "local SUITS_SORTED = tablecopy(SUITS)"
+match_indent = true
+
+[[patches]] 
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "{card_limit = #SUITS[suit_map[j]], type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})"
+position = "at"
+payload = "{card_limit = #SUITS_SORTED[suit_map[j]], type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})"
+match_indent = true
+
+# Overwrite cards copy and display code
+
+[[patches]] 
+[patches.regex]
+target = "functions/UI_definitions.lua"
+pattern = '''
+(?<indent>[\t ]*)for i = 1\, \#SUITS\[suit_map\[j\]\] do
+[\t ]*  if SUITS\[suit_map\[j\]\]\[i\] then
+[\t ]*    local greyed\, _scale = nil\, 0\.7
+[\t ]*    if unplayed_only and not \(\(SUITS\[suit_map\[j\]\]\[i\]\.area and SUITS\[suit_map\[j\]\]\[i\]\.area == G\.deck\) or SUITS\[suit_map\[j\]\]\[i\]\.ability\.wheel_flipped\) then
+[\t ]*      greyed = true
+[\t ]*    end
+[\t ]*    local copy = copy_card\(SUITS\[suit_map\[j\]\]\[i\]\,nil\, _scale\)
+[\t ]*    copy\.greyed = greyed
+[\t ]*    copy\.T\.x = view_deck\.T\.x \+ view_deck\.T\.w\/2
+[\t ]*    copy\.T\.y = view_deck\.T\.y
+[\t ]*
+[\t ]*    copy:hard_set_T\(\)
+[\t ]*    view_deck:emplace\(copy\)
+[\t ]*  end
+[\t ]*end'''
+position = "at"
+payload = '''
+for i = 1, #SUITS_SORTED[suit_map[j]] do
+  local card_string = SUITS_SORTED[suit_map[j]][i]
+  local stacked_card = SUITS[suit_map[j]][card_string]
+  local greyed, _scale = nil, 0.7
+  if string.sub(card_string, -6) == "Greyed" then
+    greyed = true
+  end
+  local copy = copy_card(stacked_card.card, nil, _scale)
+  copy.greyed = greyed
+  copy.T.x = view_deck.T.x + view_deck.T.w/2
+  copy.T.y = view_deck.T.y
+  stacked_card:create_quantity_display(copy)
+  copy:hard_set_T()
+  view_deck:emplace(copy)
+end
+'''
+line_prepend = '$indent'

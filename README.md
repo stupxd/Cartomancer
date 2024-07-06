@@ -7,10 +7,16 @@
 3. Unzip the folder, and move it into the `%appdata%/Balatro/Mods` folder.
 4. Restart the game to load the mod.
 
-## Showcase
-![cards-pile-difference](git-assets/difference-display.jpg)
+## Features
+1. Limit amount of cards visible in your deck pile, to make it appear smaller. Default limit is 100 cards, which can be modified in [settings.lua](settings.lua) file.
 
-Limit of cards visible by default is 52. If you have less than that, it will behave the same way as vanilla.
+![cards-pile-difference](git-assets/deck-pile.jpg)
+
+
+2. Stack identical playing cards in deck view menu. This modification additionally greatly increases performance of view deck menu.
+
+![cards-pile-difference](git-assets/deck-pile.jpg)
+
 
 ## Customization
-In [settings.lua](settings.lua) file you can customize the limit of cards.
+
