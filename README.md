@@ -18,5 +18,7 @@
 ![cards-pile-difference](git-assets/deck-pile.jpg)
 
 
-## Customization
+## Credits
+
+@cubeanimataz for the UI box on stacked cards.
 

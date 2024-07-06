@@ -69,15 +69,17 @@ G.FUNCS.disable_quantity_display = function(e)
     e.states.visible = preview_card.quantity > 1
 end
 
+local X_COLOR = HEX('ed7575')
+
 function StackedCard:create_quantity_display(copy)
     if not copy.children.stack_display and self.quantity > 1 then
         copy.children.stack_display = UIBox {
             definition = {
                 n = G.UIT.ROOT,
                 config = {
-                    minh = 0.6,
+                    minh = 0.5,
                     maxh = 1.2,
-                    minw = 0.5,
+                    minw = 0.43,
                     maxw = 2,
                     r = 0.001,
                     padding = 0.1,
@@ -92,8 +94,8 @@ function StackedCard:create_quantity_display(copy)
                         n = G.UIT.T,
                         config = {
                             text = 'x',
-                            scale = 0.4,
-                            colour = G.C.MULT
+                            scale = 0.35,
+                            colour = X_COLOR
                         }
                     },
                     {
@@ -101,7 +103,7 @@ function StackedCard:create_quantity_display(copy)
                         config = {
                             ref_table = self,
                             ref_value = 'quantity',
-                            scale = 0.4,
+                            scale = 0.35,
                             colour = G.C.UI.TEXT_LIGHT
                         }
                     }
