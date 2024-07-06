@@ -20,5 +20,5 @@
 
 ## Credits
 
-@cubeanimataz for the UI box on stacked cards.
+[Jen Walter](@cubeanimataz) for the UI box on stacked cards.
 

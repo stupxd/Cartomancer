@@ -91,26 +91,21 @@ function StackedCard:create_quantity_display(copy)
                 },
                 nodes = {
                     {
-                        n = G.UIT.T,
-                        config = {
-                            text = 'x',
-                            scale = 0.35,
-                            colour = X_COLOR
-                        }
+                        n = G.UIT.T, -- node type
+                        config = { text = 'x', scale = 0.35, colour = X_COLOR }
+                        , padding = -1
                     },
                     {
-                        n = G.UIT.T,
+                        n = G.UIT.T, -- node type
                         config = {
-                            ref_table = self,
-                            ref_value = 'quantity',
-                            scale = 0.35,
-                            colour = G.C.UI.TEXT_LIGHT
+                            ref_table = self, ref_value = 'quantity',
+                            scale = 0.35, colour = G.C.UI.TEXT_LIGHT
                         }
                     }
                 }
             },
             config = {
-                align = 'tm', -- t(op), b(ottom), l(eft), r(ight), c(enter) | m(iddle)
+                align = STACK_AMOUNT_POSITION .. 'm',
                 bond = 'Strong',
                 parent = copy
             },
