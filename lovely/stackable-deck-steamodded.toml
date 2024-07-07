@@ -30,22 +30,30 @@ for k, v in ipairs(G.playing_cards) do
   if not SUITS[v.base.suit][card_string] then
         table.insert(SUITS_SORTED[v.base.suit], card_string)
 
-        local stacked_card = StackedCard:new()
-        stacked_card:init(v)
-        SUITS[v.base.suit][card_string] = stacked_card
+        local _scale = 0.7
+        local copy = copy_card(v, nil, _scale)
+
+        copy.greyed = greyed
+        copy.stacked_quantity = 1
+
+        SUITS[v.base.suit][card_string] = copy
   else
     local stacked_card = SUITS[v.base.suit][card_string]
-    stacked_card:add(1)
+    stacked_card.stacked_quantity = stacked_card.stacked_quantity + 1
   end'''
 line_prepend = '$indent'
 
-[[patches]]
-[patches.pattern]
-target = "main.lua"
-pattern = "if SUITS[suit_map[j]][1] then"
+[[patches]] 
+[patches.regex]
+target = "functions/UI_definitions.lua"
+pattern = '''
+if SUITS\[suit_map\[j\]\]\[1\] then
+[\t ]*local view_deck = CardArea\('''
 position = "at"
-payload = "if SUITS_SORTED[suit_map[j]][1] then"
-match_indent = true
+payload = '''
+if SUITS_SORTED[suit_map[j]][1] then
+      local view_deck = CardArea('''
+line_prepend = ''
 
 [[patches]] 
 [patches.pattern]
@@ -80,18 +88,14 @@ position = "at"
 payload = '''
 for i = 1, #SUITS_SORTED[suit_map[j]] do
   local card_string = SUITS_SORTED[suit_map[j]][i]
-  local stacked_card = SUITS[suit_map[j]][card_string]
-  local greyed, _scale = nil, 0.7
-  if string.sub(card_string, -6) == "Greyed" then
-    greyed = true
-  end
-  local copy = copy_card(stacked_card.card, nil, _scale)
-  copy.greyed = greyed
-  copy.T.x = view_deck.T.x + view_deck.T.w/2
-  copy.T.y = view_deck.T.y
-  stacked_card:create_quantity_display(copy)
-  copy:hard_set_T()
-  view_deck:emplace(copy)
+  local card = SUITS[suit_map[j]][card_string]
+
+  card.T.x = view_deck.T.x + view_deck.T.w/2
+  card.T.y = view_deck.T.y
+  card:create_quantity_display()
+
+  card:hard_set_T()
+  view_deck:emplace(card)
 end
 '''
 line_prepend = '$indent'

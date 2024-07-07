@@ -1,18 +1,3 @@
-StackedCard = {}
-StackedCard._metatable = {__index = StackedCard}
-
-function StackedCard:new(o)
-    return setmetatable(o or {}, self._metatable)
-end
-
-function StackedCard:init(card, quantity)
-    self.card = card
-    self.quantity = quantity or 1
-end
-
-function StackedCard:add(amount)
-    self.quantity = self.quantity + amount
-end
 
 function Card:to_string()
     local result = (self.base and self.base.suit .. self.base.value) or ''
@@ -66,14 +51,14 @@ end
 ----- Copied from incantation
 G.FUNCS.disable_quantity_display = function(e)
     local preview_card = e.config.ref_table
-    e.states.visible = preview_card.quantity > 1
+    e.states.visible = preview_card.stacked_quantity > 1
 end
 
 local X_COLOR = HEX(Cartomancer.SETTINGS.stack_x_color)
 
-function StackedCard:create_quantity_display(copy)
-    if not copy.children.stack_display and self.quantity > 1 then
-        copy.children.stack_display = UIBox {
+function Card:create_quantity_display()
+    if not self.children.stack_display and self.stacked_quantity > 1 then
+        self.children.stack_display = UIBox {
             definition = {
                 n = G.UIT.ROOT,
                 config = {
@@ -98,7 +83,7 @@ function StackedCard:create_quantity_display(copy)
                     {
                         n = G.UIT.T, -- node type
                         config = {
-                            ref_table = self, ref_value = 'quantity',
+                            ref_table = self, ref_value = 'stacked_quantity',
                             scale = 0.35, colour = G.C.UI.TEXT_LIGHT
                         }
                     }
@@ -107,7 +92,7 @@ function StackedCard:create_quantity_display(copy)
             config = {
                 align = Cartomancer.SETTINGS.stack_amount_position .. 'm',
                 bond = 'Strong',
-                parent = copy
+                parent = self
             },
             states = {
                 collide = { can = false },
