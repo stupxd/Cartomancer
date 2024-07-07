@@ -13,7 +13,7 @@
 ![cards-pile-difference](git-assets/deck-pile.jpg)
 
 
-2. Stack identical playing cards in deck view menu. This modification additionally greatly increases performance of view deck menu.
+2. Stack identical playing cards in deck view menu, which looks much cleaner and improves performance.
 
 ![stackable-cards-difference](git-assets/stackable-cards.jpg)
 
@@ -22,5 +22,5 @@ The text box with stack display can be customized in [settings.lua](settings.lua
 
 ## Credits
 
-[Jen Walter](@cubeanimataz) for the UI box on stacked cards.
+[Jen Walter](https://github.com/cubeanimataz/) for the UI box on stacked cards.
 
