@@ -9,5 +9,7 @@ Cartomancer.SETTINGS = {
     stack_amount_position = 't',
     -- Hex color code for x
     stack_x_color = 'ed7575',
+    -- Opacity in %
+    stack_background_opacity = '60',
 
 }

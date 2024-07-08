@@ -69,7 +69,7 @@ function Card:create_quantity_display()
                     r = 0.001,
                     padding = 0.1,
                     align = 'cm',
-                    colour = adjust_alpha(darken(G.C.BLACK, 0.2), 0.4),
+                    colour = adjust_alpha(darken(G.C.BLACK, 0.2), Cartomancer.SETTINGS.stack_background_opacity / 100),
                     shadow = false,
                     func = 'disable_quantity_display',
                     ref_table = self
