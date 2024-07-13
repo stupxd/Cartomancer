@@ -23,7 +23,9 @@ local card_string = v:to_string()
 if greyed then
   card_string = card_string .. "Greyed"
 end
-if not SUITS[v.base.suit][card_string] then
+if Cartomancer.SETTINGS.hide_drawn_cards and greyed then
+  -- Ignore this card.
+elseif not SUITS[v.base.suit][card_string] then
       table.insert(SUITS_SORTED[v.base.suit], card_string)
 
         local _scale = 0.7
@@ -100,6 +102,7 @@ for i = 1, #SUITS_SORTED[suit_map[j]] do
 
   card:hard_set_T()
   view_deck:emplace(card)
+
 end
 '''
 line_prepend = '$indent'

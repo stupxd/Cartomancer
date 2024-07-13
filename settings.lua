@@ -12,4 +12,6 @@ Cartomancer.SETTINGS = {
     -- Opacity in %
     stack_background_opacity = '60',
 
+    hide_drawn_cards = true,
+
 }

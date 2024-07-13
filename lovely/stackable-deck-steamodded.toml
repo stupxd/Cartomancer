@@ -27,7 +27,9 @@ for k, v in ipairs(G.playing_cards) do
   if greyed then
     card_string = card_string .. "Greyed"
   end
-  if not SUITS[v.base.suit][card_string] then
+  if Cartomancer.SETTINGS.hide_drawn_cards and greyed then
+  -- Ignore this card.
+  elseif not SUITS[v.base.suit][card_string] then
         table.insert(SUITS_SORTED[v.base.suit], card_string)
 
         local _scale = 0.7
