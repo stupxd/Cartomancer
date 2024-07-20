@@ -1,0 +1,81 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+#
+# Use number_format for...
+#
+
+# DynaText
+
+[[patches]] 
+[patches.regex]
+target = "engine/text.lua"
+pattern = 'tostring\((?<param>v\.ref_table and v\.ref_table\[v\.ref_value\] or v\.string)\)'
+position = "at"
+payload = "format_ui_value($param)"
+
+# Cash Out
+
+[[patches]] 
+[patches.regex]
+target = "functions/common_events.lua"
+pattern = '''
+localize\('\$'\)\.\.config\.dollars'''
+position = "at"
+payload = "localize('$')..format_ui_value(config.dollars)"
+
+# End of round money
+
+[[patches]]
+[patches.regex]
+target = "functions/common_events.lua"
+pattern = '''
+localize\('\$'\)\.\.num_dollars\}'''
+position = "at"
+payload = "localize('$')..format_ui_value(num_dollars)}"
+
+# Tooltip numbers
+
+[[patches]] 
+[patches.regex]
+target = "functions/misc_functions.lua"
+pattern = 'args\.vars\[tonumber\(subpart\[1\]\)\]'
+position = "at"
+payload = 'format_ui_value(args.vars[tonumber(subpart[1])])'
+
+
+#
+# Custom sci notation switch point
+#
+
+# number_format
+
+[[patches]] 
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = 'function number_format(num)'
+position = "at"
+payload = 'function number_format(num, e_switch_point)'
+match_indent = true
+
+# score_number_scale
+
+[[patches]] 
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = 'function score_number_scale(scale, amt)'
+position = "at"
+payload = 'function score_number_scale(scale, amt, e_switch_point)'
+match_indent = true
+
+# Check if custom switch point is specified
+
+[[patches]] 
+[patches.regex]
+target = "functions/misc_functions.lua"
+pattern = '>= G\.E_SWITCH_POINT'
+position = "at"
+payload = ">= (e_switch_point or G.E_SWITCH_POINT)"
+
