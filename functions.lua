@@ -1,40 +1,18 @@
 
 function Card:to_string()
-    local result = (self.base and self.base.suit .. self.base.value) or ''
-
-    if self.ability.name then
-        -- enhancement?
-        result = result .. self.ability.name
-    end
-    if self.edition then
-        -- Should only have 1 edition, but they're implemented in a weird way.
-        for edition, _ in pairs(self.edition) do
-            result = result .. tostring(edition)
-        end
-    end
-    if self.seal then
-        -- self.seal == 'Gold'
-        result = result .. self.seal
-    end
-    if self.ability.eternal then
-        result = result .. "Eternal"
-    end
-    if self.ability.perishable then
-        result = result .. "Perishable"
-    end
-    if self.ability.rental then
-        result = result .. "Rental"
-    end
-
-    if self.debuff then
-        result = result .. "Debuff"
-    end
-    
-    if self.greyed then
-        result = result .. "Greyed" -- greyed should be last!
-    end
-
-    return result
+    return string.format(
+        "%s%s%s%s%s%s%s%s%s%s",
+        self.base and self.base.suit or '',
+        self.base and self.base.value or '',
+        self.ability and self.ability.name or '',
+        self.edition and next(self.edition) or '',
+        self.seal or '',
+        self.eternal and 'Eternal' or '',
+        self.perishable and 'Perishable' or '',
+        self.rental and 'Rental' or '',
+        self.debuff and 'Debuff' or '',
+        self.greyed and 'Greyed' or ''
+    )
 end
 
 -- Util
