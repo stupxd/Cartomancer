@@ -31,7 +31,7 @@ Cashout process is additionally much faster & less laggy as you don't need to wa
 
 Most numbers (money, jokers scaling, cashout, poker hand Chips x Mult) will now be formatted properly
 
-- Big numbers are formatted with comas
+- Numbers are formatted with commas
 - No rounding errors
 - Scientific notation starts at 1 million, and is more compact to avoid UI breaking.
 
