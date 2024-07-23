@@ -7,10 +7,9 @@ priority = 69
 [[patches]] 
 [patches.pattern]
 target = "cardarea.lua"
-pattern = ""
+pattern = "elwreltker"
 position = "before"
 payload = '''
-
 '''
 match_indent = true
 
@@ -18,7 +17,7 @@ match_indent = true
 [patches.regex]
 target = "cardarea.lua"
 pattern = '''
-'''
+ekrtjeortje'''
 position = "at"
 payload = '''
 '''
@@ -35,9 +34,9 @@ position = "before"
 payload = '''
 if self.held_keys['lctrl'] then
     if key == '1' then
-        --
+        Cartomancer.update_jokers_visibility()
     elseif key == '2' then
-        -- 
+        Cartomancer.show_all_jokers() 
     elseif key == '3' then
         -- 
     elseif key == '4' then

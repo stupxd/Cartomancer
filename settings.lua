@@ -23,27 +23,28 @@ Cartomancer.SETTINGS = {
         }
     },
 
+    -- stacked cards in hand? 
+
     -- Hidden cards in hand
-    hidden_cards_hand = {
+    hide_cards = {
         enabled = true,
         hide_after_total = 100,
     },
 
-    hidden_jokers = {
-        automatically_hide = {
-            enabled = false,
-            rarities = {
-                common = true,
-                uncommon = true,
-                rare = false,
-            },
-            all = false,
-            editions = {
-                negative = true,
-            },
-            -- When total reaches this number, matching jokers will be hidden TODO : make sure to show jokers once the number's back down :)
-            hide_after_total = 100,
-        }
+    -- stacked jokers?
+    hide_jokers = {
+        enabled = false,
+        rarities = {
+            common = true,
+            uncommon = true,
+            rare = false,
+        },
+        all = false,
+        editions = {
+            negative = true,
+        },
+        -- When total reaches this number, matching jokers will be hidden TODO : make sure to show jokers once the number's back down :)
+        hide_after_total = 100,
     },
 
 }
