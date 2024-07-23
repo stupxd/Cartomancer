@@ -23,6 +23,12 @@ Cartomancer.SETTINGS = {
         }
     },
 
+    -- Hidden cards in hand
+    hidden_cards_hand = {
+        enabled = true,
+        hide_after_total = 100,
+    },
+
     hidden_jokers = {
         automatically_hide = {
             enabled = false,
