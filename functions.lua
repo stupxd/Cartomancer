@@ -24,14 +24,6 @@ function tablecopy(t)
     return t2
 end
 
-function format_ui_value(value)
-    if type(value) ~= "number" then
-        return tostring(value)
-    end
-
-    return number_format(value, 1000000)
-  end
-
 -- Handle amount display
 
 ----- Copied from incantation
