@@ -11,6 +11,7 @@ target = "main.lua"
 position = "append"
 sources = [
     "settings.lua",
-    "functions.lua"
+    "core/stackable-deck.lua",
+    "core/hidden-jokers.lua",
 ]
 

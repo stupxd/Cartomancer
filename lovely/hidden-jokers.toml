@@ -1,0 +1,50 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+
+[[patches]] 
+[patches.pattern]
+target = "cardarea.lua"
+pattern = ""
+position = "before"
+payload = '''
+
+'''
+match_indent = true
+
+[[patches]] 
+[patches.regex]
+target = "cardarea.lua"
+pattern = '''
+'''
+position = "at"
+payload = '''
+'''
+line_prepend = '$indent'
+
+
+## Temporary keybinds for testing until there's proper UI
+
+[[patches]]
+[patches.pattern]
+target = 'engine/controller.lua'
+pattern = "if not _RELEASE_MODE then"
+position = "before"
+payload = '''
+if self.held_keys['lctrl'] then
+    if key == '1' then
+        --
+    elseif key == '2' then
+        -- 
+    elseif key == '3' then
+        -- 
+    elseif key == '4' then
+        -- 
+    elseif key == '5' then
+        -- 
+    end
+end
+'''
+match_indent = true

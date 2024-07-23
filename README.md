@@ -19,22 +19,6 @@
 
 The text box with stack display can be customized in [settings.lua](settings.lua) file - you can change position and color of the `x`.
 
-3. Hide off-screen cashout rows.
-
-![off-screen-cashout](git-assets/off-screen-cashout.jpg)
-
-Cashout process is additionally much faster & less laggy as you don't need to wait for off-screen cashout to be processed.
-
-4. Properly formatted numbers in UI.
-
-![numbers-formatting](git-assets/numbers-formatting.jpg)
-
-Most numbers (money, jokers scaling, cashout, poker hand Chips x Mult) will now be formatted properly
-
-- Numbers are formatted with commas
-- No rounding errors
-- Scientific notation starts at 1 million, and is more compact to avoid UI breaking.
-
 ## Credits
 
 [Jen Walter](https://github.com/cubeanimataz/) for the UI box on stacked cards.

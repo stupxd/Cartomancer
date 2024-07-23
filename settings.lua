@@ -1,17 +1,43 @@
 Cartomancer = {}
 
 Cartomancer.SETTINGS = {
+    compact_deck = {
+        enabled = true,
+        visible_cards = 100,
+    },
 
-    -- Limit of cards in deck pile
-    deck_pile_size = 100,
+    deck_view = {
+        stacked_cards = {
+            enabled = true,
+            -- first letter  - [top center bottom]
+            -- second letter - [left middle right]
+            amount_position = 'tm',
+            -- Hex color code for x (before amount)
+            x_color = 'ed7575',
+            -- Opacity in %
+            background_opacity = '60',    
+        },
+        drawn_cards = {
+            hide = true,
+            -- todo: maybe custom shader for drawn cards and ability to adjust opacity
+        }
+    },
 
-    -- t (top), b (bottom), l (left), r (right), c (center)
-    stack_amount_position = 't',
-    -- Hex color code for x
-    stack_x_color = 'ed7575',
-    -- Opacity in %
-    stack_background_opacity = '60',
-
-    hide_drawn_cards = false,
+    hidden_jokers = {
+        automatically_hide = {
+            enabled = false,
+            rarities = {
+                common = true,
+                uncommon = true,
+                rare = false,
+            },
+            all = false,
+            editions = {
+                negative = true,
+            },
+            -- When total reaches this number, matching jokers will be hidden TODO : make sure to show jokers once the number's back down :)
+            hide_after_total = 100,
+        }
+    },
 
 }

@@ -36,7 +36,12 @@ pattern = '''
 [\t ]*end'''
 position = "at"
 payload = '''
-local display_limit = Cartomancer.SETTINGS.deck_pile_size or 52
+local display_limit
+if not Cartomancer.SETTINGS.compact_deck.enabled then
+    display_limit = 999999
+else
+    display_limit = Cartomancer.SETTINGS.compact_deck.visible_cards
+end
 
 local deck_height = (self.config.deck_height or 0.15)/52
 local total_cards = #self.cards <= display_limit and #self.cards or display_limit -- limit height
