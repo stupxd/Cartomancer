@@ -25,7 +25,8 @@ Cartomancer.SETTINGS = {
 
     fixed_flames = {
         enabled = true,
-        intensity_cap = 10,
+        max_intensity = 10,
+        min_intensity = 0.5,
     },
 
     -- stacked cards in hand? 
