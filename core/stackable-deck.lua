@@ -32,13 +32,15 @@ G.FUNCS.disable_quantity_display = function(e)
     e.states.visible = preview_card.stacked_quantity > 1
 end
 
-local X_COLOR = HEX(Cartomancer.SETTINGS.deck_view.stacked_cards.x_color)
 
 function Card:create_quantity_display()
     if not Cartomancer.SETTINGS.deck_view.stacked_cards.enabled then
+
         return
     end
 
+    local X_COLOR = HEX(Cartomancer.SETTINGS.deck_view.stacked_cards.x_color)
+    
     if not self.children.stack_display and self.stacked_quantity > 1 then
         self.children.stack_display = UIBox {
             definition = {

@@ -15,19 +15,22 @@ Cartomancer.SETTINGS = {
             -- Hex color code for x (before amount)
             x_color = 'ed7575',
             -- Opacity in %
-            background_opacity = '60',    
+            background_opacity = '60',
         },
         drawn_cards = {
             hide = true,
-            -- todo: maybe custom shader for drawn cards and ability to adjust opacity
+            -- todo: maybe custom shader for drawn cards to adjust opacity
         }
     },
 
     fixed_flames = {
         enabled = true,
-        max_intensity = 10,
+        max_intensity = 8,
         min_intensity = 0.5,
     },
+
+    -- WIP
+
 
     -- stacked cards in hand? 
 
