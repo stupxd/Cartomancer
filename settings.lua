@@ -23,6 +23,11 @@ Cartomancer.SETTINGS = {
         }
     },
 
+    fixed_flames = {
+        enabled = true,
+        intensity_cap = 10,
+    },
+
     -- stacked cards in hand? 
 
     -- Hidden cards in hand
@@ -33,13 +38,13 @@ Cartomancer.SETTINGS = {
 
     -- stacked jokers?
     hide_jokers = {
-        enabled = false,
+        enabled = true,
         rarities = {
             common = true,
             uncommon = true,
             rare = false,
         },
-        all = false,
+        all = true,
         editions = {
             negative = true,
         },

@@ -17,7 +17,7 @@ pattern = '''
 [\t ]*table\.insert\(SUITS\[v\.base\.suit\], v\)'''
 position = "at"
 payload = '''
-local SUITS_SORTED = tablecopy(SUITS)
+local SUITS_SORTED = Cartomancer.tablecopy(SUITS)
 for k, v in ipairs(G.playing_cards) do
   local greyed
   if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then

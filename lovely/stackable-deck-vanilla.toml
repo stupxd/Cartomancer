@@ -58,7 +58,7 @@ line_prepend = ''
 target = "functions/UI_definitions.lua"
 pattern = "local suit_map = {'Spades', 'Hearts', 'Clubs', 'Diamonds'}"
 position = "after"
-payload = "local SUITS_SORTED = tablecopy(SUITS)"
+payload = "local SUITS_SORTED = Cartomancer.tablecopy(SUITS)"
 match_indent = true
 
 [[patches]] 

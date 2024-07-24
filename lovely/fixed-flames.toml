@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+
+[[patches]] 
+[patches.regex]
+target = "functions/button_callbacks.lua"
+pattern = '''
+(?<value>math\.max\(0\., math\.log\(G\.ARGS\.score_intensity\.earned_score, 5\)-2\))'''
+position = "at"
+payload = '''
+Cartomancer.fix_flames($value)'''
+

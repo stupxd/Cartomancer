@@ -16,7 +16,7 @@ function Card:to_string()
 end
 
 -- Util
-function tablecopy(t)
+function Cartomancer.tablecopy(t)
     local t2 = {}
     for k,v in pairs(t) do
         t2[k] = v
