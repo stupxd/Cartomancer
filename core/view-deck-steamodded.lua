@@ -1,4 +1,3 @@
--- This is not used anywhere as this code is simply copied to stackable-deck-steamodded.toml for latest Steamodded compatibility.
 
 local replacements = {
     {
@@ -16,7 +15,7 @@ for k, v in ipairs(G.playing_cards) do
   if greyed then
     card_string = string.format("%sGreyed", card_string)
   end
-  if greyed and Cartomancer.SETTINGS.deck_view.drawn_cards.hide then
+  if greyed and Cartomancer.SETTINGS.deck_view.hide_drawn_cards then
   -- Ignore this card.
   elseif not SUITS[v.base.suit][card_string] then
         table.insert(SUITS_SORTED[v.base.suit], card_string)
@@ -73,9 +72,14 @@ end]]
 
 }
 
-local nfs_read = NFS.read
 
-NFS.read = function (containerOrName, nameOrSize, sizeOrNil)
+--  Mom, can we have lovely patches for overrides.lua?
+--  No, we have lovely patches at home
+
+--  Lovely patches at home:
+
+local nfs_read
+local nfs_read_override = function (containerOrName, nameOrSize, sizeOrNil)
     local data, size = nfs_read(containerOrName, nameOrSize, sizeOrNil)
 
     if type(containerOrName) ~= "string" then
@@ -87,13 +91,21 @@ NFS.read = function (containerOrName, nameOrSize, sizeOrNil)
     end
 
     local replaced = 0
+    local total_replaced = 0
     for _, v in ipairs(replacements) do
         data, replaced = string.gsub(data, v.find, v.place)
 
         if replaced == 0 then
-          sendDebugMessage("Failed to replace " .. v.find .. " for overrides.lua")
+          print("Failed to replace " .. v.find .. " for overrides.lua")
+        else
+          total_replaced = total_replaced + 1
         end
     end
+
+    print("Totally applied " .. total_replaced .. " replacements to overrides.lua")
+
+    -- We no longer need this
+    NFS.read = nfs_read
     
     return data, size
 end

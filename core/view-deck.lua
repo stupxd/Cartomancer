@@ -74,7 +74,7 @@ function Card:create_quantity_display()
                 }
             },
             config = {
-                align = Cartomancer.SETTINGS.deck_view.stacked_cards.amount_position,
+                align = Cartomancer.SETTINGS.deck_view.stacked_cards.pos_vertical .. Cartomancer.SETTINGS.deck_view.stacked_cards.pos_horizontal,
                 bond = 'Strong',
                 parent = self
             },

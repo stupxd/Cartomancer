@@ -1,7 +1,7 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = 0
+priority = -1
 
 # Add settings
 
@@ -11,8 +11,10 @@ target = "main.lua"
 position = "append"
 sources = [
     "settings.lua",
-    "core/fixed-flames.lua",
-    "core/stackable-deck.lua",
+    "core/view-deck-steamodded.lua",
+    "core/view-deck.lua",
+    "core/score-flames.lua",
+    "core/shaders.lua",
     "core/hidden-jokers.lua",
 ]
 

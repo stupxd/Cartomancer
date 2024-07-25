@@ -9,28 +9,30 @@ Cartomancer.SETTINGS = {
     deck_view = {
         stacked_cards = {
             enabled = true,
-            -- first letter  - [top center bottom]
-            -- second letter - [left middle right]
-            amount_position = 'tm',
+            -- [top center bottom]
+            pos_vertical = 't',
+            -- [left middle right]
+            pos_horizontal = 'm',
             -- Hex color code for x (before amount)
             x_color = 'ed7575',
             -- Opacity in %
             background_opacity = '60',
         },
-        drawn_cards = {
-            hide = true,
-            -- todo: maybe custom shader for drawn cards to adjust opacity
-        }
+
+        hide_drawn_cards = true,
+        -- todo: maybe custom shader for drawn cards to adjust opacity
     },
 
-    fixed_flames = {
+    draw_shaders = false,
+
+    custom_flames = {
         enabled = true,
-        max_intensity = 8,
         min_intensity = 0.5,
+        max_intensity = 8,
     },
 
-    -- WIP
 
+    --------- WIP / concepting
 
     -- stacked cards in hand? 
 
