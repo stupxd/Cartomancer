@@ -10,4 +10,4 @@ target = "functions/button_callbacks.lua"
 pattern = '''
 (?<value>math\.max\(0\., math\.log\(G\.ARGS\.score_intensity\.earned_score, 5\)-2\))'''
 position = "at"
-payload = "Cartomancer.fix_flames($value)"
+payload = "Cartomancer.handle_flames_intensity($value)"

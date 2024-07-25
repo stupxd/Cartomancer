@@ -1,46 +1,34 @@
-Cartomancer = {}
 
 Cartomancer.SETTINGS = {
-    compact_deck = {
-        enabled = true,
-        visible_cards = 100,
-    },
+    compact_deck_enabled = true,
+    compact_deck_visible_cards = 100,
 
-    deck_view = {
-        stacked_cards = {
-            enabled = true,
-            -- [top center bottom]
-            pos_vertical = 't',
-            -- [left middle right]
-            pos_horizontal = 'm',
-            -- Hex color code for x (before amount)
-            x_color = 'ed7575',
-            -- Opacity in %
-            background_opacity = '60',
-        },
+    deck_view_stack_enabled = true,
+    -- [top center bottom]
+    deck_view_stack_pos_vertical = 't',
+    -- [left middle right]
+    deck_view_stack_pos_horizontal = 'm',
+    -- Hex color code for x (before amount)
+    deck_view_stack_x_color = 'ed7575',
+    -- Opacity in %
+    deck_view_stack_background_opacity = '60',
 
-        hide_drawn_cards = true,
-        -- todo: maybe custom shader for drawn cards to adjust opacity
-    },
+    deck_view_hide_drawn_cards = false,
+    -- todo: maybe custom shader for drawn cards to adjust opacity
 
-    draw_shaders = true,
+    draw_non_essential_shaders = true,
 
-    custom_flames = {
-        enabled = true,
-        min_intensity = 0.5,
-        max_intensity = 8,
-    },
+    flames_intensity_enabled = true,
+    flames_intensity_min = 0.5,
+    flames_intensity_max = 8,
+}
 
+--[[
+--------- WIP / concepting
 
-    --------- WIP / concepting
-
-    -- stacked cards in hand? 
-
-    -- Hidden cards in hand
-    hide_cards = {
-        enabled = true,
-        hide_after_total = 100,
-    },
+    -- Stack cards in hand?
+    hand_stack_enabled = true,
+    hand_stack_after_total = 100,
 
     -- stacked jokers?
     hide_jokers = {
@@ -57,5 +45,4 @@ Cartomancer.SETTINGS = {
         -- When total reaches this number, matching jokers will be hidden TODO : make sure to show jokers once the number's back down :)
         hide_after_total = 100,
     },
-
-}
+]]

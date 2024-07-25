@@ -10,10 +10,11 @@ priority = 0
 target = "main.lua"
 position = "append"
 sources = [
+    "cartomancer.lua",
     "settings.lua",
     "core/view-deck-steamodded.lua",
     "core/view-deck.lua",
-    "core/score-flames.lua",
+    "core/flames.lua",
     "core/shaders.lua",
     "core/hidden-jokers.lua",
 ]
