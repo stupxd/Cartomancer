@@ -1,5 +1,5 @@
 
-local replacements = {
+local Cartomancer_replacements = {
     {
         find = [[
 	for k, v in ipairs%(G%.playing_cards%) do
@@ -92,7 +92,7 @@ local nfs_read_override = function (containerOrName, nameOrSize, sizeOrNil)
 
     local replaced = 0
     local total_replaced = 0
-    for _, v in ipairs(replacements) do
+    for _, v in ipairs(Cartomancer_replacements) do
         data, replaced = string.gsub(data, v.find, v.place)
 
         if replaced == 0 then

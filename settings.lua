@@ -23,7 +23,7 @@ Cartomancer.SETTINGS = {
         -- todo: maybe custom shader for drawn cards to adjust opacity
     },
 
-    draw_shaders = false,
+    draw_shaders = true,
 
     custom_flames = {
         enabled = true,
