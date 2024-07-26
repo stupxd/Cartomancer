@@ -5,7 +5,7 @@ function Card:to_string()
         self.base and self.base.suit or '',
         self.base and self.base.value or '',
         self.ability and self.ability.name or '',
-        self.edition and next(self.edition) or '',
+        self.edition and (self.edition.type or next(self.edition)) or '',
         self.seal or '',
         self.eternal and 'Eternal' or '',
         self.perishable and 'Perishable' or '',

@@ -13,21 +13,32 @@ for k, v in ipairs(G.playing_cards) do
   end
   local card_string = v:to_string()
   if greyed then
-    card_string = string.format("%sGreyed", card_string)
+    card_string = card_string .. "Greyed" -- for some reason format doesn't work and final string is `sGreyed`
   end
   if greyed and Cartomancer.SETTINGS.deck_view_hide_drawn_cards then
   -- Ignore this card.
+  elseif not Cartomancer.SETTINGS.deck_view_stack_enabled then
+    -- Don't stack cards    
+    local _scale = 0.7
+    local copy = copy_card(v, nil, _scale)
+    
+    copy.greyed = greyed
+    copy.stacked_quantity = 1
+    table.insert(SUITS_SORTED[v.base.suit], copy)
+
   elseif not SUITS[v.base.suit][card_string] then
-        table.insert(SUITS_SORTED[v.base.suit], card_string)
+    -- Initiate stack
+    table.insert(SUITS_SORTED[v.base.suit], card_string)
 
-        local _scale = 0.7
-        local copy = copy_card(v, nil, _scale)
+    local _scale = 0.7
+    local copy = copy_card(v, nil, _scale)
 
-        copy.greyed = greyed
-        copy.stacked_quantity = 1
+    copy.greyed = greyed
+    copy.stacked_quantity = 1
 
-        SUITS[v.base.suit][card_string] = copy
+    SUITS[v.base.suit][card_string] = copy
   else
+    -- Stack cards
     local stacked_card = SUITS[v.base.suit][card_string]
     stacked_card.stacked_quantity = stacked_card.stacked_quantity + 1
   end]]
@@ -58,8 +69,13 @@ for i = 1%, %#SUITS%[suit_map%[j%]%] do
 			end]],
         place = [[
 for i = 1%, %#SUITS_SORTED%[suit_map%[j%]%] do
-  local card_string = SUITS_SORTED%[suit_map%[j%]%]%[i%]
-  local card = SUITS%[suit_map%[j%]%]%[card_string%]
+  local card
+  if not Cartomancer.SETTINGS.deck_view_stack_enabled then
+    card = SUITS_SORTED%[suit_map%[j%]%]%[i%]
+  else
+    local card_string = SUITS_SORTED%[suit_map%[j%]%]%[i%]
+    card = SUITS%[suit_map%[j%]%]%[card_string%]
+  end
 
   card%.T%.x = view_deck%.T%.x %+ view_deck%.T%.w%/2
   card%.T%.y = view_deck%.T%.y
@@ -78,9 +94,9 @@ end]]
 
 --  Lovely patches at home:
 
-local nfs_read
-local nfs_read_override = function (containerOrName, nameOrSize, sizeOrNil)
-    local data, size = nfs_read(containerOrName, nameOrSize, sizeOrNil)
+local Cartomancer_nfs_read
+local Cartomancer_nfs_read_override = function (containerOrName, nameOrSize, sizeOrNil)
+    local data, size = Cartomancer_nfs_read(containerOrName, nameOrSize, sizeOrNil)
 
     if type(containerOrName) ~= "string" then
         return data, size
@@ -104,8 +120,8 @@ local nfs_read_override = function (containerOrName, nameOrSize, sizeOrNil)
 
     print("Totally applied " .. total_replaced .. " replacements to overrides.lua")
 
-    -- We no longer need this
-    NFS.read = nfs_read
+    -- We no longer need this override
+    NFS.read = Cartomancer_nfs_read
     
     return data, size
 end

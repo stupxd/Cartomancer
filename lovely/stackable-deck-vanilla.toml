@@ -21,7 +21,7 @@ if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipp
 end
 local card_string = v:to_string()
 if greyed then
-    card_string = string.format("%sGreyed", card_string)
+    card_string = card_string .. "Greyed"
 end
 if greyed and Cartomancer.SETTINGS.deck_view_hide_drawn_cards then
   -- Ignore this card.

@@ -1,8 +1,9 @@
 
-Cartomancer.SETTINGS = {
+return {
     compact_deck_enabled = true,
     compact_deck_visible_cards = 100,
 
+    -- TODO : figure out how to allow toggling this,
     deck_view_stack_enabled = true,
     -- [top center bottom]
     deck_view_stack_pos_vertical = 't',
@@ -16,11 +17,14 @@ Cartomancer.SETTINGS = {
     deck_view_hide_drawn_cards = false,
     -- todo: maybe custom shader for drawn cards to adjust opacity
 
-    draw_non_essential_shaders = true,
+    draw_non_essential_shaders = false,
 
     flames_intensity_enabled = true,
     flames_intensity_min = 0.5,
     flames_intensity_max = 8,
+
+    -- TODO : when round ends, remove animation for deck reshuffle
+    instant_deck_reshuffle = true,
 }
 
 --[[

@@ -10,9 +10,7 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
--- 
--- Empty mod for display in the Steamodded menu.
--- 
+Cartomancer.SETTINGS = SMODS.current_mod.config
 
 ----------------------------------------------
 ------------MOD CODE END----------------------

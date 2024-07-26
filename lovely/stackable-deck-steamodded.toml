@@ -11,8 +11,8 @@ match_indent = true
 pattern = "SMODS.path = find_self(SMODS.MODS_DIR, 'core.lua', '--- STEAMODDED CORE')"
 position = "after"
 payload = '''
--- Cartomancer code
-nfs_read = NFS.read
-NFS.read = nfs_read_override
--- Cartomancer code
+
+Cartomancer_nfs_read = NFS.read
+NFS.read = Cartomancer_nfs_read_override
+
 '''
