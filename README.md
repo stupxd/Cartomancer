@@ -21,5 +21,6 @@ The text box with stack display can be customized in [settings.lua](settings.lua
 
 ## Credits
 
-[Jen Walter](https://github.com/jenwalter666/) for the UI box on stacked cards.
+[Jen Walter](https://github.com/jenwalter666/) for the code for UI box on stacked cards.
+[Mysthaps](https://github.com/Mysthaps/) for the most of the initial mod config code.
 

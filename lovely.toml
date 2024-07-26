@@ -3,13 +3,7 @@ version = "1.0.0"
 dump_lua = true
 priority = 1
 
-[[patches]]
-[patches.module]
-source = "nativefs/nativefs.lua"
-before = "main.lua"
-name = "nativefs"
-
-# Add settings
+# Add core functionality
 
 [[patches]]
 [patches.copy]
