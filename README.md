@@ -17,6 +17,12 @@
 
 ![stackable-cards-difference](git-assets/stackable-cards.jpg)
 
+3. Hide drawn cards from deck view
+
+4. Hide non-essential (edition) shaders.
+
+5. Custom scoring flames intensity.
+
 The text box with stack display can be customized in [settings.lua](settings.lua) file - you can change position and color of the `x`.
 
 ## Credits
