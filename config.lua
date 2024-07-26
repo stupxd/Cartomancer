@@ -17,7 +17,7 @@ return {
     deck_view_hide_drawn_cards = false,
     -- todo: maybe custom shader for drawn cards to adjust opacity
 
-    draw_non_essential_shaders = false,
+    draw_non_essential_shaders = true,
 
     flames_intensity_enabled = true,
     flames_intensity_min = 0.5,

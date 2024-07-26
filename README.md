@@ -8,7 +8,7 @@
 4. Restart the game to load the mod.
 
 ## Features
-1. Limit amount of cards visible in your deck pile, to make it appear smaller. Default limit is 100 cards, which can be modified in [settings.lua](settings.lua) file.
+1. Limit amount of cards visible in your deck pile, to make it appear smaller. Default limit is 100 cards, which can be modified in mod config menu.
 
 ![cards-pile-difference](git-assets/deck-pile.jpg)
 
@@ -28,5 +28,6 @@ The text box with stack display can be customized in [settings.lua](settings.lua
 ## Credits
 
 [Jen Walter](https://github.com/jenwalter666/) for the code for UI box on stacked cards.
-[Mysthaps](https://github.com/Mysthaps/) for the most of the initial mod config code.
+
+[Mysthaps](https://github.com/Mysthaps/) for most of the initial mod config code.
 
