@@ -14,5 +14,5 @@ sources = [
     "core/view-deck.lua",
     "core/flames.lua",
     "core/shaders.lua",
-    "core/hidden-jokers.lua",
+#    "core/hidden-jokers.lua",
 ]

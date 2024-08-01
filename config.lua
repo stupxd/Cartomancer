@@ -23,8 +23,6 @@ return {
     flames_intensity_min = 0.5,
     flames_intensity_max = 8,
 
-    -- TODO : when round ends, remove animation for deck reshuffle
-    instant_deck_reshuffle = true,
 }
 
 --[[

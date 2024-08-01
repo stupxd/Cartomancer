@@ -4,24 +4,24 @@ dump_lua = true
 priority = 69
 
 
-[[patches]] 
-[patches.pattern]
-target = "cardarea.lua"
-pattern = "elwreltker"
-position = "before"
-payload = '''
-'''
-match_indent = true
-
-[[patches]] 
-[patches.regex]
-target = "cardarea.lua"
-pattern = '''
-ekrtjeortje'''
-position = "at"
-payload = '''
-'''
-line_prepend = '$indent'
+# [[patches]] 
+# [patches.pattern]
+# target = "cardarea.lua"
+# pattern = "elwreltker"
+# position = "before"
+# payload = '''
+# '''
+# match_indent = true
+# 
+# [[patches]] 
+# [patches.regex]
+# target = "cardarea.lua"
+# pattern = '''
+# ekrtjeortje'''
+# position = "at"
+# payload = '''
+# '''
+# line_prepend = '$indent'
 
 
 ## Temporary keybinds for testing until there's proper UI
@@ -32,17 +32,13 @@ target = 'engine/controller.lua'
 pattern = "if not _RELEASE_MODE then"
 position = "before"
 payload = '''
-if self.held_keys['lctrl'] then
+if false and self.held_keys['lctrl'] then
     if key == '1' then
         Cartomancer.update_jokers_visibility()
     elseif key == '2' then
         Cartomancer.show_all_jokers() 
     elseif key == '3' then
-        Cartomancer.SETTINGS.deck_view_hide_drawn_cards = not Cartomancer.SETTINGS.deck_view_hide_drawn_cards
-        print("Drawn cards are now " .. (Cartomancer.SETTINGS.deck_view_hide_drawn_cards and "shown" or "hidden"))
     elseif key == '4' then
-        Cartomancer.SETTINGS.deck_view_stack_enabled = not Cartomancer.SETTINGS.deck_view_stack_enabled
-        print("View deck stack is now " .. (Cartomancer.SETTINGS.deck_view_stack_enabled and "enabled" or "disabled"))
         -- 
     elseif key == '5' then
         -- 
