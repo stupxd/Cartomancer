@@ -39,7 +39,7 @@ function Card:create_quantity_display()
     end
 
     local X_COLOR = HEX(Cartomancer.SETTINGS.deck_view_stack_x_color)
-    
+
     if not self.children.stack_display and self.stacked_quantity > 1 then
         self.children.stack_display = UIBox {
             definition = {
@@ -73,7 +73,7 @@ function Card:create_quantity_display()
                 }
             },
             config = {
-                align = Cartomancer.SETTINGS.deck_view_stack_pos_vertical .. Cartomancer.SETTINGS.deck_view_stack_pos_horizontal,
+                align = (Cartomancer.SETTINGS.deck_view_stack_pos_vertical:sub(1, 1)) .. (Cartomancer.SETTINGS.deck_view_stack_pos_horizontal:sub(1, 1)),
                 bond = 'Strong',
                 parent = self
             },

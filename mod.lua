@@ -26,7 +26,11 @@ SMODS.Atlas{
 
 local color = HEX('FFD700')
 
-local create_column_tabs, create_inline_slider, create_toggle_option, create_input_option
+local create_column_tabs,
+      create_inline_slider,
+      create_toggle_option,
+      create_input_option,
+      create_inline_options
 
 local function is_chosen(tab)
   return Cartomancer.LAST_OPEN_TAB == tab
@@ -40,7 +44,7 @@ SMODS.current_mod.config_tab = function()
 
     Cartomancer.LAST_OPEN_TAB = "compact_deck"
 
-    local tab_config = {r = 0.1, align = "t", padding = 0.1, colour = G.C.MONEY, minw = 8.5, minh = 6}
+    local tab_config = {r = 0.1, align = "t", padding = 0.2, colour = G.C.GREY, minw = 8.5, minh = 6}
 
     table.insert(vertical_tabs, {
         label = "Compact deck",
@@ -50,7 +54,7 @@ SMODS.current_mod.config_tab = function()
             -- Yellow node. Align changes the position of modes inside
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option('compact_deck_enabled', 'carto_compact_deck_enabled'),
-                create_inline_slider('compact_deck_visible_cards', 'carto_compact_deck_visible_cards', {max_value = 999}),
+                create_inline_slider('compact_deck_visible_cards', 'carto_compact_deck_visible_cards', {max_value = 300}),
             }}
         end
     })
@@ -65,6 +69,10 @@ SMODS.current_mod.config_tab = function()
                 create_toggle_option('deck_view_hide_drawn_cards', 'carto_deck_view_hide_drawn_cards'),
                 create_inline_slider('deck_view_stack_background_opacity', 'carto_deck_view_stack_background_opacity'),
                 create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
+                create_inline_options('deck_view_stack_pos_vertical', 'carto_deck_view_stack_pos_vertical', 
+                                       'cartomancer_deck_view_pos_vertical', 'carto_deck_view_stack_pos_vertical_options'),
+                create_inline_options('deck_view_stack_pos_horizontal', 'carto_deck_view_stack_pos_horizontal', 
+                                       'cartomancer_deck_view_pos_horizontal', 'carto_deck_view_stack_pos_horizontal_options'),
             }}
         end
     })
@@ -97,11 +105,11 @@ SMODS.current_mod.config_tab = function()
     })
 
     return create_UIBox_generic_options_custom({
-        bg_colour = G.C.BLUE,
+        bg_colour = G.C.CLEAR,-- G.C.BLUE,
         contents = {
             {
                 n = G.UIT.R,
-                config = { padding = 0, align = "tl", minw = 10, colour = color },
+                config = { padding = 0, align = "tl", minw = 9, colour = G.C.CLEAR },
                 nodes = {
                     create_column_tabs({
                         tab_alignment = 'tl',
@@ -109,7 +117,7 @@ SMODS.current_mod.config_tab = function()
                         tab_h = 4.3,-- this seems to not do shit?
                         text_scale = 0.4,
                         snap_to_nav = true,
-                        colour =  G.C.RED,
+                        colour =  G.C.CLEAR,-- G.C.RED,
                         tabs = vertical_tabs
                     })
                 }
@@ -121,13 +129,45 @@ end
 create_inline_slider = function (ref_value, localization, args)
     local args = args or {}
 
-    local slider = create_slider({label = localize(localization), label_scale = 0.36, w = 4, h = 0.3, 
+    local slider = create_slider({label = localize(localization), label_scale = 0.36, w = 3, h = 0.3, 
                                   ref_table = Cartomancer.SETTINGS, ref_value = ref_value, min = 0, max = args.max_value or 100,
                                   decimal_places = args.decimal_places})
 
     slider.nodes[1].config.align = "cl"
+    
+    for _, node in pairs(slider.nodes) do
+        node.n = G.UIT.C
+    end
     -- slider.nodes[2].nodes[1].n = G.UIT.R
     return slider
+end
+
+local function starts_with(str, start)
+    return str:sub(1, #start) == start
+ end
+
+local function find_option(options, value)
+    for i, str in pairs(options) do
+        if starts_with(str, value) then
+            return i
+        end
+    end
+end
+
+create_inline_options = function (ref_value, localization, change_function, options)
+    local options_loc = localize(options)
+
+    local cycle = create_option_cycle({w = 3, label = localize(localization),scale = 0.7, options = options_loc,
+                                       opt_callback = change_function, current_option = find_option(options_loc, Cartomancer.SETTINGS[ref_value])})
+    cycle.n = G.UIT.R
+    cycle.nodes[1].config.align = "cl"
+    cycle.nodes[2].config.align = "cr"
+    
+    for _, node in pairs(cycle.nodes) do
+        node.n = G.UIT.C
+    end
+
+    return cycle
 end
 
 create_toggle_option = function (ref_value, localization)
@@ -136,7 +176,7 @@ create_toggle_option = function (ref_value, localization)
             { n = G.UIT.T, config = { text = localize(localization), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
         }},
         {n = G.UIT.C, config = { align = "cr", padding = 0.05 }, nodes = {
-            create_toggle{ col = true, label = "", scale = 0.85, w = 0, shadow = true, ref_table = Cartomancer.SETTINGS, ref_value = ref_value },
+            create_toggle{ col = true, label = "", scale = 0.70, w = 0, shadow = true, ref_table = Cartomancer.SETTINGS, ref_value = ref_value },
         }},
       }}
 end
@@ -171,14 +211,14 @@ create_column_tabs = function (args)
     end
 
     -- Tabs + Contents
-    return {n=G.UIT.R, config={padding = 0.0, align = "cl", colour = args.colour,},
+    return {n=G.UIT.R, config={padding = 0.2, align = "cl", colour = args.colour,},
 
         nodes={
           -- Tabs
-          {n=G.UIT.ROOT, config={align = "cm", padding = 0.1, colour = G.C.CLEAR}, nodes=tab_buttons},
+          {n=G.UIT.C, config={align = "cl", padding = 0.2, colour = G.C.CLEAR}, nodes=tab_buttons},
           
           -- Tab contents
-          {n=G.UIT.R, config={align = args.tab_alignment, padding = args.padding or 0.1, no_fill = true, minh = args.tab_h, minw = args.tab_w}, nodes={
+          {n=G.UIT.C, config={align = args.tab_alignment, padding = args.padding or 0.1, no_fill = true, minh = args.tab_h, minw = args.tab_w}, nodes={
               {n=G.UIT.O, config={id = 'cartomancer_settings_tab_contents',
                                   old_chosen = tab_buttons[1].nodes[1].nodes[1],
                                   object = UIBox{definition = args.current.v.tab_definition_function(args.current.v.tab_definition_function_args),
@@ -187,6 +227,18 @@ create_column_tabs = function (args)
           }},
         }
     }
+end
+
+local vertical = { "top", "center", "bottom" }
+
+G.FUNCS.cartomancer_deck_view_pos_vertical = function(args)
+    Cartomancer.SETTINGS.deck_view_stack_pos_vertical = vertical[args.to_key]
+end
+
+local horizontal = { "left", "middle", "right" }
+
+G.FUNCS.cartomancer_deck_view_pos_horizontal = function(args)
+    Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = horizontal[args.to_key]
 end
 
 G.FUNCS.cartomancer_settings_change_tab = function(e)

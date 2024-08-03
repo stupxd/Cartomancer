@@ -3,7 +3,6 @@ return {
     compact_deck_enabled = true,
     compact_deck_visible_cards = 100,
 
-    -- TODO : figure out how to allow toggling this,
     deck_view_stack_enabled = true,
     -- [top center bottom]
     deck_view_stack_pos_vertical = 't',
