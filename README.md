@@ -19,9 +19,9 @@
 
 3. Hide drawn cards from deck view
 
-4. Hide non-essential (edition) shaders.
+4. Custom scoring flames intensity and SFX volume.
 
-5. Custom scoring flames intensity.
+5. Hide non-essential (edition) shaders.
 
 The text box with stack display can be customized in [settings.lua](settings.lua) file - you can change position and color of the `x`.
 

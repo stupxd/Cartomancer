@@ -6,7 +6,7 @@ return {
 
             carto_deck_view_stack_enabled = "Stack cards in deck view",
             carto_deck_view_hide_drawn_cards = "Hide drawn cards",
-            carto_deck_view_stack_x_color = "Stack display color  ",
+            carto_deck_view_stack_x_color = "Stack display color (hex)  ",
             carto_deck_view_stack_background_opacity = "Stack display opacity ",
             carto_deck_view_stack_pos_vertical = "Vertical stack alignment  ",
             carto_deck_view_stack_pos_vertical_options = {
