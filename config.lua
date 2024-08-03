@@ -22,6 +22,7 @@ return {
     flames_intensity_enabled = true,
     flames_intensity_min = 0.5,
     flames_intensity_max = 8,
+    flames_volume = 100,
 
 }
 

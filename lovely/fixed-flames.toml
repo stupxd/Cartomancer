@@ -7,7 +7,15 @@ priority = 69
 [[patches]] 
 [patches.regex]
 target = "functions/button_callbacks.lua"
+position = "at"
 pattern = '''
 (?<value>math\.max\(0\., math\.log\(G\.ARGS\.score_intensity\.earned_score, 5\)-2\))'''
-position = "at"
 payload = "Cartomancer.handle_flames_intensity($value)"
+
+[[patches]]
+[patches.regex]
+target = "functions/misc_functions.lua"
+position = "at"
+pattern = '''
+(?<value>\(not G\.video_organ and G\.STATE == G\.STATES\.SPLASH\) and 0 or AC\[k\]\.vol and v\.volfunc\(AC\[k\]\.vol\) or 0)'''
+payload = "Cartomancer.handle_flames_volume($value)"

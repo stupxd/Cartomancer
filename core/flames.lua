@@ -11,3 +11,7 @@ function Cartomancer.handle_flames_intensity(value)
     )
 end
 
+function Cartomancer.handle_flames_volume(value)
+    return Cartomancer.SETTINGS.flames_volume/100. * value
+end
+
