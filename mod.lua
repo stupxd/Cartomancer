@@ -24,8 +24,6 @@ SMODS.Atlas{
 --                   Mod config menu
 -- ========================================================
 
-local color = HEX('FFD700')
-
 local create_column_tabs,
       create_inline_slider,
       create_toggle_option,
@@ -65,8 +63,8 @@ SMODS.current_mod.config_tab = function()
         tab_definition_function = function (...)
             Cartomancer.LAST_OPEN_TAB = "deck_view"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_toggle_option('deck_view_stack_enabled', 'carto_deck_view_stack_enabled'),
                 create_toggle_option('deck_view_hide_drawn_cards', 'carto_deck_view_hide_drawn_cards'),
+                create_toggle_option('deck_view_stack_enabled', 'carto_deck_view_stack_enabled'),
                 create_inline_slider('deck_view_stack_background_opacity', 'carto_deck_view_stack_background_opacity'),
                 create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
                 create_inline_options('deck_view_stack_pos_vertical', 'carto_deck_view_stack_pos_vertical', 
@@ -229,16 +227,12 @@ create_column_tabs = function (args)
     }
 end
 
-local vertical = { "top", "center", "bottom" }
-
 G.FUNCS.cartomancer_deck_view_pos_vertical = function(args)
-    Cartomancer.SETTINGS.deck_view_stack_pos_vertical = vertical[args.to_key]
+    Cartomancer.SETTINGS.deck_view_stack_pos_vertical = args.to_val
 end
 
-local horizontal = { "left", "middle", "right" }
-
 G.FUNCS.cartomancer_deck_view_pos_horizontal = function(args)
-    Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = horizontal[args.to_key]
+    Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = args.to_val
 end
 
 G.FUNCS.cartomancer_settings_change_tab = function(e)

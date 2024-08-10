@@ -2,7 +2,7 @@ return {
     misc = {
         dictionary = {
             carto_compact_deck_enabled = "Limit cards in deck pile",
-            carto_compact_deck_visible_cards = "Visible cards amount ",
+            carto_compact_deck_visible_cards = "Cards limit ",
 
             carto_deck_view_stack_enabled = "Stack cards in deck view",
             carto_deck_view_hide_drawn_cards = "Hide drawn cards",
