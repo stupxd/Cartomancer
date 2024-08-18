@@ -13,6 +13,9 @@
 
 Cartomancer.SETTINGS = SMODS.current_mod.config
 
+-- Setting max intensity to this value disables limit.
+Cartomancer._INTERNAL_max_flames_intensity = 40
+
 SMODS.Atlas{
     key = "modicon",
     path = "modicon.png",
@@ -93,9 +96,10 @@ SMODS.current_mod.config_tab = function()
         tab_definition_function = function (...)
             Cartomancer.LAST_OPEN_TAB = "flames"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_toggle_option('flames_intensity_enabled', 'carto_flames_intensity_enabled'),
                 create_inline_slider('flames_intensity_min', 'carto_flames_intensity_min', {max_value = 20, decimal_places = 1}),
-                create_inline_slider('flames_intensity_max', 'carto_flames_intensity_max', {max_value = 30, decimal_places = 1}),
+                create_inline_slider('flames_intensity_max', 'carto_flames_intensity_max', {max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
+                create_toggle_option('flames_relative_intensity', 'carto_flames_relative_intensity'),
+                create_toggle_option('flames_slower_speed', 'carto_flames_slower_speed'),
                 create_inline_slider('flames_volume', 'carto_flames_volume'),
                 -- 
             }}
@@ -261,7 +265,7 @@ G.FUNCS.cartomancer_settings_change_tab = function(e)
 function create_UIBox_generic_options_custom(args)
     args = args or {}
 
-    return {n=G.UIT.ROOT, config = {align = "cl", minw = G.ROOM.T.w*0.6, padding = 0.1, r = 0.1, 
+    return {n=G.UIT.ROOT, config = {align = "cl", minw = G.ROOM.T.w*0.6, padding = 0.0, r = 0.1, 
                                     colour = args.bg_colour or {G.C.GREY[1], G.C.GREY[2], G.C.GREY[3],0.7}},
             nodes = {
               {n=G.UIT.C, config={align = "cl", padding = 0, minw = args.minw or 5, minh = args.minh or 3},

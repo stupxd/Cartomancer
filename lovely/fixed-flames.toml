@@ -10,7 +10,7 @@ target = "functions/button_callbacks.lua"
 position = "at"
 pattern = '''
 (?<value>math\.max\(0\., math\.log\(G\.ARGS\.score_intensity\.earned_score, 5\)-2\))'''
-payload = "Cartomancer.handle_flames_intensity($value)"
+payload = "Cartomancer.get_flames_intensity()"
 
 [[patches]]
 [patches.regex]
@@ -19,3 +19,12 @@ position = "at"
 pattern = '''
 (?<value>\(not G\.video_organ and G\.STATE == G\.STATES\.SPLASH\) and 0 or AC\[k\]\.vol and v\.volfunc\(AC\[k\]\.vol\) or 0)'''
 payload = "Cartomancer.handle_flames_volume($value)"
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''_F.timer = _F.timer + G.real_dt*(1 + _F.intensity*0.2)'''
+position = 'at'
+payload = '''
+_F.timer = Cartomancer.handle_flames_timer(_F.timer, _F.intensity)'''
+match_indent = true

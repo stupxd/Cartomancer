@@ -23,9 +23,10 @@ return {
 
             carto_draw_non_essential_shaders = "Draw non-essential shaders",
 
-            carto_flames_intensity_enabled = "Fixed flames intensity",
             carto_flames_intensity_min = "Min intensity ",
             carto_flames_intensity_max = "Max intensity ",
+            carto_flames_relative_intensity = "Relative score intensity",
+            carto_flames_slower_speed = "Slower flames on big scores",
             carto_flames_volume = "Flames volume ",
         }
     }

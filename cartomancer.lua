@@ -19,9 +19,11 @@ Cartomancer.SETTINGS = {
 
     draw_non_essential_shaders = false,
 
-    flames_intensity_enabled = true,
     flames_intensity_min = 0.5,
-    flames_intensity_max = 8,
+    -- Setting this to 40+ will disable limit
+    flames_intensity_max = 10,
+    flames_relative_intensity = false,
+    flames_slower_speed = false,
     flames_volume = 100,
 
 }
