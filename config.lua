@@ -23,7 +23,6 @@ return {
     flames_relative_intensity = false,
     flames_slower_speed = false,
     flames_volume = 100,
-
 }
 
 --[[

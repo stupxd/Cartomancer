@@ -63,7 +63,7 @@ for k, card in ipairs(self.cards) do
             card.T.x = card.T.x + card.shadow_parrallax.x/30
             card.states.visible = true
 
-            if k == display_limit then
+            if k >= display_limit then
                 fixedX = card.T.x
                 fixedY = card.T.y
                 fixedR = card.T.r

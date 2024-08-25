@@ -1,29 +1,15 @@
-Cartomancer = {}
+require 'cartomancer.init'
 
-Cartomancer.SETTINGS = {
-    compact_deck_enabled = true,
-    compact_deck_visible_cards = 100,
+Cartomancer.load_mod_file('internal/config.lua', 'config')
+Cartomancer.load_mod_file('internal/atlas.lua', 'atlas')
+Cartomancer.load_mod_file('internal/localization.lua', 'localization')
+Cartomancer.load_mod_file('internal/ui.lua', 'ui')
+Cartomancer.load_mod_file('core/view-deck.lua', 'view-deck')
+Cartomancer.load_mod_file('core/flames.lua', 'flames')
+Cartomancer.load_mod_file('core/shaders.lua', 'shaders')
+Cartomancer.load_mod_file('core/jokers.lua', 'jokers')
 
-    deck_view_stack_enabled = true,
-    -- [top center bottom]
-    deck_view_stack_pos_vertical = 't',
-    -- [left middle right]
-    deck_view_stack_pos_horizontal = 'm',
-    -- Hex color code for x (before amount)
-    deck_view_stack_x_color = 'ed7575',
-    -- Opacity in %
-    deck_view_stack_background_opacity = '60',
+Cartomancer.load_config()
 
-    deck_view_hide_drawn_cards = false,
-    -- todo: maybe custom shader for drawn cards to adjust opacity
+-- TODO : localization without steamodded 
 
-    draw_non_essential_shaders = false,
-
-    flames_intensity_min = 0.5,
-    -- Setting this to 40+ will disable limit
-    flames_intensity_max = 10,
-    flames_relative_intensity = false,
-    flames_slower_speed = false,
-    flames_volume = 100,
-
-}

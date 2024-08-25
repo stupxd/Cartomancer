@@ -1,7 +1,14 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = 1
+priority = 11
+
+
+[[patches]]
+[patches.module]
+source = "internal/init.lua"
+before = "main.lua"
+name = "cartomancer.init"
 
 # Add core functionality
 
@@ -11,8 +18,24 @@ target = "main.lua"
 position = "append"
 sources = [
     "cartomancer.lua",
-    "core/view-deck.lua",
-    "core/flames.lua",
-    "core/shaders.lua",
-#    "core/hidden-jokers.lua",
 ]
+
+
+# From steamodded for vertical tabs support.
+# Fix UIElement.config.chosen being overriden if choice=true is set
+# UIElement:click()
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+match_indent = true
+position = "after"
+pattern = "if self.config.choice then"
+payload = "    local chosen_temp = self.config.chosen"
+
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+match_indent = true
+position = "at"
+pattern = "self.config.chosen = true"
+payload = "self.config.chosen = chosen_temp or true"

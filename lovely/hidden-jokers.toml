@@ -4,25 +4,26 @@ dump_lua = true
 priority = 69
 
 
-# [[patches]] 
-# [patches.pattern]
-# target = "cardarea.lua"
-# pattern = "elwreltker"
-# position = "before"
-# payload = '''
-# '''
-# match_indent = true
-# 
-# [[patches]] 
-# [patches.regex]
-# target = "cardarea.lua"
-# pattern = '''
-# ekrtjeortje'''
-# position = "at"
-# payload = '''
-# '''
-# line_prepend = '$indent'
+[[patches]] 
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)"
+position = "at"
+payload = '''
+if not Cartomancer.disable_joker_sorting then
+    table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)
+end
+'''
+match_indent = true
 
+[[patches]] 
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "self.children.area_uibox:draw()"
+position = "after"
+payload = '''
+Cartomancer.add_visibility_controls()'''
+match_indent = true
 
 ## Temporary keybinds for testing until there's proper UI
 
@@ -32,16 +33,9 @@ target = 'engine/controller.lua'
 pattern = "if not _RELEASE_MODE then"
 position = "before"
 payload = '''
-if false and self.held_keys['lctrl'] then
+if self.held_keys['lctrl'] then
     if key == '1' then
-        Cartomancer.update_jokers_visibility()
-    elseif key == '2' then
-        Cartomancer.show_all_jokers() 
-    elseif key == '3' then
-    elseif key == '4' then
-        -- 
-    elseif key == '5' then
-        -- 
+        Cartomancer.hide_hovered_joker(self)
     end
 end
 '''
