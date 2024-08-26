@@ -34,3 +34,51 @@ match_indent = true
 position = "at"
 pattern = "self.config.chosen = true"
 payload = "self.config.chosen = chosen_temp or true"
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "before"
+pattern = '''local t = create_UIBox_generic_options({back_func = 'options',contents = {create_tabs('''
+payload = '''
+Cartomancer.add_settings_icon = function ()
+  if SMODS then return end
+
+  -- local icon = Sprite(0,0,0.6,0.6,G.ASSET_ATLAS["cart_modicon"], {x=0, y=0})
+  local icon = Sprite(0,0,0.6,0.6,G.ASSET_ATLAS["icons"], {x=0, y=0})
+  icon.states.drag.can = false
+
+  return {n = G.UIT.C, nodes = {
+    {n=G.UIT.R, config = {align = "cm", padding = 0.2}, nodes={
+          {n=G.UIT.C, config={align = "cm", padding = 0.1, r = 0.1, hover = true, colour = mix_colours(G.C.BLUE, G.C.GREY, 0.4), button = 'cartomancer_settings_menu', shadow = true}, nodes={
+            {n=G.UIT.O, config={object = icon}},
+          }},
+        }}
+  }}
+end
+
+local settings_icon = Cartomancer.add_settings_icon()
+if settings_icon then
+    tabs[#tabs+1] = {
+    button = settings_icon,
+    tab_definition_function = Cartomancer.config_menu,
+    tab_definition_function_args = ''
+  }
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "at"
+pattern = '''tab_buttons[#tab_buttons+1] = UIBox_button({id = 'tab_but_'..(v.label or ''), ref_table = v, button = 'change_tab', label = {v.label}, minh = 0.8*args.scale, minw = 2.5*args.scale, col = true, choice = true, scale = args.text_scale, chosen = v.chosen, func = v.func, focus_args = {type = 'none'}})'''
+payload = '''
+if v.button then
+  tab_buttons[#tab_buttons+1] = v.button
+else
+  tab_buttons[#tab_buttons+1] = UIBox_button({id = 'tab_but_'..(v.label or ''), ref_table = v, button = 'change_tab', label = {v.label}, minh = 0.8*args.scale, minw = 2.5*args.scale, col = true, choice = true, scale = args.text_scale, chosen = v.chosen, func = v.func, focus_args = {type = 'none'}})
+end
+'''
