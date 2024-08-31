@@ -2,6 +2,8 @@ Cartomancer = {}
 
 Cartomancer.SETTINGS = {}
 
+Cartomancer.INTERNAL_debugging = true
+
 Cartomancer.find_self = function (target_filename)
     local mods_path = SMODS and SMODS.MODS_DIR or 'Mods'
 
@@ -38,6 +40,14 @@ Cartomancer.load_mod_file = function (path, name)
     end
 
     return load(file, "Cartomancer/"..name)()
+end
+
+Cartomancer.log = function (msg)
+    if Cartomancer.INTERNAL_debugging then
+        local msg = type(msg) == "string" and msg or Cartomancer.dump(msg)
+
+        print("[Cartomancer] "..msg)
+    end
 end
 
 

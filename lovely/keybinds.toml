@@ -1,0 +1,35 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+
+[[patches]]
+[patches.pattern]
+target = 'engine/controller.lua'
+pattern = "function Controller:key_press_update(key, dt)"
+position = "after"
+payload = '''
+    if key == "escape" and Cartomancer.INTERNAL_in_config then
+        Cartomancer.INTERNAL_in_config = false
+        if not SMODS then
+            Cartomancer.save_config()
+        end
+    end
+'''
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = 'engine/controller.lua'
+pattern = "if not _RELEASE_MODE then"
+position = "before"
+payload = '''
+if self.held_keys['lctrl'] then
+    if key == '1' then
+        Cartomancer.hide_hovered_joker(self)
+    end
+end
+'''
+match_indent = true

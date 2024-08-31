@@ -29,7 +29,7 @@ return {
             carto_flames_slower_speed = "Slower flames on big scores",
             carto_flames_volume = "Flames volume ",
             
-            carto_jokers_visibility_buttons = "Show jokers visibility buttons WIP",
+            carto_jokers_visibility_buttons = "WIP | Show jokers visibility buttons",
             carto_jokers_hide = "Hide",
             carto_jokers_show = "Show",
         }

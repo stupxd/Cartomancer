@@ -1,6 +1,4 @@
 
--- TODO : save settings
-
 -- Setting max intensity to this value disables limit.
 Cartomancer._INTERNAL_max_flames_intensity = 40
 
@@ -28,13 +26,15 @@ local function is_chosen(tab)
   return Cartomancer.LAST_OPEN_TAB == tab
 end
 
-Cartomancer.config_tab = function()
+local tab_config = {r = 0.1, align = "t", padding = 0.0, colour = G.C.CLEAR, minw = 8.5, minh = 6}
 
+Cartomancer.config_tab = function()
+    Cartomancer.INTERNAL_in_config = true
+    Cartomancer.log "Opened cartomancer config"
     local vertical_tabs = {}
 
     Cartomancer.LAST_OPEN_TAB = "compact_deck"
 
-    local tab_config = {r = 0.1, align = "t", padding = 0.0, colour = G.C.CLEAR, minw = 8.5, minh = 6}
 
     table.insert(vertical_tabs, {
         label = "Compact deck",
@@ -85,7 +85,7 @@ Cartomancer.config_tab = function()
         tab_definition_function = function (...)
             Cartomancer.LAST_OPEN_TAB = "flames"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_inline_slider('flames_intensity_min', 'carto_flames_intensity_min', {max_value = 20, decimal_places = 1}),
+                create_inline_slider('flames_intensity_min', 'carto_flames_intensity_min', {max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
                 create_inline_slider('flames_intensity_max', 'carto_flames_intensity_max', {max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
                 create_toggle_option('flames_relative_intensity', 'carto_flames_relative_intensity'),
                 create_toggle_option('flames_slower_speed', 'carto_flames_slower_speed'),
@@ -134,7 +134,7 @@ Cartomancer.jokers_visibility_menu = function ()
     
     Cartomancer.LAST_OPEN_TAB = "jokers"
 
-    return {n = G.UIT.ROOT, config = {r = 0.1, align = "cm", padding = 0.0, colour = G.C.GREY, minw = 6.5, minh = 4}, nodes = {
+    return {n = G.UIT.ROOT, config = tab_config, nodes = {
         create_toggle_option('jokers_visibility_buttons', 'carto_jokers_visibility_buttons'),
     }}
 end
@@ -274,15 +274,11 @@ end
 
 Cartomancer.add_settings_icon = function ()
     if SMODS then return end
-    local icon = Sprite(0,0,0.6,0.6,G.ASSET_ATLAS["cart_modicon"], {x=0, y=0})
+    local icon = Sprite(0,0,0.75,0.75,G.ASSET_ATLAS["cart_modicon"], {x=0, y=0})
     icon.states.drag.can = false
-    return {n = G.UIT.C, nodes = {
-          {n=G.UIT.R, config = {align = "cm", padding = 0.05}, nodes={
-            {n=G.UIT.C, config={align = "cm", padding = 0.15, r = 0.1, hover = true, colour = mix_colours(G.C.BLUE, G.C.GREY, 0.4), button = 'change_tab', shadow = true}, nodes={
-              {n=G.UIT.O, config={object = icon}},
-            }},
-          }}
-        }}
+    return {n=G.UIT.C, config={align = "cm", padding = 0.05, r = 0.1, button = 'change_tab'}, nodes={
+        {n=G.UIT.O, config={object = icon}},
+      }}
 end
 
 

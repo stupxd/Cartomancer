@@ -24,12 +24,15 @@ Cartomancer.dump = function (o, level, prefix)
 end
 
 Cartomancer.save_config = function ()
+    Cartomancer.log "Saving cartomancer config..."
     love.filesystem.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
 end
 
 
 Cartomancer.load_config = function ()
+    Cartomancer.log "Starting to load config"
     if not love.filesystem.getInfo('config') then
+        Cartomancer.log("Creating config folder...")
         love.filesystem.createDirectory('config')
     end
 
@@ -39,18 +42,29 @@ Cartomancer.load_config = function ()
     local latest_default_config = Cartomancer.load_mod_file('config.lua', 'default-config')
 
     if config_file then
+        Cartomancer.log "Reading config file: "
+        Cartomancer.log(config_file)
         Cartomancer.SETTINGS = load(config_file)()
     else
+        Cartomancer.log "Creating default settings"
         Cartomancer.SETTINGS = latest_default_config
         Cartomancer.save_config()
     end
 
     -- Remove unused settings
-    local to_remove = {}
-
     for k, v in pairs(Cartomancer.SETTINGS) do
-        if not latest_default_config[k] then
+        if latest_default_config[k] == nil then
+            Cartomancer.log("Removing setting `"..k.. "` because it is not in default config")
             Cartomancer.SETTINGS[k] = nil
         end
     end
+end
+
+local cart_options_ref = G.FUNCS.options
+G.FUNCS.options = function(e)
+    if Cartomancer.INTERNAL_in_config then
+        Cartomancer.INTERNAL_in_config = false
+        Cartomancer.save_config()
+    end
+    return cart_options_ref(e)
 end

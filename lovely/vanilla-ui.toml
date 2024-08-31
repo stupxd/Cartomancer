@@ -24,6 +24,7 @@ payload = '''
 local settings_icon = Cartomancer.add_settings_icon()
 if settings_icon then
     tabs[#tabs+1] = {
+    colour = G.C.MONEY,
     custom_button = {settings_icon},
     tab_definition_function = Cartomancer.config_tab,
     tab_definition_function_args = ''
@@ -39,7 +40,17 @@ match_indent = true
 position = "at"
 pattern = '''but_UI_label'''
 payload = '''
-args.ref_table and args.ref_table.custom_button or but_UI_label'''
+args.ref_table and args.ref_table.custom_button or but_UI_label -- Cartomancer'''
+
+# Use custom color
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "at"
+pattern = '''colour = args.colour,'''
+payload = '''
+colour = args.ref_table and args.ref_table.colour or args.colour, -- Cartomancer'''
 
 
 # From steamodded for vertical tabs support.

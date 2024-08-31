@@ -24,19 +24,3 @@ position = "after"
 payload = '''
 Cartomancer.add_visibility_controls()'''
 match_indent = true
-
-## Temporary keybinds for testing until there's proper UI
-
-[[patches]]
-[patches.pattern]
-target = 'engine/controller.lua'
-pattern = "if not _RELEASE_MODE then"
-position = "before"
-payload = '''
-if self.held_keys['lctrl'] then
-    if key == '1' then
-        Cartomancer.hide_hovered_joker(self)
-    end
-end
-'''
-match_indent = true

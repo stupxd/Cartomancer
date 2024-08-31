@@ -1,7 +1,5 @@
 -- TODO : popup below joker to hide it
 
--- TODO : 
-
 local JOKER_RARITY = {
     'common',
     'uncommon',
@@ -133,11 +131,11 @@ function Cartomancer.update_jokers_visibility()
                 hide = true
 
             elseif settings.rarities[JOKER_RARITY[joker.config.center.rarity]] then
-                print("hiding joker with rarity " .. JOKER_RARITY[joker.config.center.rarity])
+                Cartomancer.log("hiding joker with rarity " .. JOKER_RARITY[joker.config.center.rarity])
                 hide = true
             
             elseif joker.edition and settings.editions[next(joker.edition)] then
-                print("hiding joker with edition " .. next(joker.edition))
+                Cartomancer.log("hiding joker with edition " .. next(joker.edition))
                 hide = true
             end
 
@@ -164,7 +162,7 @@ end
 
 function Cartomancer.show_all_jokers()
     if not G.jokers then
-        print("no jokers")
+        Cartomancer.log("no jokers")
         return
     end
 
