@@ -2,7 +2,7 @@ Cartomancer = {}
 
 Cartomancer.SETTINGS = {}
 
-Cartomancer.INTERNAL_debugging = true
+Cartomancer.INTERNAL_debugging = false
 
 Cartomancer.find_self = function (target_filename)
     local mods_path = SMODS and SMODS.MODS_DIR or 'Mods'
