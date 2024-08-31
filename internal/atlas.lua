@@ -3,8 +3,8 @@ local function asset_path(filename)
 end
 
 local assets = {
-    {name = 'cartomancer_modicon', path = asset_path('modicon.png'), px = 32, py = 32},
-    {name = 'cartomancer_settings', path = asset_path('settings.png'), px = 80, py = 80},
+    {name = 'cart_modicon', path = asset_path('modicon.png'), px = 32, py = 32},
+    {name = 'cart_settings', path = asset_path('settings.png'), px = 80, py = 80},
 }
 
 local game_set_render_settings = Game.set_render_settings

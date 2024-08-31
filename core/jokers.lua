@@ -14,32 +14,39 @@ function Cartomancer.add_visibility_controls()
         return
     end
 
+    if not Cartomancer.SETTINGS.jokers_visibility_buttons then
+        return
+    end
+
     if not G.jokers.children.cartomancer_controls then
-        local settings = Sprite(0,0,0.425,0.425,G.ASSET_ATLAS["cartomancer_settings"], {x=0, y=0})
+        local settings = Sprite(0,0,0.425,0.425,G.ASSET_ATLAS["cart_settings"], {x=0, y=0})
         settings.states.drag.can = false
 
         G.jokers.children.cartomancer_controls = UIBox {
             definition = {
                 n = G.UIT.ROOT,
+                func = function ()
+                    return Cartomancer.SETTINGS.jokers_visibility_buttons
+                end,
                 config = { align = 'cm', padding = 0.07, colour = G.C.CLEAR, },
                 nodes = {
                     {n=G.UIT.R, config={align = 'tm', padding = 0.07, no_fill = true}, nodes={
                         {n=G.UIT.C, config={align = "cm"}, nodes={
-                            UIBox_button({id = 'hide_all_jokers', button = 'cartomancer_hide_all_jokers', label = {'Hide'},
+                            UIBox_button({id = 'hide_all_jokers', button = 'cartomancer_hide_all_jokers', label ={localize('carto_jokers_hide')},
                                                                       minh = 0.45, minw = 1, col = false, scale = 0.3,
                                                                       colour = G.C.CHIPS,
                                                                       })
                         }},
                         {n=G.UIT.C, config={align = "cm"}, nodes={
-                            UIBox_button({id = 'show_all_jokers', button = 'cartomancer_show_all_jokers', label = {'Show'},
+                            UIBox_button({id = 'show_all_jokers', button = 'cartomancer_show_all_jokers', label = {localize('carto_jokers_show')},
                                                                       minh = 0.45, minw = 1, col = false, scale = 0.3,
                                                                       })
                         }},
-                        {n=G.UIT.C, config={align = "cm"}, nodes={
+                        Cartomancer.INTERNAL_jokers_menu and {n=G.UIT.C, config={align = "cm"}, nodes={
                             {n=G.UIT.C, config={align = "cm", padding = 0.01, r = 0.1, hover = true, colour = G.C.BLUE, button = 'cartomancer_joker_visibility_settings', shadow = true}, nodes={
                                 {n=G.UIT.O, config={object = settings}},
                               }},
-                        }},
+                        }} or nil,
                     }}
                 }
             },
@@ -51,14 +58,6 @@ function Cartomancer.add_visibility_controls()
             },
         }
     end
-
-    --[[
-    
-        language = 
-        language
-    
-          
-    ]]
 
     G.jokers.children.cartomancer_controls:draw()
 end
@@ -74,7 +73,7 @@ end
 G.FUNCS.cartomancer_joker_visibility_settings = function(e)
 
     G.CARTO_JOKER_VISIBILITY = UIBox{
-        definition = Cartomancer.jokers_visibility_menu,
+        definition = Cartomancer.jokers_visibility_standalone_menu(),
         config = {align="cm", offset = {x=0,y=10},major = G.ROOM_ATTACH, bond = 'Weak', instance_type = "POPUP"}
     }
     G.CARTO_JOKER_VISIBILITY.alignment.offset.y = 0

@@ -28,6 +28,10 @@ return {
             carto_flames_relative_intensity = "Relative score intensity",
             carto_flames_slower_speed = "Slower flames on big scores",
             carto_flames_volume = "Flames volume ",
+            
+            carto_jokers_visibility_buttons = "Show jokers visibility buttons WIP",
+            carto_jokers_hide = "Hide",
+            carto_jokers_show = "Show",
         }
     }
 }

@@ -11,7 +11,6 @@ before = "main.lua"
 name = "cartomancer.init"
 
 # Add core functionality
-
 [[patches]]
 [patches.copy]
 target = "main.lua"
@@ -19,23 +18,3 @@ position = "append"
 sources = [
     "cartomancer.lua",
 ]
-
-
-# From steamodded for vertical tabs support.
-# Fix UIElement.config.chosen being overriden if choice=true is set
-# UIElement:click()
-[[patches]]
-[patches.pattern]
-target = "engine/ui.lua"
-match_indent = true
-position = "after"
-pattern = "if self.config.choice then"
-payload = "    local chosen_temp = self.config.chosen"
-
-[[patches]]
-[patches.pattern]
-target = "engine/ui.lua"
-match_indent = true
-position = "at"
-pattern = "self.config.chosen = true"
-payload = "self.config.chosen = chosen_temp or true"

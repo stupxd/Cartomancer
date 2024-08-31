@@ -4,7 +4,7 @@ dump_lua = true
 priority = 69
 
 
-[[patches]] 
+[[patches]]
 [patches.regex]
 target = "functions/button_callbacks.lua"
 position = "at"

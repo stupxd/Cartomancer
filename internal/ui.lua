@@ -123,16 +123,21 @@ Cartomancer.config_tab = function()
     })
 end
 
+Cartomancer.jokers_visibility_standalone_menu = function ()
+    return {n = G.UIT.C, config = {r = 0.1, align = "cm", padding = 0.0, colour = G.C.BLUE, minw = 8.5, minh = 6}, nodes = {
+        Cartomancer.jokers_visibility_menu(),
+        
+    }}
+end
 
 Cartomancer.jokers_visibility_menu = function ()
     
     Cartomancer.LAST_OPEN_TAB = "jokers"
 
-
-
-    return
+    return {n = G.UIT.ROOT, config = {r = 0.1, align = "cm", padding = 0.0, colour = G.C.GREY, minw = 6.5, minh = 4}, nodes = {
+        create_toggle_option('jokers_visibility_buttons', 'carto_jokers_visibility_buttons'),
+    }}
 end
-
 
 
 create_inline_slider = function (ref_value, localization, args)
@@ -267,6 +272,18 @@ G.FUNCS.cartomancer_settings_change_tab = function(e)
 
 end
 
+Cartomancer.add_settings_icon = function ()
+    if SMODS then return end
+    local icon = Sprite(0,0,0.6,0.6,G.ASSET_ATLAS["cart_modicon"], {x=0, y=0})
+    icon.states.drag.can = false
+    return {n = G.UIT.C, nodes = {
+          {n=G.UIT.R, config = {align = "cm", padding = 0.05}, nodes={
+            {n=G.UIT.C, config={align = "cm", padding = 0.15, r = 0.1, hover = true, colour = mix_colours(G.C.BLUE, G.C.GREY, 0.4), button = 'change_tab', shadow = true}, nodes={
+              {n=G.UIT.O, config={object = icon}},
+            }},
+          }}
+        }}
+end
 
 
 --[=[

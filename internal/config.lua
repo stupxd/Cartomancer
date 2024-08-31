@@ -24,7 +24,7 @@ Cartomancer.dump = function (o, level, prefix)
 end
 
 Cartomancer.save_config = function ()
-    love.filesystem.write('config/cartomancer.jkr', "--cartomancer hello\n\nreturn " .. Cartomancer.dump(Cartomancer.SETTINGS))
+    love.filesystem.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
 end
 
 

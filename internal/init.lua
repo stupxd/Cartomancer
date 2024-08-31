@@ -3,7 +3,9 @@ Cartomancer = {}
 Cartomancer.SETTINGS = {}
 
 Cartomancer.find_self = function (target_filename)
-	local mod_folders = love.filesystem.getDirectoryItems('Mods')
+    local mods_path = SMODS and SMODS.MODS_DIR or 'Mods'
+
+	local mod_folders = love.filesystem.getDirectoryItems(mods_path)
     for _, folder in pairs(mod_folders) do
         local path = string.format('Mods/%s', folder)
         local files = love.filesystem.getDirectoryItems(path)

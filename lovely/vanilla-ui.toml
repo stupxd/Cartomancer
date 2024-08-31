@@ -1,0 +1,62 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+
+# Localization
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "boot_timer('prep stage', 'splash prep',1)"
+position = "before"
+payload = "Cartomancer.load_mod_file('internal/localization.lua', 'localization')"
+match_indent = true
+
+# Add tab button to settings menu
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "before"
+pattern = '''local t = create_UIBox_generic_options({back_func = 'options',contents = {create_tabs('''
+payload = '''
+local settings_icon = Cartomancer.add_settings_icon()
+if settings_icon then
+    tabs[#tabs+1] = {
+    custom_button = {settings_icon},
+    tab_definition_function = Cartomancer.config_tab,
+    tab_definition_function_args = ''
+  }
+end
+'''
+
+# Use custom button
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "at"
+pattern = '''but_UI_label'''
+payload = '''
+args.ref_table and args.ref_table.custom_button or but_UI_label'''
+
+
+# From steamodded for vertical tabs support.
+# Fix UIElement.config.chosen being overriden if choice=true is set
+# UIElement:click()
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+match_indent = true
+position = "after"
+pattern = "if self.config.choice then"
+payload = "    local chosen_temp = self.config.chosen"
+
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+match_indent = true
+position = "at"
+pattern = "self.config.chosen = true"
+payload = "self.config.chosen = chosen_temp or true"
