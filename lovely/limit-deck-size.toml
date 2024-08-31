@@ -17,6 +17,19 @@ end'''
 match_indent = true
 overwrite = false
 
+# Fix drawing specific card staying invisible
+[[patches]] 
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "local stay_flipped = G.GAME and G.GAME.blind and G.GAME.blind:stay_flipped(to, card)"
+position = "before"
+payload = '''
+if card and to == G.hand and not card.states.visible then
+    card.states.visible = true
+end'''
+match_indent = true
+overwrite = false
+
 # Replace drawing deck pile
 
 [[patches]] 
