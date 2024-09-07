@@ -3,19 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 69
 
-
-[[patches]] 
-[patches.pattern]
-target = "cardarea.lua"
-pattern = "table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)"
-position = "at"
-payload = '''
-if not Cartomancer.disable_joker_sorting then
-    table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)
-end
-'''
-match_indent = true
-
 [[patches]] 
 [patches.pattern]
 target = "cardarea.lua"

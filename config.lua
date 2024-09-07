@@ -4,6 +4,7 @@ return {
     compact_deck_visible_cards = 100,
 
     deck_view_stack_enabled = true,
+    deck_view_stack_modifiers = false,
     -- [top center bottom]
     deck_view_stack_pos_vertical = 't',
     -- [left middle right]

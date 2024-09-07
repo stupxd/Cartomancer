@@ -1,5 +1,14 @@
 
 function Card:to_string()
+    if Cartomancer.SETTINGS.deck_view_stack_modifiers then
+        return string.format(
+            "%s%s",
+            self.base and self.base.suit or '',
+            self.base and self.base.value or '',
+            self.greyed and 'Greyed' or ''
+        )
+    end
+
     return string.format(
         "%s%s%s%s%s%s%s%s%s%s",
         self.base and self.base.suit or '',

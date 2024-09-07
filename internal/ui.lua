@@ -5,6 +5,7 @@ Cartomancer._INTERNAL_max_flames_intensity = 40
 local create_column_tabs,
       create_inline_slider,
       create_toggle_option,
+      create_text_line,
       create_input_option,
       create_inline_options,
       create_option_cycle_custom
@@ -57,12 +58,22 @@ Cartomancer.config_tab = function()
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option('deck_view_hide_drawn_cards', 'carto_deck_view_hide_drawn_cards'),
                 create_toggle_option('deck_view_stack_enabled', 'carto_deck_view_stack_enabled'),
+                create_toggle_option('deck_view_stack_modifiers', 'carto_deck_view_stack_modifiers'),
+                --create_toggle_option('deck_view_stack_suits', 'carto_deck_view_stack_suits'),
                 create_inline_slider('deck_view_stack_background_opacity', 'carto_deck_view_stack_background_opacity'),
                 create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
-                create_option_cycle_custom('deck_view_stack_pos_vertical', 'carto_deck_view_stack_pos_vertical',
-                                       'cartomancer_deck_view_pos_vertical', 'carto_deck_view_stack_pos_vertical_options'),
-                create_option_cycle_custom('deck_view_stack_pos_horizontal', 'carto_deck_view_stack_pos_horizontal',
-                                       'cartomancer_deck_view_pos_horizontal', 'carto_deck_view_stack_pos_horizontal_options'),
+
+                -- inline this
+                {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
+                    {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
+                        create_option_cycle_custom('deck_view_stack_pos_vertical', 'carto_deck_view_stack_pos_vertical',
+                        'cartomancer_deck_view_pos_vertical', 'carto_deck_view_stack_pos_vertical_options'),
+                    }},
+                    {n = G.UIT.C, config = {align = "r", padding = 0}, nodes = {
+                        create_option_cycle_custom('deck_view_stack_pos_horizontal', 'carto_deck_view_stack_pos_horizontal',
+                                            'cartomancer_deck_view_pos_horizontal', 'carto_deck_view_stack_pos_horizontal_options'),
+                    }},
+                }}
             }}
         end
     })
@@ -136,6 +147,7 @@ Cartomancer.jokers_visibility_menu = function ()
 
     return {n = G.UIT.ROOT, config = tab_config, nodes = {
         create_toggle_option('jokers_visibility_buttons', 'carto_jokers_visibility_buttons'),
+        create_text_line{ loc = 'carto_jokers_hide_keybind' },
     }}
 end
 
@@ -143,7 +155,7 @@ end
 create_inline_slider = function (ref_value, localization, args)
     local args = args or {}
 
-    local slider = create_slider({label = localize(localization), label_scale = 0.36, w = 3, h = 0.3, 
+    local slider = create_slider({label = localize(localization), label_scale = 0.36, w = 3, h = 0.3, padding = -0.05, 
                                   ref_table = Cartomancer.SETTINGS, ref_value = ref_value, min = 0, max = args.max_value or 100,
                                   decimal_places = args.decimal_places})
 
@@ -176,13 +188,14 @@ create_option_cycle_custom = function (ref_value, localization, change_function,
 
     cycle.config.padding = 0
 
-    return {n = G.UIT.R, config = {align = "cl", padding = 0}, w = 0.4, colour = G.C.CHIPS, nodes = { 
+    return
+    {n = G.UIT.R, config = {align = "cl", padding = 0.05}, w = 0.4, colour = G.C.CHIPS, nodes = { 
         cycle
     }}
 end
 
 create_toggle_option = function (ref_value, localization)
-    return {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+    return {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
         {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
             { n = G.UIT.T, config = { text = localize(localization), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
         }},
@@ -193,9 +206,15 @@ create_toggle_option = function (ref_value, localization)
 end
 
 create_input_option = function (ref_value, localization, max_length)
-    return { n = G.UIT.R, config = {align = "cl", minw = 4, minh = 0.5, colour = G.C.CLEAR}, nodes = {
+    return { n = G.UIT.R, config = {align = "cl", minw = 4, minh = 0.5, colour = G.C.CLEAR, padding = 0.05}, nodes = {
             { n = G.UIT.T, config = {text = localize(localization), scale = .36, minw = 4, minh = 0.5, colour = G.C.WHITE} },
             create_text_input({ id = 'Input:'..ref_value, w = 2, max_length = max_length or 3, prompt_text = tostring(Cartomancer.SETTINGS[ref_value]), ref_table = Cartomancer.SETTINGS, ref_value = ref_value})
+    }}
+end
+
+create_text_line = function(args)
+    return { n = G.UIT.R, config = {align = "cl", minw = 4, minh = 0.5, padding = 0.05, colour = G.C.CLEAR}, nodes = {
+            { n = G.UIT.T, config = {text = localize(args.loc), scale = .36, minw = 4, minh = 0.5, colour = G.C.WHITE} },
     }}
 end
 
