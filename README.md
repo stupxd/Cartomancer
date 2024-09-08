@@ -28,7 +28,7 @@
 
 Settings for this mod can be found under `Mods` tab, if you use Steamodded 1.0.0 - find `Cartomancer`, and open `Config` tab.
 
-If you play vanilla, go to `Settings` and click lil' Cartomancer icon.
+If you play vanilla, go to `Settings` and open ![cartomancer](assets/1x/modicon.png) tab.
 
 ## Credits
 
