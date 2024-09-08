@@ -292,7 +292,7 @@ G.FUNCS.cartomancer_settings_change_tab = function(e)
 end
 
 Cartomancer.add_settings_icon = function ()
-    if SMODS then return end
+    if Cartomancer.use_smods() then return end
     local icon = Sprite(0,0,0.75,0.75,G.ASSET_ATLAS["cart_modicon"], {x=0, y=0})
     icon.states.drag.can = false
     return {n=G.UIT.C, config={align = "cm", padding = 0.05, r = 0.1, button = 'change_tab'}, nodes={

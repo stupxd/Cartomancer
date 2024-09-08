@@ -22,6 +22,7 @@ return {
                 "middle",
                 "right"
             },
+            carto_deck_view_unique_cards = "Unique cards:",
 
             carto_draw_non_essential_shaders = "Draw non-essential shaders",
 

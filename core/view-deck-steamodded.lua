@@ -11,7 +11,7 @@ for k, v in ipairs(G.playing_cards) do
   if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
     greyed = true
   end
-  local card_string = v:to_string()
+  local card_string = v:cart_to_string()
   if greyed then
     card_string = card_string .. "Greyed" -- for some reason format doesn't work and final string is `sGreyed`
   end
@@ -84,7 +84,14 @@ for i = 1%, %#SUITS_SORTED%[suit_map%[j%]%] do
   card:hard_set_T%(%)
   view_deck:emplace%(card%)
 end]]
-    }
+    },
+    
+    {
+      find = '			modded and {n = G.UIT.R, config = {align = "cm"}, nodes = {',
+      place = [=[
+      not unplayed_only and Cartomancer.add_unique_count() or nil,
+			modded and {n = G.UIT.R, config = {align = "cm"}, nodes = {]=]
+  },
 
 }
 

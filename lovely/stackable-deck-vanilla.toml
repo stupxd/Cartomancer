@@ -19,7 +19,7 @@ local greyed
 if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
   greyed = true
 end
-local card_string = v:to_string()
+local card_string = v:cart_to_string()
 if greyed then
     card_string = card_string .. "Greyed"
 end
@@ -67,6 +67,14 @@ target = "functions/UI_definitions.lua"
 pattern = "{card_limit = #SUITS[suit_map[j]], type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})"
 position = "at"
 payload = "{card_limit = #SUITS_SORTED[suit_map[j]], type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})"
+match_indent = true
+
+[[patches]] 
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''modded and {n=G.UIT.R, config={align = "cm"}, nodes={'''
+position = "before"
+payload = "not unplayed_only and Cartomancer.add_unique_count() or nil,"
 match_indent = true
 
 # Overwrite cards copy and display code

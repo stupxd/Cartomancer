@@ -1,4 +1,4 @@
-if SMODS then return end
+if Cartomancer.use_smods() then return end
 
 -- Vanilla will only support default loc cuz yes.
 local loc_table = Cartomancer.load_mod_file('localization/default.lua', 'localization')

@@ -2,10 +2,14 @@ Cartomancer = {}
 
 Cartomancer.SETTINGS = {}
 
+Cartomancer.use_smods = function ()
+    return SMODS and not (MODDED_VERSION == "0.9.8-STEAMODDED")
+end
+
 Cartomancer.INTERNAL_debugging = false
 
 Cartomancer.find_self = function (target_filename)
-    local mods_path = SMODS and SMODS.MODS_DIR or 'Mods'
+    local mods_path = Cartomancer.use_smods() and SMODS.MODS_DIR or 'Mods'
 
 	local mod_folders = love.filesystem.getDirectoryItems(mods_path)
     for _, folder in pairs(mod_folders) do
