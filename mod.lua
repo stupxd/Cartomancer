@@ -11,6 +11,10 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
+if not SMODS.current_mod then
+    return
+end
+
 SMODS.current_mod.config_tab = Cartomancer.config_tab
 SMODS.current_mod.save_mod_config = Cartomancer.save_config
 

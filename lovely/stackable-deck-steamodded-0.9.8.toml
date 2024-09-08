@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+# Add unique count
+
+[[patches]] 
+[patches.pattern]
+target = "main.lua"
+match_indent = true
+pattern = "modded and {"
+position = "before"
+payload = '''
+not unplayed_only and Cartomancer.add_unique_count() or nil, -- Cartomancer Steamodded 0.9.8 compatibility'''

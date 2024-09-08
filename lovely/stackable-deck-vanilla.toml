@@ -69,6 +69,8 @@ position = "at"
 payload = "{card_limit = #SUITS_SORTED[suit_map[j]], type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})"
 match_indent = true
 
+# Add unique count
+
 [[patches]] 
 [patches.pattern]
 target = "functions/UI_definitions.lua"
