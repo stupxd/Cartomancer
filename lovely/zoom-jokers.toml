@@ -1,0 +1,55 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+[[patches]] 
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.config.type == 'joker' or self.config.type == 'title_2' then"
+position = "at"
+payload = '''
+if false and self == G.jokers and Cartomancer.SETTINGS.jokers_expanded then
+    Cartomancer.expand_G_jokers()
+elseif self.config.type == 'joker' or self.config.type == 'title_2' then'''
+match_indent = true
+
+[[patches]] 
+[patches.pattern]
+target = "card.lua"
+pattern = "if not self.states.visible then return end"
+position = "after"
+payload = '''
+if self.VT.x < -3 or self.VT.x > G.TILE_W + 2.5 then return end'''
+match_indent = true
+
+[[patches]] 
+[patches.regex]
+target = "functions/UI_definitions.lua"
+pattern = '''
+(?<content>\{n=G\.UIT\.C\, config=\{align = "cm"\, minh = args\.h\,r = 0\.1\, minw = 0\.8\, colour = args\.colour\,shadow = true\}\, nodes=\{
+[\t ]*\{n=G\.UIT\.T\, config=\{ref_table = args\, ref_value = 'text'\, scale = args\.text_scale\, colour = G\.C\.UI\.TEXT_LIGHT\, decimal_places = args\.decimal_places\}\}
+[\t ]*\}\})\,'''
+position = "at"
+payload = '''
+not args.hide_val and $content or nil'''
+match_indent = true
+
+
+[[patches]]
+[patches.regex]
+target = 'functions/state_events.lua'
+pattern = '''
+(?<indent>[\t ]*)for i=1, #G\.jokers\.cards do
+[\t ]*--calculate the joker after hand played effects
+[\t ]*local effects = eval_card\(G\.jokers\.cards\[i\], \{cardarea = G\.jokers, full_hand = G\.play\.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, after = true\}\)
+[\t ]*if effects\.jokers then
+[\t ]*card_eval_status_text\(G\.jokers\.cards\[i\], 'jokers', nil, percent, nil, effects\.jokers\)
+[\t ]*percent = percent \+ percent_delta
+[\t ]*end
+[\t ]*end'''
+position = 'after'
+line_prepend = '$indent'
+payload = '''
+-- waddup
+'''
