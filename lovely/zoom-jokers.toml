@@ -9,7 +9,7 @@ target = "cardarea.lua"
 pattern = "if self.config.type == 'joker' or self.config.type == 'title_2' then"
 position = "at"
 payload = '''
-if false and self == G.jokers and Cartomancer.SETTINGS.jokers_expanded then
+if self == G.jokers and G.jokers.cart_jokers_expanded then
     Cartomancer.expand_G_jokers()
 elseif self.config.type == 'joker' or self.config.type == 'title_2' then'''
 match_indent = true

@@ -13,7 +13,7 @@ Cartomancer.dump = function (o, level, prefix)
             end
             s = s .. string.format(format, prefix, k, Cartomancer.dump(v, level + 1, prefix..'  '))
         end
-        return s .. '}'
+        return s ..prefix:sub(3)..'}'
     else
         if type(o) == "string" then
             return string.format('"%s"', o)

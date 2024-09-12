@@ -1,32 +1,7 @@
 -- EXPAND JOKERS CARDAREA
 
-local cached_G_jokers_T_x
-
--- TODO : instead of changing actual T.x and T.w, use custom T.x and T.w in Cartomancer.expand_G_jokers() for CardArea:align_cards
-
-local cardarea_align_cards = CardArea.align_cards
-function CardArea:align_cards()
-
-    if self == G.jokers and G.jokers.cart_jokers_expanded then
-        if not cached_G_jokers_T_x then
-            cached_G_jokers_T_x = self.T.x
-        end
-        G.jokers.cart_zoom_slider = G.jokers.cart_zoom_slider or 0
-        self.T.x = cached_G_jokers_T_x - self.T.w * G.jokers.cart_zoom_slider / 100
-    end
-
-    return cardarea_align_cards(self)
-end
 
 function Cartomancer.align_G_jokers()
-    if G.jokers.cart_jokers_expanded then
-        G.jokers.T.w = math.max(4.9*G.CARD_W, 0.9*#G.jokers.cards * G.CARD_W)
-        G.jokers.T.y = G.play.T.y - 1.8
-    else
-        G.jokers.T.y = 0
-        G.jokers.T.w = 4.9*G.CARD_W
-    end
-
     -- Refresh controls
     G.jokers.children.cartomancer_controls:remove()
     G.jokers.children.cartomancer_controls = nil
@@ -34,23 +9,43 @@ function Cartomancer.align_G_jokers()
     G.jokers:hard_set_cards()
 
     Cartomancer.add_visibility_controls()
-
 end
+
+local old_slider_value = 0
 
 -- TODO : mod compat
 --  current patch completely overrides logic
+
 function Cartomancer.expand_G_jokers()
+    G.jokers.cart_zoom_slider = G.jokers.cart_zoom_slider or 0
+
+    local self_T_w = math.max(4.9*G.CARD_W, 0.6*#G.jokers.cards * G.CARD_W)
+    local self_T_x = G.jokers.T.x - self_T_w * G.jokers.cart_zoom_slider / 100
+
+    local self = G.jokers
+
     for k, card in ipairs(self.cards) do
-        if not card.states.drag.is then 
+        if card.states.drag.is then
+            local sign = nil
+            if card.T.x < -1 then
+                sign = -1
+            elseif card.T.x > G.TILE_W then
+                sign = 1
+            end
+
+            if sign then
+                G.jokers.cart_zoom_slider = math.max(0, math.min(100, G.jokers.cart_zoom_slider + sign * 4 / self_T_w))
+            end
+        else
             card.T.r = 0.1*(-#self.cards/2 - 0.5 + k)/(#self.cards)+ (G.SETTINGS.reduced_motion and 0 or 1)*0.02*math.sin(2*G.TIMERS.REAL+card.T.x)
             local max_cards = math.max(#self.cards, self.config.temp_limit)
-            card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w)
+            card.T.x = self_T_x + (self_T_w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w)
             if #self.cards > 2 or (#self.cards > 1 and self == G.consumeables) or (#self.cards > 1 and self.config.spread) then
-                card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/(#self.cards-1)) + 0.5*(self.card_w - card.T.w)
+                card.T.x = self_T_x + (self_T_w-self.card_w)*((k-1)/(#self.cards-1)) + 0.5*(self.card_w - card.T.w)
             elseif #self.cards > 1 and self ~= G.consumeables then
-                card.T.x = self.T.x + (self.T.w-self.card_w)*((k - 0.5)/(#self.cards)) + 0.5*(self.card_w - card.T.w)
+                card.T.x = self_T_x + (self_T_w-self.card_w)*((k - 0.5)/(#self.cards)) + 0.5*(self.card_w - card.T.w)
             else
-                card.T.x = self.T.x + self.T.w/2 - self.card_w/2 + 0.5*(self.card_w - card.T.w)
+                card.T.x = self_T_x + self_T_w/2 - self.card_w/2 + 0.5*(self.card_w - card.T.w)
             end
             local highlight_height = G.HIGHLIGHT_H/2
             if not card.highlighted then highlight_height = 0 end
@@ -58,7 +53,13 @@ function Cartomancer.expand_G_jokers()
             card.T.x = card.T.x + card.shadow_parrallax.x/30
         end
     end
+    
     table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)
+
+    if not (old_slider_value == G.jokers.cart_zoom_slider) then
+        old_slider_value = G.jokers.cart_zoom_slider
+        G.jokers:hard_set_cards()
+    end
 end
 
 
@@ -89,6 +90,16 @@ function Cartomancer.add_visibility_controls()
         local settings = Sprite(0,0,0.425,0.425,G.ASSET_ATLAS["cart_settings"], {x=0, y=0})
         settings.states.drag.can = false
 
+        local joker_slider = nil
+        if G.jokers.cart_jokers_expanded then
+            joker_slider = create_slider({w = 6, h = 0.4,
+                ref_table = G.jokers, ref_value = 'cart_zoom_slider', min = 0, max = 100,
+                decimal_places = 1,
+                hide_val = true,
+            })
+            joker_slider.config.padding = 0
+        end
+
         G.jokers.children.cartomancer_controls = UIBox {
             definition = {
                 n = G.UIT.ROOT,
@@ -115,12 +126,7 @@ function Cartomancer.add_visibility_controls()
                                                                       minh = 0.45, minw = 1, col = false, scale = 0.3,
                                                                       })
                         }},
-                        G.jokers.cart_jokers_expanded and 
-                        create_slider({w = 3, h = 0.3, padding = -0.1,
-                                  ref_table = G.jokers, ref_value = 'cart_zoom_slider', min = 0, max = 100,
-                                  decimal_places = 1,
-                                  hide_val = true,
-                        }) or nil,
+                        joker_slider,
                         
                         Cartomancer.INTERNAL_jokers_menu and {n=G.UIT.C, config={align = "cm"}, nodes={
                             {n=G.UIT.C, config={align = "cm", padding = 0.01, r = 0.1, hover = true, colour = G.C.BLUE, button = 'cartomancer_joker_visibility_settings', shadow = true}, nodes={
