@@ -3,6 +3,7 @@ version = "1.0.0"
 dump_lua = true
 priority = 69
 
+# Replace joker sorting. Needs better mod compat
 [[patches]] 
 [patches.pattern]
 target = "cardarea.lua"
@@ -14,6 +15,7 @@ if self == G.jokers and G.jokers.cart_jokers_expanded then
 elseif self.config.type == 'joker' or self.config.type == 'title_2' then'''
 match_indent = true
 
+# Hide all cards that are off-screen
 [[patches]] 
 [patches.pattern]
 target = "card.lua"
@@ -23,6 +25,18 @@ payload = '''
 if self.VT.x < -3 or self.VT.x > G.TILE_W + 2.5 then return end'''
 match_indent = true
 
+# Add slider ID
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''{n=G.UIT.B, config={w=startval,h=args.h, r = 0.1, colour = args.colour, ref_table = args, refresh_movement = true}},'''
+position = "at"
+payload = '''
+{n=G.UIT.B, config={id = args.id, w=startval,h=args.h, r = 0.1, colour = args.colour, ref_table = args, refresh_movement = true}},
+'''
+match_indent = true
+
+# Hide slider value
 [[patches]] 
 [patches.regex]
 target = "functions/UI_definitions.lua"
@@ -33,23 +47,3 @@ pattern = '''
 position = "at"
 payload = '''
 not args.hide_val and $content or nil'''
-match_indent = true
-
-
-[[patches]]
-[patches.regex]
-target = 'functions/state_events.lua'
-pattern = '''
-(?<indent>[\t ]*)for i=1, #G\.jokers\.cards do
-[\t ]*--calculate the joker after hand played effects
-[\t ]*local effects = eval_card\(G\.jokers\.cards\[i\], \{cardarea = G\.jokers, full_hand = G\.play\.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, after = true\}\)
-[\t ]*if effects\.jokers then
-[\t ]*card_eval_status_text\(G\.jokers\.cards\[i\], 'jokers', nil, percent, nil, effects\.jokers\)
-[\t ]*percent = percent \+ percent_delta
-[\t ]*end
-[\t ]*end'''
-position = 'after'
-line_prepend = '$indent'
-payload = '''
--- waddup
-'''

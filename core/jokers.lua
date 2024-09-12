@@ -12,6 +12,7 @@ function Cartomancer.align_G_jokers()
 end
 
 local old_slider_value = 0
+local slide_speedup = nil
 
 -- TODO : mod compat
 --  current patch completely overrides logic
@@ -32,9 +33,22 @@ function Cartomancer.expand_G_jokers()
             elseif card.T.x > G.TILE_W then
                 sign = 1
             end
-
+            
             if sign then
-                G.jokers.cart_zoom_slider = math.max(0, math.min(100, G.jokers.cart_zoom_slider + sign * 4 / self_T_w))
+                slide_speedup = (slide_speedup or 1) + 0.01
+                local shift = math.min(
+                    self_T_w / 3,
+                    4 * (slide_speedup ^ 1.7)
+                )
+                G.jokers.cart_zoom_slider = math.max(0, math.min(100, G.jokers.cart_zoom_slider + sign * shift / self_T_w))
+                
+                local slider = G.jokers.children.cartomancer_controls:get_UIE_by_ID('joker_slider')
+                -- Only relevant part, copied from G.FUNCS.slider
+                local rt = slider.config.ref_table
+                slider.T.w = (G.jokers.cart_zoom_slider - rt.min)/(rt.max - rt.min)*rt.w
+                slider.config.w = slider.T.w
+            else
+                slide_speedup = nil
             end
         else
             card.T.r = 0.1*(-#self.cards/2 - 0.5 + k)/(#self.cards)+ (G.SETTINGS.reduced_motion and 0 or 1)*0.02*math.sin(2*G.TIMERS.REAL+card.T.x)
@@ -92,7 +106,7 @@ function Cartomancer.add_visibility_controls()
 
         local joker_slider = nil
         if G.jokers.cart_jokers_expanded then
-            joker_slider = create_slider({w = 6, h = 0.4,
+            joker_slider = create_slider({id = 'joker_slider', w = 6, h = 0.4,
                 ref_table = G.jokers, ref_value = 'cart_zoom_slider', min = 0, max = 100,
                 decimal_places = 1,
                 hide_val = true,
