@@ -146,7 +146,8 @@ Cartomancer.jokers_visibility_menu = function ()
     Cartomancer.LAST_OPEN_TAB = "jokers"
 
     return {n = G.UIT.ROOT, config = tab_config, nodes = {
-        create_toggle_option('jokers_visibility_buttons', 'carto_jokers_visibility_buttons'),
+        create_toggle_option('jokers_controls_buttons', 'carto_jokers_controls_buttons'),
+        -- create_toggle_option('jokers_visibility_buttons', 'carto_jokers_visibility_buttons'),
         create_text_line{ loc = 'carto_jokers_hide_keybind' },
     }}
 end

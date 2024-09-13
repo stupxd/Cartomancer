@@ -14,14 +14,11 @@ end
 local old_slider_value = 0
 local slide_speedup = nil
 
--- TODO : mod compat
---  current patch completely overrides logic
-
 function Cartomancer.expand_G_jokers()
     G.jokers.cart_zoom_slider = G.jokers.cart_zoom_slider or 0
 
     local self_T_w = math.max(4.9*G.CARD_W, 0.6*#G.jokers.cards * G.CARD_W)
-    local self_T_x = G.jokers.T.x - self_T_w * G.jokers.cart_zoom_slider / 100
+    local self_T_x = G.jokers.T.x - (self_T_w- 4.9*G.CARD_W) * G.jokers.cart_zoom_slider / 100
 
     local self = G.jokers
 
@@ -67,12 +64,9 @@ function Cartomancer.expand_G_jokers()
             card.T.x = card.T.x + card.shadow_parrallax.x/30
         end
     end
-    
-    table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)
-
     if not (old_slider_value == G.jokers.cart_zoom_slider) then
         old_slider_value = G.jokers.cart_zoom_slider
-        G.jokers:hard_set_cards()
+        return true
     end
 end
 
@@ -96,7 +90,7 @@ function Cartomancer.add_visibility_controls()
         return
     end
 
-    if not Cartomancer.SETTINGS.jokers_visibility_buttons then
+    if not Cartomancer.SETTINGS.jokers_controls_buttons then
         return
     end
 
@@ -110,6 +104,7 @@ function Cartomancer.add_visibility_controls()
                 ref_table = G.jokers, ref_value = 'cart_zoom_slider', min = 0, max = 100,
                 decimal_places = 1,
                 hide_val = true,
+                colour = G.C.CHIPS,
             })
             joker_slider.config.padding = 0
         end
@@ -117,28 +112,28 @@ function Cartomancer.add_visibility_controls()
         G.jokers.children.cartomancer_controls = UIBox {
             definition = {
                 n = G.UIT.ROOT,
-                func = function ()
-                    return Cartomancer.SETTINGS.jokers_visibility_buttons
-                end,
+                -- UIBox visibility
+                func = function () return Cartomancer.SETTINGS.jokers_controls_buttons end,
                 config = { align = 'cm', padding = 0.07, colour = G.C.CLEAR, },
                 nodes = {
                     {n=G.UIT.R, config={align = 'tm', padding = 0.07, no_fill = true}, nodes={
-                        {n=G.UIT.C, config={align = "cm"}, nodes={
+
+                        {n=G.UIT.C, config={align = "cm", }, nodes={
                             UIBox_button({id = 'hide_all_jokers', button = 'cartomancer_hide_all_jokers', label ={localize('carto_jokers_hide')},
-                                                                      minh = 0.45, minw = 1, col = false, scale = 0.3,
-                                                                      colour = G.C.CHIPS,
-                                                                      })
+                                                                      minh = 0.45, minw = 1, col = false, scale = 0.3,-- func = function ()return Cartomancer.SETTINGS.jokers_visibility_controls end
+                            })
                         }},
                         {n=G.UIT.C, config={align = "cm"}, nodes={
                             UIBox_button({id = 'show_all_jokers', button = 'cartomancer_show_all_jokers', label = {localize('carto_jokers_show')},
                                                                       minh = 0.45, minw = 1, col = false, scale = 0.3,
-                                                                      })
+                                                                      colour = G.C.CHIPS, --func = function ()return Cartomancer.SETTINGS.jokers_visibility_controls end
+                            })
                         }},
                         
                         {n=G.UIT.C, config={align = "cm"}, nodes={
-                            UIBox_button({id = 'zoom_jokers', button = 'cartomancer_zoom_jokers', label = {'Zoom'},
+                            UIBox_button({id = 'zoom_jokers', button = 'cartomancer_zoom_jokers', label = {localize('carto_jokers_zoom')},
                                                                       minh = 0.45, minw = 1, col = false, scale = 0.3,
-                                                                      })
+                            })
                         }},
                         joker_slider,
                         
@@ -164,10 +159,12 @@ end
 
 G.FUNCS.cartomancer_hide_all_jokers = function(e)
     Cartomancer.hide_all_jokers()
+    G.jokers.cart_hide_all = true
 end
 
 G.FUNCS.cartomancer_show_all_jokers = function(e)
     Cartomancer.show_all_jokers()
+    G.jokers.cart_hide_all = false
 end
 
 G.FUNCS.cartomancer_zoom_jokers = function(e)
@@ -190,6 +187,12 @@ end
 
 local function hide_card(card)
     card.states.visible = false
+end
+
+function Cartomancer.handle_joker_added(card)
+    if G.jokers.cart_hide_all then
+        hide_card(card)
+    end
 end
 
 function Cartomancer.hide_hovered_joker(controller)

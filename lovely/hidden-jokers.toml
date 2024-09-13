@@ -11,3 +11,15 @@ position = "after"
 payload = '''
 Cartomancer.add_visibility_controls()'''
 match_indent = true
+
+[[patches]] 
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "function CardArea:emplace(card, location, stay_flipped)"
+position = "after"
+payload = '''
+if self == G.jokers then
+    Cartomancer.handle_joker_added(card)
+end
+'''
+match_indent = true

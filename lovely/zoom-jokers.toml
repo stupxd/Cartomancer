@@ -11,7 +11,16 @@ pattern = "if self.config.type == 'joker' or self.config.type == 'title_2' then"
 position = "at"
 payload = '''
 if self == G.jokers and G.jokers.cart_jokers_expanded then
-    Cartomancer.expand_G_jokers()
+    local align_cards = Cartomancer.expand_G_jokers()
+
+    -- This should work fine without cryptid. But because cryptid's patch is priority=0, it has to be this way
+    if not G.GAME.modifiers.cry_conveyor then 
+        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)
+    end
+    
+    if align_cards then
+        G.jokers:hard_set_cards()
+    end
 elseif self.config.type == 'joker' or self.config.type == 'title_2' then'''
 match_indent = true
 

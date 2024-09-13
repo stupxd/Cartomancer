@@ -25,7 +25,8 @@ return {
     flames_slower_speed = false,
     flames_volume = 100,
 
-    jokers_visibility_buttons = false,
+    jokers_controls_buttons = true,
+    jokers_visibility_buttons = true,
 }
 
 --[[
