@@ -26,6 +26,14 @@
 
 5. Hide non-essential (edition) shaders.
 
+6. Improved jokers management
+
+- Option to hide all jokers (improves performance at 100+ jokers).
+
+- Zoom into the jokers area for easier jokers management and navigation.
+
+![zoom-jokers-difference](git-assets/zoom-jokers.jpg)
+
 Settings for this mod can be found under `Mods` tab, if you use Steamodded 1.0.0 - find `Cartomancer`, and open `Config` tab.
 
 If you play vanilla, go to `Settings` and open ![cartomancer](assets/1x/modicon.png) tab.
