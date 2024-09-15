@@ -3,8 +3,10 @@
 
 function Cartomancer.align_G_jokers()
     -- Refresh controls
-    G.jokers.children.cartomancer_controls:remove()
-    G.jokers.children.cartomancer_controls = nil
+    if G.jokers.children.cartomancer_controls then
+        G.jokers.children.cartomancer_controls:remove()
+        G.jokers.children.cartomancer_controls = nil
+    end
     G.jokers:align_cards()
     G.jokers:hard_set_cards()
 end
