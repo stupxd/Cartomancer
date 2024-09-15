@@ -3,10 +3,8 @@
 
 function Cartomancer.align_G_jokers()
     -- Refresh controls
-    if G.jokers.children.cartomancer_controls then
-        G.jokers.children.cartomancer_controls:remove()
-        G.jokers.children.cartomancer_controls = nil
-    end
+    G.jokers.children.cartomancer_controls:remove()
+    G.jokers.children.cartomancer_controls = nil
     G.jokers:align_cards()
     G.jokers:hard_set_cards()
 end
@@ -93,7 +91,9 @@ function Cartomancer.add_visibility_controls()
     
     if not (Cartomancer.SETTINGS.jokers_controls_buttons and #G.jokers.cards >= Cartomancer.SETTINGS.jokers_controls_show_after) then
         G.jokers.cart_jokers_expanded = false
-        Cartomancer.align_G_jokers()
+        if G.jokers.children.cartomancer_controls then
+            Cartomancer.align_G_jokers()
+        end
         return
     end
 
