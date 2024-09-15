@@ -45,7 +45,7 @@ Cartomancer.config_tab = function()
             -- Yellow node. Align changes the position of modes inside
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option('compact_deck_enabled', 'carto_compact_deck_enabled'),
-                create_inline_slider('compact_deck_visible_cards', 'carto_compact_deck_visible_cards', {max_value = 300}),
+                create_inline_slider({ref_value = 'compact_deck_visible_cards', localization = 'carto_compact_deck_visible_cards', max_value = 300}),
             }}
         end
     })
@@ -60,7 +60,7 @@ Cartomancer.config_tab = function()
                 create_toggle_option('deck_view_stack_enabled', 'carto_deck_view_stack_enabled'),
                 create_toggle_option('deck_view_stack_modifiers', 'carto_deck_view_stack_modifiers'),
                 --create_toggle_option('deck_view_stack_suits', 'carto_deck_view_stack_suits'),
-                create_inline_slider('deck_view_stack_background_opacity', 'carto_deck_view_stack_background_opacity'),
+                create_inline_slider({ref_value = 'deck_view_stack_background_opacity', localization = 'carto_deck_view_stack_background_opacity',}),
                 create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
 
                 -- inline this
@@ -77,6 +77,13 @@ Cartomancer.config_tab = function()
             }}
         end
     })
+
+    table.insert(vertical_tabs, {
+        label = "Jokers",
+        chosen = is_chosen("jokers"),
+        tab_definition_function = Cartomancer.jokers_visibility_menu
+    })
+
 
     table.insert(vertical_tabs, {
         label = "Optimizations",
@@ -96,20 +103,14 @@ Cartomancer.config_tab = function()
         tab_definition_function = function (...)
             Cartomancer.LAST_OPEN_TAB = "flames"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_inline_slider('flames_intensity_min', 'carto_flames_intensity_min', {max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
-                create_inline_slider('flames_intensity_max', 'carto_flames_intensity_max', {max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
+                create_inline_slider({ref_value = 'flames_intensity_min', localization = 'carto_flames_intensity_min', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
+                create_inline_slider({ref_value = 'flames_intensity_max', localization = 'carto_flames_intensity_max', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
                 create_toggle_option('flames_relative_intensity', 'carto_flames_relative_intensity'),
                 create_toggle_option('flames_slower_speed', 'carto_flames_slower_speed'),
-                create_inline_slider('flames_volume', 'carto_flames_volume'),
+                create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
                 -- 
             }}
         end
-    })
-
-    table.insert(vertical_tabs, {
-        label = "Jokers",
-        chosen = is_chosen("jokers"),
-        tab_definition_function = Cartomancer.jokers_visibility_menu
     })
 
     return create_UIBox_generic_options_custom({
@@ -147,17 +148,17 @@ Cartomancer.jokers_visibility_menu = function ()
 
     return {n = G.UIT.ROOT, config = tab_config, nodes = {
         create_toggle_option('jokers_controls_buttons', 'carto_jokers_controls_buttons'),
-        -- create_toggle_option('jokers_visibility_buttons', 'carto_jokers_visibility_buttons'),
+        create_inline_slider({ref_value = 'jokers_controls_show_after', localization = 'carto_jokers_controls_show_after',}),
         create_text_line{ loc = 'carto_jokers_hide_keybind' },
     }}
 end
 
 
-create_inline_slider = function (ref_value, localization, args)
+create_inline_slider = function (args)
     local args = args or {}
 
-    local slider = create_slider({label = localize(localization), label_scale = 0.36, w = 3, h = 0.3, padding = -0.05, 
-                                  ref_table = Cartomancer.SETTINGS, ref_value = ref_value, min = 0, max = args.max_value or 100,
+    local slider = create_slider({label = localize(args.localization), label_scale = 0.36, w = 3, h = 0.3, padding = -0.05,
+                                  ref_table = Cartomancer.SETTINGS, ref_value = args.ref_value, min = args.min_value or 0, max = args.max_value or 100,
                                   decimal_places = args.decimal_places})
 
     slider.nodes[1].config.align = "cl"

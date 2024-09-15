@@ -32,8 +32,8 @@ return {
             carto_flames_slower_speed = "Slower flames on big scores",
             carto_flames_volume = "Flames volume ",
             
-            carto_jokers_controls_buttons = "Joker area buttons",
-            carto_jokers_visibility_buttons = "Show/hide buttons",
+            carto_jokers_controls_buttons = "Show joker area buttons",
+            carto_jokers_controls_show_after = "after total # of jokers above ",
             carto_jokers_hide_keybind = "Hide hovered joker with Alt + 1",
             carto_jokers_hide = "Hide",
             carto_jokers_show = "Show",

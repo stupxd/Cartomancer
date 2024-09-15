@@ -9,7 +9,10 @@ target = "cardarea.lua"
 pattern = "self.children.area_uibox:draw()"
 position = "after"
 payload = '''
-Cartomancer.add_visibility_controls()'''
+if self == G.jokers then
+    Cartomancer.add_visibility_controls()
+end
+'''
 match_indent = true
 
 [[patches]] 

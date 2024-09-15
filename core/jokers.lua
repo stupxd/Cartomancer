@@ -7,8 +7,6 @@ function Cartomancer.align_G_jokers()
     G.jokers.children.cartomancer_controls = nil
     G.jokers:align_cards()
     G.jokers:hard_set_cards()
-
-    Cartomancer.add_visibility_controls()
 end
 
 local old_slider_value = 0
@@ -90,7 +88,8 @@ function Cartomancer.add_visibility_controls()
         return
     end
 
-    if not Cartomancer.SETTINGS.jokers_controls_buttons then
+    
+    if not (Cartomancer.SETTINGS.jokers_controls_buttons and #G.jokers.cards >= Cartomancer.SETTINGS.jokers_controls_show_after) then
         return
     end
 
@@ -112,8 +111,6 @@ function Cartomancer.add_visibility_controls()
         G.jokers.children.cartomancer_controls = UIBox {
             definition = {
                 n = G.UIT.ROOT,
-                -- UIBox visibility
-                func = function () return Cartomancer.SETTINGS.jokers_controls_buttons end,
                 config = { align = 'cm', padding = 0.07, colour = G.C.CLEAR, },
                 nodes = {
                     {n=G.UIT.R, config={align = 'tm', padding = 0.07, no_fill = true}, nodes={
@@ -147,13 +144,13 @@ function Cartomancer.add_visibility_controls()
             },
             config = {
                 align = 't',
-                
                 bond = 'Strong',
                 parent = G.jokers
             },
         }
     end
 
+    -- This makes sure UIBox is drawn every frame 
     G.jokers.children.cartomancer_controls:draw()
 end
 
@@ -190,6 +187,8 @@ local function hide_card(card)
 end
 
 function Cartomancer.handle_joker_added(card)
+    
+
     if G.jokers.cart_hide_all then
         hide_card(card)
     end

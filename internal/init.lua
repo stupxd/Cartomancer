@@ -6,7 +6,7 @@ Cartomancer.use_smods = function ()
     return SMODS and not (MODDED_VERSION == "0.9.8-STEAMODDED")
 end
 
-Cartomancer.INTERNAL_debugging = false
+Cartomancer.INTERNAL_debugging = true
 
 Cartomancer.find_self = function (target_filename)
     local mods_path = Cartomancer.use_smods() and SMODS.MODS_DIR or 'Mods'

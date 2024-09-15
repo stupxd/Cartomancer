@@ -58,6 +58,13 @@ Cartomancer.load_config = function ()
             Cartomancer.SETTINGS[k] = nil
         end
     end
+
+    for k, v in pairs(latest_default_config) do
+        if Cartomancer.SETTINGS[k] == nil then
+            Cartomancer.log("Adding setting `"..k.. "` because it is missing in latest config")
+            Cartomancer.SETTINGS[k] = v
+        end
+    end
 end
 
 local cart_options_ref = G.FUNCS.options
