@@ -90,7 +90,8 @@ function Cartomancer.add_visibility_controls()
 
     
     if not (Cartomancer.SETTINGS.jokers_controls_buttons and #G.jokers.cards >= Cartomancer.SETTINGS.jokers_controls_show_after) then
-        G.jokers.cart_zoom_slider = nil
+        G.jokers.cart_jokers_expanded = false
+        Cartomancer.align_G_jokers()
         return
     end
 
