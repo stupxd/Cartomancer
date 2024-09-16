@@ -9,7 +9,7 @@ end
 Cartomancer.INTERNAL_debugging = true
 
 Cartomancer.find_self = function (target_filename)
-    local mods_path = Cartomancer.use_smods() and SMODS.MODS_DIR or 'Mods'
+    local mods_path = 'Mods' -- Cartomancer.use_smods() and SMODS.MODS_DIR or -- add NFS support later
 
 	local mod_folders = love.filesystem.getDirectoryItems(mods_path)
     for _, folder in pairs(mod_folders) do
