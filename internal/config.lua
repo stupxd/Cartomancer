@@ -19,7 +19,11 @@ Cartomancer.dump = function (o, level, prefix)
             return string.format('"%s"', o)
         end
 
-       return tostring(o)
+        if type(o) == "function" or type(o) == "table" then
+            return string.format("'%s'", tostring(o))
+        end
+
+        return tostring(o)
     end
 end
 
