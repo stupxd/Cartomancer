@@ -3,7 +3,7 @@ local Cartomancer_replacements = {
     {
         find = [[
 	for k, v in ipairs%(G%.playing_cards%) do
-		table%.insert%(SUITS%[v%.base%.suit%], v%)]],
+		if v%.base%.suit then table%.insert%(SUITS%[v%.base%.suit%], v%) end]],
         place = [[
 local SUITS_SORTED = Cartomancer.tablecopy(SUITS)
 for k, v in ipairs(G.playing_cards) do

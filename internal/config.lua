@@ -11,9 +11,15 @@ Cartomancer.dump = function (o, level, prefix)
             else
                 format = '%s["%s"] = %s,\n'
             end
-            s = s .. string.format(format, prefix, k, (k == 'parent' or k == 'draw_major') and '\'parent_table\'' or Cartomancer.dump(v, level + 1, prefix..'  '))
+            s = s .. string.format(
+                    format,
+                    prefix,
+                    k,
+                    -- Compact parent & draw_major to avoid recursion and huge dumps.
+                    (k == 'parent' or k == 'draw_major') and string.format("'%s'", tostring(v)) or Cartomancer.dump(v, level + 1, prefix..'  ')
+            )
         end
-        return s ..prefix:sub(3)..'}'
+        return s..prefix:sub(3)..'}'
     else
         if type(o) == "string" then
             return string.format('"%s"', o)
