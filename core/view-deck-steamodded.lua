@@ -4,9 +4,14 @@ local Cartomancer_replacements = {
         find = [[
 	for k, v in ipairs%(G%.playing_cards%) do
 		if v%.base%.suit then table%.insert%(SUITS%[v%.base%.suit%], v%) end]],
+    -- Steamodded<0917b
+        find_alt = [[
+	for k, v in ipairs%(G%.playing_cards%) do
+		table%.insert%(SUITS%[v%.base%.suit%], v%)]],
         place = [[
 local SUITS_SORTED = Cartomancer.tablecopy(SUITS)
 for k, v in ipairs(G.playing_cards) do
+  if v.base.suit then
   local greyed
   if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
     greyed = true
@@ -41,8 +46,8 @@ for k, v in ipairs(G.playing_cards) do
     -- Stack cards
     local stacked_card = SUITS[v.base.suit][card_string]
     stacked_card.stacked_quantity = stacked_card.stacked_quantity + 1
+  end
   end]]
-
     },
 
     {
@@ -117,6 +122,10 @@ local Cartomancer_nfs_read_override = function (containerOrName, nameOrSize, siz
     local total_replaced = 0
     for _, v in ipairs(Cartomancer_replacements) do
         data, replaced = string.gsub(data, v.find, v.place)
+
+        if replaced == 0 and v.find_alt then
+          data, replaced = string.gsub(data, v.find_alt, v.place)
+        end
 
         if replaced == 0 then
           print("Failed to replace " .. v.find .. " for overrides.lua")
