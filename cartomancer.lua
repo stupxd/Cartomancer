@@ -8,6 +8,7 @@ Cartomancer.load_mod_file('core/view-deck.lua', 'view-deck')
 Cartomancer.load_mod_file('core/flames.lua', 'flames')
 Cartomancer.load_mod_file('core/shaders.lua', 'shaders')
 Cartomancer.load_mod_file('core/jokers.lua', 'jokers')
+Cartomancer.load_mod_file('core/hand.lua', 'hand')
 
 Cartomancer.load_config()
 

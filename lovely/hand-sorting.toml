@@ -1,0 +1,30 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# Add no sort button to
+# create_UIBox_buttons
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+{n=G.UIT.T, config={text = localize('b_sort_hand'), scale = text_scale*0.8, colour = G.C.UI.TEXT_LIGHT}}'''
+position = "before"
+payload = '''
+Cartomancer.SETTINGS.improved_hand_sorting and
+create_toggle{ col = true, label = localize('b_sort_hand'), label_scale = text_scale*0.8, scale = 0.30, w = 0, shadow = true, ref_table = G.hand, ref_value = 'cart_sorting', callback = function () G.FUNCS.cartomancer_sort_hand_off() end }
+or'''
+match_indent = true
+
+# Set default value of G.hand.cart_sorting
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+function create_UIBox_buttons()'''
+position = "after"
+payload = '''
+  if G.hand and G.hand.cart_sorting == nil then G.hand.cart_sorting = true end
+'''
+match_indent = true

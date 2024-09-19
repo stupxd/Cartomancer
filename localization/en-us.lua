@@ -1,6 +1,12 @@
 return {
     misc = {
         dictionary = {
+            carto_settings_compact_deck = "Compact deck",
+            carto_settings_deck_view = "Deck view",
+            carto_settings_jokers = "Jokers",
+            carto_settings_flames = "Flames",
+            carto_settings_other = "Other",
+
             carto_compact_deck_enabled = "Limit cards in deck pile",
             carto_compact_deck_visible_cards = "Cards limit ",
 
@@ -25,6 +31,7 @@ return {
             carto_deck_view_unique_cards = "Unique cards:",
 
             carto_draw_non_essential_shaders = "Draw non-essential shaders",
+            carto_improved_hand_sorting = "Improved hand sorting",
 
             carto_flames_intensity_min = "Min intensity ",
             carto_flames_intensity_max = "Max intensity ",

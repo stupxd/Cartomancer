@@ -38,27 +38,39 @@ Cartomancer.config_tab = function()
 
 
     table.insert(vertical_tabs, {
-        label = "Compact deck",
+        label = localize('carto_settings_compact_deck'),
         chosen = is_chosen("compact_deck"),
         tab_definition_function = function (...)
             Cartomancer.LAST_OPEN_TAB = "compact_deck"
             -- Yellow node. Align changes the position of modes inside
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_toggle_option('compact_deck_enabled', 'carto_compact_deck_enabled'),
+                create_toggle_option {
+                    ref_value = 'compact_deck_enabled',
+                    localization = 'carto_compact_deck_enabled',
+                },
                 create_inline_slider({ref_value = 'compact_deck_visible_cards', localization = 'carto_compact_deck_visible_cards', max_value = 300}),
             }}
         end
     })
 
     table.insert(vertical_tabs, {
-        label = "Deck view",
+        label = localize('carto_settings_deck_view'),
         chosen = is_chosen("deck_view"),
         tab_definition_function = function (...)
             Cartomancer.LAST_OPEN_TAB = "deck_view"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_toggle_option('deck_view_hide_drawn_cards', 'carto_deck_view_hide_drawn_cards'),
-                create_toggle_option('deck_view_stack_enabled', 'carto_deck_view_stack_enabled'),
-                create_toggle_option('deck_view_stack_modifiers', 'carto_deck_view_stack_modifiers'),
+                create_toggle_option {
+                    ref_value = 'deck_view_hide_drawn_cards',
+                    localization = 'carto_deck_view_hide_drawn_cards',
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_enabled',
+                    localization = 'carto_deck_view_stack_enabled',
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_modifiers',
+                    localization = 'carto_deck_view_stack_modifiers',
+                },
                 --create_toggle_option('deck_view_stack_suits', 'carto_deck_view_stack_suits'),
                 create_inline_slider({ref_value = 'deck_view_stack_background_opacity', localization = 'carto_deck_view_stack_background_opacity',}),
                 create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
@@ -79,36 +91,49 @@ Cartomancer.config_tab = function()
     })
 
     table.insert(vertical_tabs, {
-        label = "Jokers",
+        label = localize('carto_settings_jokers'),
         chosen = is_chosen("jokers"),
         tab_definition_function = Cartomancer.jokers_visibility_menu
     })
 
-
     table.insert(vertical_tabs, {
-        label = "Optimizations",
-        chosen = is_chosen("optimizations"),
-        tab_definition_function = function (...)
-            Cartomancer.LAST_OPEN_TAB = "optimizations"
-            return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_toggle_option('draw_non_essential_shaders', 'carto_draw_non_essential_shaders'),
-                -- 
-            }}
-        end
-    })
-
-    table.insert(vertical_tabs, {
-        label = "Flames",
+        label = localize('carto_settings_flames'),
         chosen = is_chosen("flames"),
         tab_definition_function = function (...)
             Cartomancer.LAST_OPEN_TAB = "flames"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_inline_slider({ref_value = 'flames_intensity_min', localization = 'carto_flames_intensity_min', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
                 create_inline_slider({ref_value = 'flames_intensity_max', localization = 'carto_flames_intensity_max', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
-                create_toggle_option('flames_relative_intensity', 'carto_flames_relative_intensity'),
-                create_toggle_option('flames_slower_speed', 'carto_flames_slower_speed'),
+                create_toggle_option {
+                    ref_value = 'flames_relative_intensity',
+                    localization = 'carto_flames_relative_intensity',
+                },
+                create_toggle_option {
+                    ref_value = 'flames_slower_speed',
+                    localization = 'carto_flames_slower_speed',
+                },
                 create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
                 -- 
+            }}
+        end
+    })
+
+
+    table.insert(vertical_tabs, {
+        label = localize('carto_settings_other'),
+        chosen = is_chosen("other"),
+        tab_definition_function = function (...)
+            Cartomancer.LAST_OPEN_TAB = "other"
+            return {n = G.UIT.ROOT, config = tab_config, nodes = {
+                create_toggle_option {
+                    ref_value = 'improved_hand_sorting',
+                    localization = 'carto_improved_hand_sorting',
+                    callback = function () G.FUNCS.change_play_discard_position {to_key = G.SETTINGS.play_button_pos} end
+                },
+                create_toggle_option {
+                    ref_value = 'draw_non_essential_shaders',
+                    localization = 'carto_draw_non_essential_shaders',
+                },
             }}
         end
     })
@@ -147,7 +172,10 @@ Cartomancer.jokers_visibility_menu = function ()
     Cartomancer.LAST_OPEN_TAB = "jokers"
 
     return {n = G.UIT.ROOT, config = tab_config, nodes = {
-        create_toggle_option('jokers_controls_buttons', 'carto_jokers_controls_buttons'),
+        create_toggle_option {
+            ref_value = 'jokers_controls_buttons',
+            localization = 'carto_jokers_controls_buttons',
+        },
         create_inline_slider({ref_value = 'jokers_controls_show_after', localization = 'carto_jokers_controls_show_after',}),
         create_text_line{ loc = 'carto_jokers_hide_keybind' },
     }}
@@ -196,13 +224,13 @@ create_option_cycle_custom = function (ref_value, localization, change_function,
     }}
 end
 
-create_toggle_option = function (ref_value, localization)
+create_toggle_option = function (args)
     return {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
         {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
-            { n = G.UIT.T, config = { text = localize(localization), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+            { n = G.UIT.T, config = { text = localize(args.localization), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
         }},
         {n = G.UIT.C, config = { align = "cr", padding = 0.05 }, nodes = {
-            create_toggle{ col = true, label = "", scale = 0.70, w = 0, shadow = true, ref_table = Cartomancer.SETTINGS, ref_value = ref_value },
+            create_toggle{ col = true, label = "", scale = 0.70, w = 0, shadow = true, ref_table = Cartomancer.SETTINGS, ref_value = args.ref_value, callback = args.callback },
         }},
       }}
 end
