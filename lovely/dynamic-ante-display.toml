@@ -1,0 +1,49 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# Patch dynamic ante display into
+# function create_UIBox_your_collection_blinds(exit)
+# this will only work for vanilla, as steamodded overrides this
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "local ante_amounts = {}"
+position = "before"
+payload = '''
+local min_ante = 1
+local max_ante = 16
+local spacing = 1 - 15*0.06
+if G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante then
+    local current_ante = G.GAME.round_resets.ante
+
+    if current_ante > 8 then
+        min_ante = current_ante - 8 + 1
+        max_ante = current_ante + 8
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "for i = 1, math.min(16, math.max(16, G.PROFILES[G.SETTINGS.profile].high_scores.furthest_ante.amt)) do"
+position = "at"
+payload = '''
+for i = min_ante, max_ante do
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "local spacing = 1 - math.min(20, math.max(15, G.PROFILES[G.SETTINGS.profile].high_scores.furthest_ante.amt))*0.06"
+position = "at"
+payload = '''
+-- :3
+'''
+match_indent = true
+

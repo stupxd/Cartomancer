@@ -7,7 +7,7 @@
 --- BADGE_COLOR: FFD700
 --- DISPLAY_NAME: Cartomancer
 --//--//--- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-0917b]
---- VERSION: 4.4
+--- VERSION: 4.5
 
 ----------------------------------------------
 ------------MOD CODE -------------------------
