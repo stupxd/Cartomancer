@@ -1,15 +1,17 @@
 require 'cartomancer.init'
 
-Cartomancer.load_mod_file('internal/config.lua', 'config')
-Cartomancer.load_mod_file('internal/atlas.lua', 'atlas')
-Cartomancer.load_mod_file('internal/ui.lua', 'ui')
+Cartomancer.load_mod_file('internal/config.lua', 'internal.config')
+Cartomancer.load_mod_file('internal/atlas.lua', 'internal.atlas')
+Cartomancer.load_mod_file('internal/ui.lua', 'internal.ui')
 
-Cartomancer.load_mod_file('core/view-deck.lua', 'view-deck')
-Cartomancer.load_mod_file('core/flames.lua', 'flames')
-Cartomancer.load_mod_file('core/shaders.lua', 'shaders')
-Cartomancer.load_mod_file('core/jokers.lua', 'jokers')
-Cartomancer.load_mod_file('core/hand.lua', 'hand')
+Cartomancer.load_mod_file('core/view-deck.lua', 'core.view-deck')
+Cartomancer.load_mod_file('core/flames.lua', 'core.flames')
+Cartomancer.load_mod_file('core/shaders.lua', 'core.shaders')
+Cartomancer.load_mod_file('core/jokers.lua', 'core.jokers')
+Cartomancer.load_mod_file('core/hand.lua', 'core.hand')
 
 Cartomancer.load_config()
 
 Cartomancer.INTERNAL_jokers_menu = false
+
+

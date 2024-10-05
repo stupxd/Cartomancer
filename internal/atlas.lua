@@ -15,7 +15,10 @@ function Game:set_render_settings()
     for i=1, #assets do
         G.ASSET_ATLAS[assets[i].name] = {}
         G.ASSET_ATLAS[assets[i].name].name = assets[i].name
-        G.ASSET_ATLAS[assets[i].name].image = love.graphics.newImage(assets[i].path, {mipmaps = true, dpiscale = G.SETTINGS.GRAPHICS.texture_scaling})
+        -- File load method using steamodded's code
+        local file_data = assert(Cartomancer.nfs.newFileData(assets[i].path), 'Failed to collect file data for '..assets[i].name)
+        local image_data = assert(love.image.newImageData(file_data), 'Failed to initialize image data for '..assets[i].name)
+        G.ASSET_ATLAS[assets[i].name].image = love.graphics.newImage(image_data, {mipmaps = true, dpiscale = G.SETTINGS.GRAPHICS.texture_scaling})
         G.ASSET_ATLAS[assets[i].name].px = assets[i].px
         G.ASSET_ATLAS[assets[i].name].py = assets[i].py
     end

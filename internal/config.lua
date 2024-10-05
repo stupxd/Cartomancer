@@ -35,26 +35,26 @@ end
 
 Cartomancer.save_config = function ()
     Cartomancer.log "Saving cartomancer config..."
-    love.filesystem.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
+    Cartomancer.nfs.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
 end
 
 
 Cartomancer.load_config = function ()
     Cartomancer.log "Starting to load config"
-    if not love.filesystem.getInfo('config') then
+    if not Cartomancer.nfs.getInfo('config') then
         Cartomancer.log("Creating config folder...")
-        love.filesystem.createDirectory('config')
+        Cartomancer.nfs.createDirectory('config')
     end
 
     -- Steamodded config file location
-    local config_file = Cartomancer.read_file('config/cartomancer.jkr')
+    local config_file = Cartomancer.nfs.read('config/cartomancer.jkr')
 
     local latest_default_config = Cartomancer.load_mod_file('config.lua', 'default-config')
 
     if config_file then
         Cartomancer.log "Reading config file: "
         Cartomancer.log(config_file)
-        Cartomancer.SETTINGS = load(config_file)()
+        Cartomancer.SETTINGS = STR_UNPACK(config_file) -- Use STR_UNPACK to avoid code injectons via config files
     else
         Cartomancer.log "Creating default settings"
         Cartomancer.SETTINGS = latest_default_config

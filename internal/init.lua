@@ -1,20 +1,23 @@
 Cartomancer = {}
+Cartomancer.INTERNAL_debugging = false
 
 Cartomancer.SETTINGS = {}
+
+Cartomancer.nfs = require "cartomancer.nfs"
+local lovely = require "lovely"
 
 Cartomancer.use_smods = function ()
     return SMODS and not (MODDED_VERSION == "0.9.8-STEAMODDED")
 end
 
-Cartomancer.INTERNAL_debugging = false
 
 Cartomancer.find_self = function (target_filename)
-    local mods_path = 'Mods' -- Cartomancer.use_smods() and SMODS.MODS_DIR or -- add NFS support later
+    local mods_path = lovely.mod_dir
 
-	local mod_folders = love.filesystem.getDirectoryItems(mods_path)
+	local mod_folders = Cartomancer.nfs.getDirectoryItems(mods_path)
     for _, folder in pairs(mod_folders) do
-        local path = string.format('Mods/%s', folder)
-        local files = love.filesystem.getDirectoryItems(path)
+        local path = string.format('%s/%s', mods_path, folder)
+        local files = Cartomancer.nfs.getDirectoryItems(path)
 
         for _, filename in pairs(files) do
             if filename == target_filename then
@@ -25,25 +28,19 @@ Cartomancer.find_self = function (target_filename)
 end
 
 Cartomancer.path = Cartomancer.find_self('cartomancer.lua')
-
-Cartomancer.read_file = function (file_path)
-    local file_data = love.filesystem.getInfo(file_path)
-    if file_data ~= nil then
-        return love.filesystem.read(file_path)
-    end
-end
+assert(Cartomancer.path, "Failed to find mod folder. Make sure that `Cartomancer` folder has `cartomancer.lua` file!")
 
 Cartomancer.load_mod_file = function (path, name)
     name = name or path
 
-    local file, err = Cartomancer.read_file(Cartomancer.path..'/'..path)
+    local file, err = Cartomancer.nfs.read(Cartomancer.path..'/'..path)
 
-    if not file then
-        print("[Cartomancer] Failed to load file "..path.." ("..name.."): "..tostring(err))
-        return
-    end
+    assert(file, string.format([=[[Cartomancer] Failed to load mod file %s (%s).:
+%s
 
-    return load(file, "Cartomancer/"..name)()
+Get latest release here: https://github.com/stupxd/Cartomancer/releases ]=], path, name, tostring(err)))
+
+    return load(file, string.format(" Cartomancer - %s ", name))()
 end
 
 Cartomancer.log = function (msg)

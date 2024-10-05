@@ -18,6 +18,11 @@ local function is_suit(method)
     return string.find(method, "suit")
 end
 
+local function is_sorted()
+    -- TODO : check if hand is already sorted with current method
+    return true
+end
+
 local g_func_sort_hand_suit = G.FUNCS.sort_hand_suit
 G.FUNCS.sort_hand_suit = function(e)
     G.hand.cart_sorting = true
@@ -29,7 +34,7 @@ G.FUNCS.sort_hand_suit = function(e)
     local new = 'suit desc'
 
     -- If already sorted by suit, toggle ascending/descending order
-    if is_suit(current) then
+    if is_suit(current) and is_sorted() then
         if is_desc(current) then
             new = 'suit asc'
         else
@@ -52,7 +57,7 @@ G.FUNCS.sort_hand_value = function(e)
     local new = 'desc'
 
     -- If already sorted by value, toggle ascending/descending order
-    if not is_suit(current) then
+    if not is_suit(current) and is_sorted() then
         if is_desc(current) then
             new = 'asc'
         else

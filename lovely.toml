@@ -10,6 +10,12 @@ source = "internal/init.lua"
 before = "main.lua"
 name = "cartomancer.init"
 
+[[patches]]
+[patches.module]
+source = "libs/nativefs.lua"
+before = "main.lua"
+name = "cartomancer.nfs"
+
 # Add core functionality
 [[patches]]
 [patches.copy]
