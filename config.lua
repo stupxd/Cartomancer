@@ -5,6 +5,7 @@ return {
 
     deck_view_stack_enabled = true,
     deck_view_stack_modifiers = false,
+    deck_view_stack_chips = true,
     -- [top center bottom]
     deck_view_stack_pos_vertical = 't',
     -- [left middle right]

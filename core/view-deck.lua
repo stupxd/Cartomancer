@@ -15,6 +15,10 @@ function Card:cart_to_string(args)
             -- otherwise empty string
     ) or ''
 
+    if not Cartomancer.SETTINGS.deck_view_stack_chips then
+        rank = rank .. tostring(self:get_chip_bonus())
+    end
+
     if not args.unique_count and Cartomancer.SETTINGS.deck_view_stack_modifiers then
         return string.format(
             "%s%s",

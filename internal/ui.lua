@@ -71,6 +71,10 @@ Cartomancer.config_tab = function()
                     ref_value = 'deck_view_stack_modifiers',
                     localization = 'carto_deck_view_stack_modifiers',
                 },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_chips',
+                    localization = 'carto_deck_view_stack_chips',
+                },
                 --create_toggle_option('deck_view_stack_suits', 'carto_deck_view_stack_suits'),
                 create_inline_slider({ref_value = 'deck_view_stack_background_opacity', localization = 'carto_deck_view_stack_background_opacity',}),
                 create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
