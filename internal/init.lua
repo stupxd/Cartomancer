@@ -27,9 +27,6 @@ Cartomancer.find_self = function (target_filename)
     end
 end
 
-Cartomancer.path = Cartomancer.find_self('cartomancer.lua')
-assert(Cartomancer.path, "Failed to find mod folder. Make sure that `Cartomancer` folder has `cartomancer.lua` file!")
-
 Cartomancer.load_mod_file = function (path, name)
     name = name or path
 

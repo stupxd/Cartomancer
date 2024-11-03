@@ -1,5 +1,10 @@
 require 'cartomancer.init'
 
+Cartomancer.path = assert(
+    Cartomancer.find_self('cartomancer.lua'),
+    "Failed to find mod folder. Make sure that `Cartomancer` folder has `cartomancer.lua` file!"
+)
+
 Cartomancer.load_mod_file('internal/config.lua', 'internal.config')
 Cartomancer.load_mod_file('internal/atlas.lua', 'internal.atlas')
 Cartomancer.load_mod_file('internal/ui.lua', 'internal.ui')
