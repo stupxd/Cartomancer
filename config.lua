@@ -20,6 +20,9 @@ return {
 
     improved_hand_sorting = false,
     draw_non_essential_shaders = true,
+    hide_tags = false,
+    hide_consumables = false,
+    hide_deck = false,
     
     flames_intensity_min = 0.5,
     flames_intensity_max = 10,

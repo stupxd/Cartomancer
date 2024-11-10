@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''G.FUNCS.blind_chip_UI_scale(G.hand_text_area.blind_chips)'''
+position = 'before'
+payload = '''
+Cartomancer.update_tags_visibility()'''
+match_indent = true

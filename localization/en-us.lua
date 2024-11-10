@@ -33,6 +33,9 @@ return {
 
             carto_draw_non_essential_shaders = "Draw non-essential shaders",
             carto_improved_hand_sorting = "Improved hand sorting",
+            carto_hide_tags = "Hide tags",
+            carto_hide_consumables = "Hide consumables",
+            carto_hide_deck = "Hide deck",
 
             carto_flames_intensity_min = "Min intensity ",
             carto_flames_intensity_max = "Max intensity ",

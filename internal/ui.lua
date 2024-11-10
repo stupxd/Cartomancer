@@ -138,6 +138,19 @@ Cartomancer.config_tab = function()
                     ref_value = 'draw_non_essential_shaders',
                     localization = 'carto_draw_non_essential_shaders',
                 },
+                create_toggle_option {
+                    ref_value = 'hide_tags',
+                    localization = 'carto_hide_tags',
+                    callback = function () Cartomancer.update_tags_visibility() end
+                },
+                create_toggle_option {
+                    ref_value = 'hide_consumables',
+                    localization = 'carto_hide_consumables',
+                },
+                create_toggle_option {
+                    ref_value = 'hide_deck',
+                    localization = 'carto_hide_deck',
+                },
             }}
         end
     })
