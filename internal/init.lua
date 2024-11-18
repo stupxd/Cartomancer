@@ -1,10 +1,11 @@
 Cartomancer = {}
-Cartomancer.INTERNAL_debugging = false
 
 Cartomancer.SETTINGS = {}
 
 Cartomancer.nfs = require "cartomancer.nfs"
 local lovely = require "lovely"
+
+Cartomancer.INTERNAL_debugging = not not Cartomancer.nfs.getInfo('cartomancer_debugging')
 
 Cartomancer.use_smods = function ()
     return SMODS and not (MODDED_VERSION == "0.9.8-STEAMODDED")
@@ -45,6 +46,40 @@ Cartomancer.log = function (msg)
         local msg = type(msg) == "string" and msg or Cartomancer.dump(msg)
 
         print("[Cartomancer] "..msg)
+    end
+end
+
+Cartomancer.dump = function (o, level, prefix)
+    level = level or 1
+    prefix = prefix or '  '
+    if type(o) == 'table' and level <= 5 then
+        local s = '{ \n'
+        for k, v in pairs(o) do
+            local format
+            if type(k) == 'number' then
+                format = '%s[%d] = %s,\n'
+            else
+                format = '%s["%s"] = %s,\n'
+            end
+            s = s .. string.format(
+                    format,
+                    prefix,
+                    k,
+                    -- Compact parent & draw_major to avoid recursion and huge dumps.
+                    (k == 'parent' or k == 'draw_major') and string.format("'%s'", tostring(v)) or Cartomancer.dump(v, level + 1, prefix..'  ')
+            )
+        end
+        return s..prefix:sub(3)..'}'
+    else
+        if type(o) == "string" then
+            return string.format('"%s"', o)
+        end
+
+        if type(o) == "function" or type(o) == "table" then
+            return string.format("'%s'", tostring(o))
+        end
+
+        return tostring(o)
     end
 end
 

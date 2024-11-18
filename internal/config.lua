@@ -1,38 +1,4 @@
 
-Cartomancer.dump = function (o, level, prefix)
-    level = level or 1
-    prefix = prefix or '  '
-    if type(o) == 'table' and level <= 5 then
-        local s = '{ \n'
-        for k, v in pairs(o) do
-            local format
-            if type(k) == 'number' then
-                format = '%s[%d] = %s,\n'
-            else
-                format = '%s["%s"] = %s,\n'
-            end
-            s = s .. string.format(
-                    format,
-                    prefix,
-                    k,
-                    -- Compact parent & draw_major to avoid recursion and huge dumps.
-                    (k == 'parent' or k == 'draw_major') and string.format("'%s'", tostring(v)) or Cartomancer.dump(v, level + 1, prefix..'  ')
-            )
-        end
-        return s..prefix:sub(3)..'}'
-    else
-        if type(o) == "string" then
-            return string.format('"%s"', o)
-        end
-
-        if type(o) == "function" or type(o) == "table" then
-            return string.format("'%s'", tostring(o))
-        end
-
-        return tostring(o)
-    end
-end
-
 Cartomancer.save_config = function ()
     Cartomancer.log "Saving cartomancer config..."
     Cartomancer.nfs.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
@@ -75,6 +41,9 @@ Cartomancer.load_config = function ()
             Cartomancer.SETTINGS[k] = v
         end
     end
+
+    Cartomancer.log "Successfully loaded config: "
+    Cartomancer.log(Cartomancer.SETTINGS)
 end
 
 local cart_options_ref = G.FUNCS.options
