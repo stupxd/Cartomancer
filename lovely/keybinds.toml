@@ -18,18 +18,3 @@ payload = '''
     end
 '''
 match_indent = true
-
-
-[[patches]]
-[patches.pattern]
-target = 'engine/controller.lua'
-pattern = "if not _RELEASE_MODE then"
-position = "before"
-payload = '''
-if self.held_keys['lalt'] then
-    if key == '1' then
-        Cartomancer.hide_hovered_joker(self)
-    end
-end
-'''
-match_indent = true

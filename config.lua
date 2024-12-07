@@ -32,6 +32,17 @@ return {
 
     jokers_controls_buttons = true,
     jokers_controls_show_after = 13,
+
+    keybinds = {
+        hide_joker = {
+            lalt = true,
+            h = true,
+        },
+        toggle_tags_visibility = {
+            lalt = true,
+            t = true,
+        }
+    },
 }
 
 --[[
