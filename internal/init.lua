@@ -5,7 +5,7 @@ Cartomancer.SETTINGS = {}
 Cartomancer.nfs = require "cartomancer.nfs"
 local lovely = require "lovely"
 
-Cartomancer.INTERNAL_debugging = not not Cartomancer.nfs.getInfo('cartomancer_debugging')
+Cartomancer.INTERNAL_debugging = not not love.filesystem.getInfo('cartomancer_debugging')
 
 Cartomancer.use_smods = function ()
     return SMODS and not (MODDED_VERSION == "0.9.8-STEAMODDED")

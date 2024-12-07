@@ -7,13 +7,13 @@ end
 
 Cartomancer.load_config = function ()
     Cartomancer.log "Starting to load config"
-    if not Cartomancer.nfs.getInfo('config') then
+    if not love.filesystem.getInfo('config') then
         Cartomancer.log("Creating config folder...")
-        Cartomancer.nfs.createDirectory('config')
+        love.filesystem.createDirectory('config')
     end
 
     -- Steamodded config file location
-    local config_file = Cartomancer.nfs.read('config/cartomancer.jkr')
+    local config_file = love.filesystem.read('config/cartomancer.jkr')
 
     local latest_default_config = Cartomancer.load_mod_file('config.lua', 'default-config')
 
