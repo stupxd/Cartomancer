@@ -6,6 +6,7 @@ return {
             carto_settings_jokers = "Jokers",
             carto_settings_flames = "Flames",
             carto_settings_other = "Other",
+            carto_settings_keybinds = "Keybinds",
 
             carto_compact_deck_enabled = "Limit cards in deck pile",
             carto_compact_deck_visible_cards = "Cards limit ",
@@ -49,6 +50,10 @@ return {
             carto_jokers_hide = "Hide",
             carto_jokers_show = "Show",
             carto_jokers_zoom = "Zoom",
+
+            carto_waiting_keybind = "Waiting for input...",
+            carto_kb_hide_joker =  "Hide joker               ",
+            carto_kb_toggle_tags = "Toggle tags visibility      ",
         }
     }
 }

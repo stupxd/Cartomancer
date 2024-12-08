@@ -55,6 +55,7 @@ function Cartomancer.record_keybind(args)
         Cartomancer.log "Already recording keybind, ignoring another call."
         return
     end
+    --Cartomancer.log "Starting to record keybind"
 
     if not args.callback then
         assert(type(args.name) == "string", "missing callback or keybind name")
@@ -79,6 +80,7 @@ function Controller:key_press(key)
     local ret = on_press(self, key)
 
     if recording_keybind then
+        --Cartomancer.log("Adding key "..key)
         recording_keybind.pressed[key] = true
         if recording_keybind.press_callback then
             recording_keybind.press_callback(recording_keybind.pressed)
@@ -97,6 +99,7 @@ function Controller:key_release(key)
 
     -- Only callback if key was pressed during keybind recording
     if recording_keybind and recording_keybind.pressed[key] then
+        --Cartomancer.log "Saving keybind"
         recording_keybind.callback(recording_keybind.pressed)
         recording_keybind = nil
     end

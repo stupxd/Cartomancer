@@ -24,7 +24,6 @@ Cartomancer.INTERNAL_jokers_menu = false
 Cartomancer.register_keybind {
     name = 'hide_joker',
     func = function (controller)
-        Cartomancer.log("hiding joker")
         Cartomancer.hide_hovered_joker(controller)
     end
 }
@@ -36,30 +35,3 @@ Cartomancer.register_keybind {
         Cartomancer.update_tags_visibility()
     end
 }
-
---[=[
-    Cartomancer.SETTINGS.keybinds.ouroboros = {
-        lctrl = true,
-        o = true
-    }
-Cartomancer.register_keybind {
-    name = 'ouroboros',
-    func = function (controller)
-        Cartomancer.record_keybind {
-            name = 'ouroboros',
-            callback = function (keys)
-                Cartomancer.log("Recorded keybind: ")
-                Cartomancer.log(keys)
-                Cartomancer.SETTINGS.keybinds.ouroboros = keys
-            end,
-            press_callback = function (keys)
-                local inline
-                for k, _ in pairs(keys) do
-                    inline = (inline and inline..", " or "") .. k
-                end
-
-                Cartomancer.log("Pressed keys: "..inline)
-            end
-        }
-    end
-}]=]--

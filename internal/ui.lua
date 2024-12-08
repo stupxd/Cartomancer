@@ -5,6 +5,7 @@ Cartomancer._INTERNAL_max_flames_intensity = 40
 local create_column_tabs,
       create_inline_slider,
       create_toggle_option,
+      create_keybind,
       create_text_line,
       create_input_option,
       create_inline_options,
@@ -155,6 +156,24 @@ Cartomancer.config_tab = function()
         end
     })
 
+    table.insert(vertical_tabs, {
+        label = localize('carto_settings_keybinds'),
+        chosen = is_chosen("keybinds"),
+        tab_definition_function = function (...)
+            Cartomancer.LAST_OPEN_TAB = "keybinds"
+            return {n = G.UIT.ROOT, config = tab_config, nodes = {
+                create_keybind {
+                    name = 'hide_joker',
+                    localization = 'carto_kb_hide_joker',
+                },
+                create_keybind {
+                    name = 'toggle_tags_visibility',
+                    localization = 'carto_kb_toggle_tags',
+                },
+            }}
+        end
+    })
+
     return create_UIBox_generic_options_custom({
         bg_colour = G.C.CLEAR,-- G.C.BLUE,
         contents = {
@@ -252,6 +271,31 @@ create_toggle_option = function (args)
       }}
 end
 
+create_keybind = function (args)
+    assert(args.name, "Missing `name` in create_keybind " .. Cartomancer.dump(args))
+
+    local ref_table = {
+        name = args.name,
+        label = {
+            text = Cartomancer.table_join_keys(Cartomancer.SETTINGS.keybinds[args.name], "+")
+        },
+    }
+
+    local id = 'kb_'..args.name
+
+    return 
+    {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
+        {n = G.UIT.C, config = { align = "cl", padding = 0 }, nodes = {
+            { n = G.UIT.T, config = { text = localize(args.localization), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+        }},
+        {n = G.UIT.C, config = { align = "cr", padding = 0.05 }, nodes = {
+            UIBox_button({id = id, ref_table = ref_table, colour = G.C.GREY, button = 'cartomancer_settings_change_keybind', label = {}, dynamic_label = ref_table.label,
+                                                    minh = 0.32, minw = 3, col = true, scale = 0.3,
+            })
+        }},
+    }}
+end
+
 create_input_option = function (ref_value, localization, max_length)
     return { n = G.UIT.R, config = {align = "cl", minw = 4, minh = 0.5, colour = G.C.CLEAR, padding = 0.05}, nodes = {
             { n = G.UIT.T, config = {text = localize(localization), scale = .36, minw = 4, minh = 0.5, colour = G.C.WHITE} },
@@ -313,6 +357,36 @@ end
 
 G.FUNCS.cartomancer_deck_view_pos_horizontal = function(args)
     Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = args.to_val
+end
+
+local keybind_held_keys = false
+
+G.FUNCS.cartomancer_settings_change_keybind = function(e)
+    local name = e.config.ref_table.name
+    local dynamic_label = e.config.ref_table.label
+    dynamic_label.text = localize "carto_waiting_keybind"
+    
+    Cartomancer.record_keybind {
+        name = name,
+        callback = function (keys)
+            if not keybind_held_keys then
+                Cartomancer.log("No keys pressed! No keybind recorded")
+                return
+            end
+            
+            if keybind_held_keys['esc'] and Cartomancer.table_size(keys) == 1 then
+                Cartomancer.log("You just quit menu, ignoring keybind o7")
+                return
+            end
+
+            Cartomancer.SETTINGS.keybinds[name] = keys
+            Cartomancer.log("Saved keybind: " ..Cartomancer.table_join_keys(keys, "+"))
+        end,
+        press_callback = function (keys)
+            keybind_held_keys = keys
+            dynamic_label.text = Cartomancer.table_join_keys(keys, "+")
+        end,
+    }
 end
 
 G.FUNCS.cartomancer_settings_change_tab = function(e)

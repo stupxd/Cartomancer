@@ -83,5 +83,15 @@ Cartomancer.dump = function (o, level, prefix)
     end
 end
 
+Cartomancer.table_join_keys = function (tab_, separator)
+    local separator = separator or "" 
+    local inline
+    for k, _ in pairs(tab_) do
+        inline = (inline and inline..separator or "") .. k
+    end
+
+    return inline or "[empty]"
+end
+
 
 return Cartomancer

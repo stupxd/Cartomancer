@@ -71,3 +71,20 @@ match_indent = true
 position = "at"
 pattern = "self.config.chosen = true"
 payload = "self.config.chosen = chosen_temp or true"
+
+# Add dynamic label support to UIBox_button
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "before"
+pattern = "for k, v in ipairs(args.label) do"
+payload = '''
+if args.dynamic_label then
+  but_UI_label = {}
+  
+  table.insert(but_UI_label, {n=G.UIT.R, config={align = "cm", padding = 0, minw = args.minw, maxw = args.maxw}, nodes={
+    {n=G.UIT.T, config={ref_table = args.dynamic_label, ref_value = 'text', scale = args.scale, colour = args.text_colour, shadow = args.shadow, focus_args = button_pip and args.focus_args or nil, func = button_pip,}}
+  }})
+end
+'''
