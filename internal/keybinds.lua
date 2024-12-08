@@ -77,6 +77,18 @@ end
 
 local on_press = Controller.key_press
 function Controller:key_press(key)
+    if key == 'escape' and recording_keybind then
+        -- Reset keybind completely
+        Cartomancer.log "Resetting keybind"
+        local empty_keybind = {['[none]'] = true}
+        if recording_keybind.press_callback then
+            recording_keybind.press_callback(empty_keybind)
+        end
+        recording_keybind.callback(empty_keybind)
+        recording_keybind = nil
+        return
+    end
+
     local ret = on_press(self, key)
 
     if recording_keybind then

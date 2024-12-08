@@ -2,9 +2,14 @@
 
 
 function Cartomancer.align_G_jokers()
+    if not G or not G.jokers then
+        return
+    end
     -- Refresh controls
-    G.jokers.children.cartomancer_controls:remove()
-    G.jokers.children.cartomancer_controls = nil
+    if G.jokers.children.cartomancer_controls then
+        G.jokers.children.cartomancer_controls:remove()
+        G.jokers.children.cartomancer_controls = nil
+    end
     G.jokers:align_cards()
     G.jokers:hard_set_cards()
 end
@@ -119,18 +124,20 @@ function Cartomancer.add_visibility_controls()
                 nodes = {
                     {n=G.UIT.R, config={align = 'tm', padding = 0.07, no_fill = true}, nodes={
 
-                        {n=G.UIT.C, config={align = "cm", }, nodes={
-                            UIBox_button({id = 'hide_all_jokers', button = 'cartomancer_hide_all_jokers', label ={localize('carto_jokers_hide')},
-                                                                      minh = 0.45, minw = 1, col = false, scale = 0.3,-- func = function ()return Cartomancer.SETTINGS.jokers_visibility_controls end
-                            })
-                        }},
+                        G.jokers.cart_hide_all and 
                         {n=G.UIT.C, config={align = "cm"}, nodes={
                             UIBox_button({id = 'show_all_jokers', button = 'cartomancer_show_all_jokers', label = {localize('carto_jokers_show')},
                                                                       minh = 0.45, minw = 1, col = false, scale = 0.3,
                                                                       colour = G.C.CHIPS, --func = function ()return Cartomancer.SETTINGS.jokers_visibility_controls end
                             })
+                        }}
+                        or
+                        {n=G.UIT.C, config={align = "cm", }, nodes={
+                            UIBox_button({id = 'hide_all_jokers', button = 'cartomancer_hide_all_jokers', label ={localize('carto_jokers_hide')},
+                                                                      minh = 0.45, minw = 1, col = false, scale = 0.3,-- func = function ()return Cartomancer.SETTINGS.jokers_visibility_controls end
+                            })
                         }},
-                        
+
                         {n=G.UIT.C, config={align = "cm"}, nodes={
                             UIBox_button({id = 'zoom_jokers', button = 'cartomancer_zoom_jokers', label = {localize('carto_jokers_zoom')},
                                                                       minh = 0.45, minw = 1, col = false, scale = 0.3,
@@ -161,11 +168,13 @@ end
 G.FUNCS.cartomancer_hide_all_jokers = function(e)
     Cartomancer.hide_all_jokers()
     G.jokers.cart_hide_all = true
+    Cartomancer.align_G_jokers()
 end
 
 G.FUNCS.cartomancer_show_all_jokers = function(e)
     Cartomancer.show_all_jokers()
     G.jokers.cart_hide_all = false
+    Cartomancer.align_G_jokers()
 end
 
 G.FUNCS.cartomancer_zoom_jokers = function(e)
@@ -215,51 +224,6 @@ function Cartomancer.hide_hovered_joker(controller)
 
     hide_card(selected)
 end
-
--- Returns true if joker should be hidden due to settings 
-function Cartomancer.should_hide_joker(card)
-    
-    
-end
-
-function Cartomancer.update_jokers_visibility()
-    if not G.jokers then
-        return
-    end
-
-    local settings = Cartomancer.SETTINGS.hide_jokers
-
-    local total_jokers = #G.jokers.cards
-
-    for i = 1, total_jokers do
-        local joker = G.jokers.cards[i]
-        if not settings.enabled then
-            joker.states.visible = true
-        else
-            local hide = false
-
-            if settings.all then
-                hide = true
-
-            elseif total_jokers >= settings.hide_after_total then
-                hide = true
-
-            elseif settings.rarities[JOKER_RARITY[joker.config.center.rarity]] then
-                Cartomancer.log("hiding joker with rarity " .. JOKER_RARITY[joker.config.center.rarity])
-                hide = true
-            
-            elseif joker.edition and settings.editions[next(joker.edition)] then
-                Cartomancer.log("hiding joker with edition " .. next(joker.edition))
-                hide = true
-            end
-
-            if hide then
-                hide_card(joker)
-            end
-        end
-    end
-end
-
 
 function Cartomancer.hide_all_jokers()
     if not G.jokers then

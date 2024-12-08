@@ -4,6 +4,24 @@ Cartomancer.save_config = function ()
     love.filesystem.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
 end
 
+-- Logic for keeping config tables up to date
+local function remove_unused_keys(from_table, template)
+    for k, v in pairs(from_table) do
+        if template[k] == nil then
+            Cartomancer.log("Removing setting `"..k.. "` because it is not in default config")
+            from_table[k] = nil
+        end
+    end
+end
+
+local function add_missing_keys(to_table, template)
+    for k, v in pairs(template) do
+        if to_table[k] == nil then
+            Cartomancer.log("Adding setting `"..k.. "` because it is missing in latest config")
+            to_table[k] = v
+        end
+    end
+end
 
 Cartomancer.load_config = function ()
     Cartomancer.log "Starting to load config"
@@ -40,20 +58,11 @@ Cartomancer.load_config = function ()
         Cartomancer.save_config()
     end
 
-    -- Remove unused settings
-    for k, v in pairs(Cartomancer.SETTINGS) do
-        if latest_default_config[k] == nil then
-            Cartomancer.log("Removing setting `"..k.. "` because it is not in default config")
-            Cartomancer.SETTINGS[k] = nil
-        end
-    end
+    remove_unused_keys(Cartomancer.SETTINGS, latest_default_config)
+    add_missing_keys(Cartomancer.SETTINGS, latest_default_config)
 
-    for k, v in pairs(latest_default_config) do
-        if Cartomancer.SETTINGS[k] == nil then
-            Cartomancer.log("Adding setting `"..k.. "` because it is missing in latest config")
-            Cartomancer.SETTINGS[k] = v
-        end
-    end
+    remove_unused_keys(Cartomancer.SETTINGS.keybinds, latest_default_config.keybinds)
+    add_missing_keys(Cartomancer.SETTINGS.keybinds, latest_default_config.keybinds)
 
     Cartomancer.log "Successfully loaded config: "
     Cartomancer.log(Cartomancer.SETTINGS)

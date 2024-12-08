@@ -29,9 +29,47 @@ Cartomancer.register_keybind {
 }
 
 Cartomancer.register_keybind {
-    name = 'toggle_tags_visibility',
+    name = 'toggle_tags',
     func = function (controller)
         Cartomancer.SETTINGS.hide_tags = not Cartomancer.SETTINGS.hide_tags
         Cartomancer.update_tags_visibility()
+    end
+}
+
+Cartomancer.register_keybind {
+    name = 'toggle_consumables',
+    func = function (controller)
+        Cartomancer.SETTINGS.hide_consumables = not Cartomancer.SETTINGS.hide_consumables
+    end
+}
+
+Cartomancer.register_keybind {
+    name = 'toggle_deck',
+    func = function (controller)
+        Cartomancer.SETTINGS.hide_deck = not Cartomancer.SETTINGS.hide_deck
+    end
+}
+
+Cartomancer.register_keybind {
+    name = 'toggle_jokers',
+    func = function (controller)
+        if not (G and G.jokers) then
+            return
+        end
+        G.jokers.cart_hide_all = not G.jokers.cart_hide_all
+
+        if G.jokers.cart_hide_all then
+            Cartomancer.hide_all_jokers()
+        else
+            Cartomancer.show_all_jokers()
+        end
+        Cartomancer.align_G_jokers()
+    end
+}
+
+Cartomancer.register_keybind {
+    name = 'toggle_jokers_buttons',
+    func = function (controller)
+        Cartomancer.SETTINGS.jokers_controls_buttons = not Cartomancer.SETTINGS.jokers_controls_buttons
     end
 }

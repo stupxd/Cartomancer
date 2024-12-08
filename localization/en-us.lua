@@ -37,6 +37,7 @@ return {
             carto_hide_tags = "Hide tags",
             carto_hide_consumables = "Hide consumables",
             carto_hide_deck = "Hide deck",
+            carto_hide_jokers = "Hide jokers",
 
             carto_flames_intensity_min = "Min intensity ",
             carto_flames_intensity_max = "Max intensity ",
@@ -52,8 +53,11 @@ return {
             carto_jokers_zoom = "Zoom",
 
             carto_waiting_keybind = "Waiting for input...",
-            carto_kb_hide_joker =  "Hide joker               ",
-            carto_kb_toggle_tags = "Toggle tags visibility      ",
+            carto_kb_hide_joker =  "Hide joker",
+            carto_kb_toggle_tags = "Toggle tags visibility",
+            carto_kb_toggle_consumables = "Toggle consumables visibility",
+            carto_kb_toggle_jokers = "Toggle jokers visibility",
+            carto_kb_toggle_jokers_buttons = "Toggle jokers buttons",
         }
     }
 }

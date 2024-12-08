@@ -23,6 +23,7 @@ return {
     hide_tags = false,
     hide_consumables = false,
     hide_deck = false,
+    hide_jokers = false,
     
     flames_intensity_min = 0.5,
     flames_intensity_max = 10,
@@ -38,10 +39,11 @@ return {
             lalt = true,
             h = true,
         },
-        toggle_tags_visibility = {
-            lalt = true,
-            t = true,
-        }
+        toggle_tags = {['[none]'] = true},
+        toggle_consumables = {['[none]'] = true},
+        toggle_deck = {['[none]'] = true},
+        toggle_jokers = {['[none]'] = true},
+        toggle_jokers_buttons = {['[none]'] = true},
     },
 }
 

@@ -152,6 +152,10 @@ Cartomancer.config_tab = function()
                     ref_value = 'hide_deck',
                     localization = 'carto_hide_deck',
                 },
+                create_toggle_option {
+                    ref_value = 'hide_jokers',
+                    localization = 'carto_hide_jokers',
+                },
             }}
         end
     })
@@ -167,8 +171,20 @@ Cartomancer.config_tab = function()
                     localization = 'carto_kb_hide_joker',
                 },
                 create_keybind {
-                    name = 'toggle_tags_visibility',
+                    name = 'toggle_tags',
                     localization = 'carto_kb_toggle_tags',
+                },
+                create_keybind {
+                    name = 'toggle_consumables',
+                    localization = 'carto_kb_toggle_consumables',
+                },
+                create_keybind {
+                    name = 'toggle_jokers',
+                    localization = 'carto_kb_toggle_jokers',
+                },
+                create_keybind {
+                    name = 'toggle_jokers_buttons',
+                    localization = 'carto_kb_toggle_jokers_buttons',
                 },
             }}
         end
@@ -284,7 +300,7 @@ create_keybind = function (args)
     local id = 'kb_'..args.name
 
     return 
-    {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
+    {n = G.UIT.R, config = {align = "cr", padding = 0.05}, nodes = {
         {n = G.UIT.C, config = { align = "cl", padding = 0 }, nodes = {
             { n = G.UIT.T, config = { text = localize(args.localization), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
         }},
