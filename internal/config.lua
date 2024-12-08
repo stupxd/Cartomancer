@@ -1,7 +1,7 @@
 
 Cartomancer.save_config = function ()
     Cartomancer.log "Saving cartomancer config..."
-    Cartomancer.nfs.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
+    love.filesystem.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
 end
 
 
