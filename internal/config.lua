@@ -15,6 +15,15 @@ Cartomancer.load_config = function ()
     -- Steamodded config file location
     local config_file = love.filesystem.read('config/cartomancer.jkr')
 
+    -- Fix bugged config
+    local save = false
+    if Cartomancer.nfs.getInfo('config/cartomancer.jkr') then
+        Cartomancer.log "Found bugged config, saving it to proper folder and removing unnecessary file!"
+        config_file = Cartomancer.nfs.read('config/cartomancer.jkr')
+        Cartomancer.nfs.remove('config/cartomancer.jkr')
+        save = true -- save after settings initialized
+    end
+
     local latest_default_config = Cartomancer.load_mod_file('config.lua', 'default-config')
 
     if config_file then
@@ -24,6 +33,10 @@ Cartomancer.load_config = function ()
     else
         Cartomancer.log "Creating default settings"
         Cartomancer.SETTINGS = latest_default_config
+        save = true
+    end
+
+    if save then
         Cartomancer.save_config()
     end
 
