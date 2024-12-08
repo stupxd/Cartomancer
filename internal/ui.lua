@@ -213,7 +213,7 @@ Cartomancer.jokers_visibility_menu = function ()
             localization = 'carto_jokers_controls_buttons',
         },
         create_inline_slider({ref_value = 'jokers_controls_show_after', localization = 'carto_jokers_controls_show_after',}),
-        create_text_line{ loc = 'carto_jokers_hide_keybind' },
+        --create_text_line{ loc = 'carto_jokers_hide_keybind' },
     }}
 end
 

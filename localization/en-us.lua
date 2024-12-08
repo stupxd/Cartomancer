@@ -46,7 +46,7 @@ return {
             
             carto_jokers_controls_buttons = "Show joker area buttons",
             carto_jokers_controls_show_after = "after total # of jokers above ",
-            carto_jokers_hide_keybind = "Hide hovered joker with Alt + 1",
+            --carto_jokers_hide_keybind = "Hide hovered joker with Alt + 1",
             carto_jokers_hide = "Hide",
             carto_jokers_show = "Show",
             carto_jokers_zoom = "Zoom",
