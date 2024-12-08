@@ -72,7 +72,21 @@ local cart_options_ref = G.FUNCS.options
 G.FUNCS.options = function(e)
     if Cartomancer.INTERNAL_in_config then
         Cartomancer.INTERNAL_in_config = false
+        if Cartomancer._recording_keybind then
+            Cartomancer.log "Quit config, stopping to record keybind"
+            Cartomancer._recording_keybind = nil
+        end
         Cartomancer.save_config()
     end
     return cart_options_ref(e)
+end
+
+local settings_tab_ref = G.UIDEF.settings_tab
+function G.UIDEF.settings_tab(tab)
+    if Cartomancer._recording_keybind then
+        Cartomancer.log "Changed settings tab, stopping to record keybind"
+        Cartomancer._recording_keybind = nil
+    end
+    -- Maybe I should port cartomancer settings to use this function as well? but it would still not work with other mods that add custom tabs :sob:
+    return settings_tab_ref(tab)
 end

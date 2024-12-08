@@ -20,12 +20,20 @@ local create_UIBox_generic_options_custom = function (args)
               {n=G.UIT.C, config={align = "cl", padding = 0, minw = args.minw or 5, minh = args.minh or 3},
                 nodes = args.contents
               },
-            }
+        }
     }
 end
 
 local function is_chosen(tab)
   return Cartomancer.LAST_OPEN_TAB == tab
+end
+
+local function choose_tab(tab)
+    Cartomancer.LAST_OPEN_TAB = tab
+    if Cartomancer._recording_keybind and not (tab == "keybinds") then
+        Cartomancer.log "Switched settings tab, stopping recording keybind"
+        Cartomancer._recording_keybind = nil
+    end
 end
 
 local tab_config = {r = 0.1, align = "t", padding = 0.0, colour = G.C.CLEAR, minw = 8.5, minh = 6}
@@ -35,14 +43,14 @@ Cartomancer.config_tab = function()
     Cartomancer.log "Opened cartomancer config"
     local vertical_tabs = {}
 
-    Cartomancer.LAST_OPEN_TAB = "compact_deck"
+    choose_tab "compact_deck"
 
 
     table.insert(vertical_tabs, {
         label = localize('carto_settings_compact_deck'),
         chosen = is_chosen("compact_deck"),
         tab_definition_function = function (...)
-            Cartomancer.LAST_OPEN_TAB = "compact_deck"
+            choose_tab "compact_deck"
             -- Yellow node. Align changes the position of modes inside
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option {
@@ -58,7 +66,7 @@ Cartomancer.config_tab = function()
         label = localize('carto_settings_deck_view'),
         chosen = is_chosen("deck_view"),
         tab_definition_function = function (...)
-            Cartomancer.LAST_OPEN_TAB = "deck_view"
+            choose_tab "deck_view"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option {
                     ref_value = 'deck_view_hide_drawn_cards',
@@ -105,7 +113,7 @@ Cartomancer.config_tab = function()
         label = localize('carto_settings_flames'),
         chosen = is_chosen("flames"),
         tab_definition_function = function (...)
-            Cartomancer.LAST_OPEN_TAB = "flames"
+            choose_tab "flames"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_inline_slider({ref_value = 'flames_intensity_min', localization = 'carto_flames_intensity_min', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
                 create_inline_slider({ref_value = 'flames_intensity_max', localization = 'carto_flames_intensity_max', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
@@ -128,7 +136,7 @@ Cartomancer.config_tab = function()
         label = localize('carto_settings_other'),
         chosen = is_chosen("other"),
         tab_definition_function = function (...)
-            Cartomancer.LAST_OPEN_TAB = "other"
+            choose_tab "other"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option {
                     ref_value = 'improved_hand_sorting',
@@ -164,7 +172,7 @@ Cartomancer.config_tab = function()
         label = localize('carto_settings_keybinds'),
         chosen = is_chosen("keybinds"),
         tab_definition_function = function (...)
-            Cartomancer.LAST_OPEN_TAB = "keybinds"
+            choose_tab "keybinds"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_keybind {
                     name = 'hide_joker',
@@ -221,7 +229,7 @@ end
 
 Cartomancer.jokers_visibility_menu = function ()
     
-    Cartomancer.LAST_OPEN_TAB = "jokers"
+    choose_tab "jokers"
 
     return {n = G.UIT.ROOT, config = tab_config, nodes = {
         create_toggle_option {
@@ -375,8 +383,6 @@ G.FUNCS.cartomancer_deck_view_pos_horizontal = function(args)
     Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = args.to_val
 end
 
-local keybind_held_keys = false
-
 G.FUNCS.cartomancer_settings_change_keybind = function(e)
     local name = e.config.ref_table.name
     local dynamic_label = e.config.ref_table.label
@@ -385,21 +391,17 @@ G.FUNCS.cartomancer_settings_change_keybind = function(e)
     Cartomancer.record_keybind {
         name = name,
         callback = function (keys)
-            if not keybind_held_keys then
+            if not keys then
                 Cartomancer.log("No keys pressed! No keybind recorded")
+                dynamic_label.text = 'error :c'
                 return
             end
-            
-            if keybind_held_keys['esc'] and Cartomancer.table_size(keys) == 1 then
-                Cartomancer.log("You just quit menu, ignoring keybind o7")
-                return
-            end
+            dynamic_label.text = Cartomancer.table_join_keys(keys, "+")
 
             Cartomancer.SETTINGS.keybinds[name] = keys
             Cartomancer.log("Saved keybind: " ..Cartomancer.table_join_keys(keys, "+"))
         end,
         press_callback = function (keys)
-            keybind_held_keys = keys
             dynamic_label.text = Cartomancer.table_join_keys(keys, "+")
         end,
     }

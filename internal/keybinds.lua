@@ -39,6 +39,10 @@ local function check_keybinds_deactivation(controller)
     end
 end
 
+--
+-- Public functions to handle keybinds
+--
+
 function Cartomancer.register_keybind(args)
     assert(type(args.name) == "string", 'keybind args `name` is missing or not a string')
     assert(type(args.func) == "function", 'keybind args `func` is missing or not a function')
@@ -48,55 +52,55 @@ function Cartomancer.register_keybind(args)
     Cartomancer.INTERNAL_keybinds[args.name] = args.func
 end
 
-local recording_keybind = nil
-
 function Cartomancer.record_keybind(args)
-    if recording_keybind then
-        Cartomancer.log "Already recording keybind, ignoring another call."
-        return
+    Cartomancer.log "Starting to record keybind"
+    if Cartomancer._recording_keybind then
+        Cartomancer.log "Already recording keybind, resetting that one!"
+        local existing_keybind = Cartomancer.SETTINGS.keybinds[Cartomancer._recording_keybind.name]
+        Cartomancer._recording_keybind.callback(existing_keybind)
+        Cartomancer._recording_keybind = nil
+        --return
     end
-    --Cartomancer.log "Starting to record keybind"
-
+    assert(type(args.name) == "string", "missing keybind name")
+    
     if not args.callback then
-        assert(type(args.name) == "string", "missing callback or keybind name")
         args.callback = function (new_keys)
             Cartomancer.SETTINGS.keybinds[args.name] = new_keys
         end
     end
     assert(type(args.callback) == "function", 'arg `callback` must be a function')
     -- optional arg display pressed keys live
-    if args.press_callback then
-        assert(type(args.press_callback) == "function", 'arg `press_callback` must be a function')
-    end
-    recording_keybind = {
+    args.press_callback = args.press_callback or Cartomancer.do_nothing
+    assert(type(args.press_callback) == "function", 'arg `press_callback` must be a function')
+    Cartomancer._recording_keybind = {
+        name = args.name,
         pressed = {},
         callback = args.callback,
         press_callback = args.press_callback
     }
 end
 
+-- 
+-- Handle key press / release
+-- 
+
 local on_press = Controller.key_press
 function Controller:key_press(key)
-    if key == 'escape' and recording_keybind then
+    if key == 'escape' and Cartomancer._recording_keybind then
         -- Reset keybind completely
         Cartomancer.log "Resetting keybind"
         local empty_keybind = {['[none]'] = true}
-        if recording_keybind.press_callback then
-            recording_keybind.press_callback(empty_keybind)
-        end
-        recording_keybind.callback(empty_keybind)
-        recording_keybind = nil
+        Cartomancer._recording_keybind.callback(empty_keybind)
+        Cartomancer._recording_keybind = nil
         return
     end
 
     local ret = on_press(self, key)
 
-    if recording_keybind then
-        --Cartomancer.log("Adding key "..key)
-        recording_keybind.pressed[key] = true
-        if recording_keybind.press_callback then
-            recording_keybind.press_callback(recording_keybind.pressed)
-        end
+    if Cartomancer._recording_keybind then
+        Cartomancer.log("Adding key "..key)
+        Cartomancer._recording_keybind.pressed[key] = true
+        Cartomancer._recording_keybind.press_callback(Cartomancer._recording_keybind.pressed)
     else
         -- Only check activation if not recording
         check_keybinds_activation(self)
@@ -110,10 +114,10 @@ function Controller:key_release(key)
     local ret = on_release(self, key)
 
     -- Only callback if key was pressed during keybind recording
-    if recording_keybind and recording_keybind.pressed[key] then
-        --Cartomancer.log "Saving keybind"
-        recording_keybind.callback(recording_keybind.pressed)
-        recording_keybind = nil
+    if Cartomancer._recording_keybind and Cartomancer._recording_keybind.pressed[key] then
+        Cartomancer.log "Saving keybind"
+        Cartomancer._recording_keybind.callback(Cartomancer._recording_keybind.pressed)
+        Cartomancer._recording_keybind = nil
     end
     -- Keybinds should still deactivate even during recording
     check_keybinds_deactivation(self)

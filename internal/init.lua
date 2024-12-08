@@ -93,5 +93,7 @@ Cartomancer.table_join_keys = function (tab_, separator)
     return inline or "[empty]"
 end
 
+Cartomancer.do_nothing = function (...) end
+
 
 return Cartomancer
