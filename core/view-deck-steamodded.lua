@@ -113,7 +113,7 @@ local Cartomancer_nfs_read_override = function (containerOrName, nameOrSize, siz
     if type(containerOrName) ~= "string" then
         return data, size
     end
-    local overrides = 'core/overrides.lua'
+    local overrides = '/overrides.lua'
     if containerOrName:sub(-#overrides) ~= overrides then
         return data, size
     end
