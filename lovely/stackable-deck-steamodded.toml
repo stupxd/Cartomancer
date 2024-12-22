@@ -4,7 +4,7 @@ dump_lua = true
 priority = 69
 
 # Initialize upvalue from file above, and override NFS.read now.
-[[patches]] 
+[[patches]]
 [patches.pattern]
 target = "main.lua"
 match_indent = true
@@ -16,3 +16,16 @@ Cartomancer_nfs_read = NFS.read
 NFS.read = Cartomancer_nfs_read_override
 
 '''
+
+# todo : use lovely for view deck patches
+
+#[[patches]] 
+#[patches.pattern]
+#target = "Steamodded - src/overrides.lua"
+#match_indent = true
+#pattern = "--- STEAMODDED CORE"
+#position = "after"
+#payload = '''
+#-- YO WHADDUP
+#print"------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+#'''
