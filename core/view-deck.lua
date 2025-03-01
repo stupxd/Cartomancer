@@ -2,6 +2,11 @@
 function Card:cart_to_string(args)
     local args = args or {}
 
+    -- With deck stacking disabled, sort_id should make all cards unstacked in deck view.
+    if args.deck_view and not Cartomancer.SETTINGS.deck_view_stack_enabled then
+        return tostring(self.sort_id)
+    end
+
     local suit = self.base and (
         -- if has base, check for stone / no_suit
         -- only use NoSuit for unique_count, deck view displays every stone card in respective suit area
@@ -19,7 +24,7 @@ function Card:cart_to_string(args)
         rank = rank .. tostring(self:get_chip_bonus())
     end
 
-    if not args.unique_count and Cartomancer.SETTINGS.deck_view_stack_modifiers then
+    if args.deck_view and Cartomancer.SETTINGS.deck_view_stack_modifiers then
         return string.format(
             "%s%s",
             suit,

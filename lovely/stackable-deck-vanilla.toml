@@ -19,39 +19,40 @@ local greyed
 if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
   greyed = true
 end
-local card_string = v:cart_to_string()
+local card_string = v:cart_to_string {deck_view = true}
 if greyed then
     card_string = card_string .. "Greyed"
 end
+
 if greyed and Cartomancer.SETTINGS.deck_view_hide_drawn_cards then
   -- Ignore this card.
 elseif not SUITS[v.base.suit][card_string] then
-      table.insert(SUITS_SORTED[v.base.suit], card_string)
+  table.insert(SUITS_SORTED[v.base.suit], card_string)
 
-        local _scale = 0.7
-        local copy = copy_card(v, nil, _scale)
+  local _scale = 0.7
+  local copy = copy_card(v, nil, _scale)
 
-        copy.greyed = greyed
-        copy.stacked_quantity = 1
+  copy.greyed = greyed
+  copy.stacked_quantity = 1
 
-        SUITS[v.base.suit][card_string] = copy
-  else
-    local stacked_card = SUITS[v.base.suit][card_string]
-    stacked_card.stacked_quantity = stacked_card.stacked_quantity + 1
-  end'''
+  SUITS[v.base.suit][card_string] = copy
+else
+  local stacked_card = SUITS[v.base.suit][card_string]
+  stacked_card.stacked_quantity = stacked_card.stacked_quantity + 1
+end'''
 match_indent = true
 
 [[patches]] 
-[patches.regex]
+[patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = '''
-if SUITS\[suit_map\[j\]\]\[1\] then
-[\t ]*local view_deck = CardArea\('''
+    if SUITS[suit_map[j]][1] then
+      local view_deck = CardArea('''
 position = "at"
 payload = '''
-if SUITS_SORTED[suit_map[j]][1] then
+    if SUITS_SORTED[suit_map[j]][1] then
       local view_deck = CardArea('''
-line_prepend = ''
+match_indent = true
  
 [[patches]] 
 [patches.pattern]
@@ -81,38 +82,39 @@ match_indent = true
 
 # Overwrite cards copy and display code
 
+#Note for self: multi line pattern patches only work with original spacing.
 [[patches]] 
-[patches.regex]
+[patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = '''
-(?<indent>[\t ]*)for i = 1\, \#SUITS\[suit_map\[j\]\] do
-[\t ]*  if SUITS\[suit_map\[j\]\]\[i\] then
-[\t ]*    local greyed\, _scale = nil\, 0\.7
-[\t ]*    if unplayed_only and not \(\(SUITS\[suit_map\[j\]\]\[i\]\.area and SUITS\[suit_map\[j\]\]\[i\]\.area == G\.deck\) or SUITS\[suit_map\[j\]\]\[i\]\.ability\.wheel_flipped\) then
-[\t ]*      greyed = true
-[\t ]*    end
-[\t ]*    local copy = copy_card\(SUITS\[suit_map\[j\]\]\[i\]\,nil\, _scale\)
-[\t ]*    copy\.greyed = greyed
-[\t ]*    copy\.T\.x = view_deck\.T\.x \+ view_deck\.T\.w\/2
-[\t ]*    copy\.T\.y = view_deck\.T\.y
-[\t ]*
-[\t ]*    copy:hard_set_T\(\)
-[\t ]*    view_deck:emplace\(copy\)
-[\t ]*  end
-[\t ]*end'''
+      for i = 1, #SUITS[suit_map[j]] do
+        if SUITS[suit_map[j]][i] then
+          local greyed, _scale = nil, 0.7
+          if unplayed_only and not ((SUITS[suit_map[j]][i].area and SUITS[suit_map[j]][i].area == G.deck) or SUITS[suit_map[j]][i].ability.wheel_flipped) then
+            greyed = true
+          end
+          local copy = copy_card(SUITS[suit_map[j]][i],nil, _scale)
+          copy.greyed = greyed
+          copy.T.x = view_deck.T.x + view_deck.T.w/2
+          copy.T.y = view_deck.T.y
+
+          copy:hard_set_T()
+          view_deck:emplace(copy)
+        end
+      end'''
 position = "at"
 payload = '''
-for i = 1, #SUITS_SORTED[suit_map[j]] do
-  local card_string = SUITS_SORTED[suit_map[j]][i]
-  local card = SUITS[suit_map[j]][card_string]
-
-  card.T.x = view_deck.T.x + view_deck.T.w/2
-  card.T.y = view_deck.T.y
-  card:create_quantity_display()
-
-  card:hard_set_T()
-  view_deck:emplace(card)
-
-end
+      for i = 1, #SUITS_SORTED[suit_map[j]] do
+        local card_string = SUITS_SORTED[suit_map[j]][i]
+        local card = SUITS[suit_map[j]][card_string]
+      
+        card.T.x = view_deck.T.x + view_deck.T.w/2
+        card.T.y = view_deck.T.y
+        card:create_quantity_display()
+      
+        card:hard_set_T()
+        view_deck:emplace(card)
+      
+      end
 '''
-line_prepend = '$indent'
+match_indent = true

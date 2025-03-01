@@ -16,21 +16,12 @@ for k, v in ipairs(G.playing_cards) do
   if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
     greyed = true
   end
-  local card_string = v:cart_to_string()
+  local card_string = v:cart_to_string {deck_view = true}
   if greyed then
     card_string = card_string .. "Greyed" -- for some reason format doesn't work and final string is `sGreyed`
   end
   if greyed and Cartomancer.SETTINGS.deck_view_hide_drawn_cards then
   -- Ignore this card.
-  elseif not Cartomancer.SETTINGS.deck_view_stack_enabled then
-    -- Don't stack cards    
-    local _scale = 0.7
-    local copy = copy_card(v, nil, _scale)
-    
-    copy.greyed = greyed
-    copy.stacked_quantity = 1
-    table.insert(SUITS_SORTED[v.base.suit], copy)
-
   elseif not SUITS[v.base.suit][card_string] then
     -- Initiate stack
     table.insert(SUITS_SORTED[v.base.suit], card_string)
@@ -74,13 +65,8 @@ for i = 1%, %#SUITS%[suit_map%[j%]%] do
 			end]],
         place = [[
 for i = 1%, %#SUITS_SORTED%[suit_map%[j%]%] do
-  local card
-  if not Cartomancer.SETTINGS.deck_view_stack_enabled then
-    card = SUITS_SORTED%[suit_map%[j%]%]%[i%]
-  else
-    local card_string = SUITS_SORTED%[suit_map%[j%]%]%[i%]
-    card = SUITS%[suit_map%[j%]%]%[card_string%]
-  end
+  local card_string = SUITS_SORTED%[suit_map%[j%]%]%[i%]
+  local card = SUITS%[suit_map%[j%]%]%[card_string%]
 
   card%.T%.x = view_deck%.T%.x %+ view_deck%.T%.w%/2
   card%.T%.y = view_deck%.T%.y
