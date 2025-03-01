@@ -1,4 +1,7 @@
 
+-- THIS IS NO LONGER BEING USED
+-- Leaving this in for sentimental value :)
+
 local Cartomancer_replacements = {
     {
         find = [[
