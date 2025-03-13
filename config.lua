@@ -19,6 +19,7 @@ return {
     -- todo: maybe custom shader for drawn cards to adjust opacity
 
     improved_hand_sorting = false,
+    dynamic_hand_align = false,
     draw_non_essential_shaders = true,
     hide_tags = false,
     hide_consumables = false,

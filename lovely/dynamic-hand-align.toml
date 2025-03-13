@@ -1,0 +1,35 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = '''
+local max_cards = math.max(#self.cards, self.config.temp_limit)'''
+position = "after"
+payload = '''
+if max_cards_override then max_cards = max_cards_override end'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = '''
+if self.config.type == 'hand' and not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK) then'''
+position = "after"
+payload = '''
+    local max_cards_override = (Cartomancer.SETTINGS.dynamic_hand_align and self.config.temp_limit - #self.cards > 5) and #self.cards'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = '''
+if self.config.type == 'hand' and (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK  or G.STATE == G.STATES.PLANET_PACK) then'''
+position = "after"
+payload = '''
+    local max_cards_override = (Cartomancer.SETTINGS.dynamic_hand_align and self.config.temp_limit - #self.cards > 5) and #self.cards'''
+match_indent = true
+

@@ -144,6 +144,10 @@ Cartomancer.config_tab = function()
                     callback = function () G.FUNCS.change_play_discard_position {to_key = G.SETTINGS.play_button_pos} end
                 },
                 create_toggle_option {
+                    ref_value = 'dynamic_hand_align',
+                    localization = 'carto_dynamic_hand_align',
+                },
+                create_toggle_option {
                     ref_value = 'draw_non_essential_shaders',
                     localization = 'carto_draw_non_essential_shaders',
                 },

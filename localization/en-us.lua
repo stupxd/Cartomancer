@@ -34,6 +34,7 @@ return {
 
             carto_draw_non_essential_shaders = "Draw non-essential shaders",
             carto_improved_hand_sorting = "Improved hand sorting",
+            carto_dynamic_hand_align = "Improved hand align for huge hand size",
             carto_hide_tags = "Hide tags",
             carto_hide_consumables = "Hide consumables",
             carto_hide_deck = "Hide deck",
