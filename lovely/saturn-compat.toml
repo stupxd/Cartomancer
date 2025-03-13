@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+[[patches]]
+[patches.pattern]
+target = 'main.lua'
+pattern = '''assert(load(nfs.read(Saturn.PATH .. "/core/logic/hide_played.lua")))()'''
+position = 'at'
+payload = '''
+-- Disabled for Cartomancer deck viewer compatibility.
+-- assert(load(nfs.read(Saturn.PATH .. "/core/logic/hide_played.lua")))()'''
+match_indent = true
+

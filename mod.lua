@@ -6,7 +6,7 @@
 --- PRIORITY: 69
 --- BADGE_COLOR: FFD700
 --- DISPLAY_NAME: Cartomancer
---- VERSION: 4.11
+--- VERSION: 4.12
 
 ----------------------------------------------
 ------------MOD CODE -------------------------

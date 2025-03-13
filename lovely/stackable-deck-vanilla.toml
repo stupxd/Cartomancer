@@ -42,7 +42,7 @@ else
 end'''
 match_indent = true
 
-[[patches]] 
+[[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = '''
@@ -54,7 +54,7 @@ payload = '''
       local view_deck = CardArea('''
 match_indent = true
  
-[[patches]] 
+[[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = "local suit_map = {'Spades', 'Hearts', 'Clubs', 'Diamonds'}"
@@ -62,7 +62,33 @@ position = "after"
 payload = "local SUITS_SORTED = Cartomancer.tablecopy(SUITS)"
 match_indent = true
 
-[[patches]] 
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "local suit_tallies = {['Spades']  = 0, ['Hearts'] = 0, ['Clubs'] = 0, ['Diamonds'] = 0}"
+position = "before"
+payload = '''
+-----------------------------------------------------------
+-- Add empty card area to view deck to fix a visual issue with missing deck.
+if not next(deck_tables) then
+  local view_deck = CardArea(
+    G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+    6.5*G.CARD_W,
+    0.6*G.CARD_H,
+    {card_limit = 1, type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})
+
+  table.insert(
+    deck_tables, 
+    {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
+      {n=G.UIT.O, config={object = view_deck}}
+    }}
+  )
+end
+-----------------------------------------------------------
+'''
+match_indent = true
+
+[[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = "{card_limit = #SUITS[suit_map[j]], type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})"
