@@ -21,6 +21,6 @@ if self\.config\.type == \'hand\' and [^\n]*then'''
 position = "after"
 payload = '''
 
-        local max_cards_override = (Cartomancer.SETTINGS.dynamic_hand_align and self.config.temp_limit - #self.cards > 5) and #self.cards
+        local max_cards_override = (Cartomancer.SETTINGS.dynamic_hand_align and self.config.temp_limit - #self.cards > 5) and math.max(#self.cards, math.min(10, self.config.temp_limit))
 '''
 
