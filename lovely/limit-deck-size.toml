@@ -20,12 +20,22 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
-pattern = "local stay_flipped = G.GAME and G.GAME.blind and G.GAME.blind:stay_flipped(to, card)"
-position = "before"
+pattern = "if card then drawn = true end"
+position = "after"
 payload = '''
 if card and to == G.hand and not card.states.visible then
     card.states.visible = true
 end'''
+match_indent = true
+
+# Fix drawing specific card staying invisible
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "(self.config.type == 'deck' and self ~= G.deck) or"
+position = "at"
+payload = '''
+(self.config.type == 'deck' and self ~= G.deck and not self.draw_uibox) or'''
 match_indent = true
 
 # Replace drawing deck pile
@@ -57,6 +67,8 @@ payload = '''
             local total_cards = #self.cards <= display_limit and #self.cards or display_limit -- limit height
             local fixedX, fixedY, fixedR = nil, nil, nil
 
+            local height_multiplier = total_cards/((self == G.deck or self.draw_uibox) and 1 or 2)
+
             for k, card in ipairs(self.cards) do
                 if card.facing == 'front' then card:flip() end
 
@@ -67,8 +79,8 @@ payload = '''
                         card.T.r = fixedR -- rotation
                         card.states.visible = false
                     else
-                        card.T.x = self.T.x + 0.5*(self.T.w - card.T.w) + self.shadow_parrallax.x*deck_height*(total_cards/(self == G.deck and 1 or 2) - k) + 0.9*self.shuffle_amt*(1 - k*0.01)*(k%2 == 1 and 1 or -0)
-                        card.T.y = self.T.y + 0.5*(self.T.h - card.T.h) + self.shadow_parrallax.y*deck_height*(total_cards/(self == G.deck and 1 or 2) - k)
+                        card.T.x = self.T.x + 0.5*(self.T.w - card.T.w) + self.shadow_parrallax.x*deck_height*(height_multiplier - k) + 0.9*self.shuffle_amt*(1 - k*0.01)*(k%2 == 1 and 1 or -0)
+                        card.T.y = self.T.y + 0.5*(self.T.h - card.T.h) + self.shadow_parrallax.y*deck_height*(height_multiplier - k)
                         card.T.r = 0 + 0.3*self.shuffle_amt*(1 + k*0.05)*(k%2 == 1 and 1 or -0)
                         card.T.x = card.T.x + card.shadow_parrallax.x/30
                         card.states.visible = true
