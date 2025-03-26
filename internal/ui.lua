@@ -153,7 +153,7 @@ Cartomancer.config_tab = function()
                                 {n=G.UIT.B, config={w=0.1,h=0.1}},
                             }},
                             {n=G.UIT.C, config={align = "cm"}, nodes={
-                                {n=G.UIT.T, config={text = "X", lang = G.LANGUAGES['en-us'], scale = scale * 0.2, colour = G.C.UI_MULT, shadow = true}},
+                                {n=G.UIT.T, config={text = "X", lang = G.LANGUAGES['en-us'], scale = scale * 2, colour = G.C.UI_MULT, shadow = true}},
                             }},
                             {n=G.UIT.C, config={align = "cl", minw = 2, minh=1, r = 0.1,colour = G.C.UI_MULT, id = 'hand_mult_area_cart', emboss = 0.05}, nodes={
                                 {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_mult_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
