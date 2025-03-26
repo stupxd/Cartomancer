@@ -116,25 +116,7 @@ Cartomancer.config_tab = function()
 
             choose_tab "deck_view"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-
-                create_toggle_option {
-                    ref_value = 'deck_view_hide_drawn_cards',
-                    localization = 'carto_deck_view_hide_drawn_cards',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_enabled',
-                    localization = 'carto_deck_view_stack_enabled',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_modifiers',
-                    localization = 'carto_deck_view_stack_modifiers',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_chips',
-                    localization = 'carto_deck_view_stack_chips',
-                },
-                --create_toggle_option('deck_view_stack_suits', 'carto_deck_view_stack_suits'),
-
+        
                 {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = G.C.GREY}, nodes = {
                     {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
                         create_inline_slider({
@@ -145,7 +127,7 @@ Cartomancer.config_tab = function()
                             {n=G.UIT.C, config={align = "cl", padding = 0}, nodes={
                                 {n=G.UIT.T, config={text = localize('carto_deck_view_stack_x_color'),colour = G.C.UI.TEXT_LIGHT, scale = 0.36}},
                             }},
-
+            
                             (create_slider({id = 'slider_red', colour = G.C.RED, label_scale = 0.36, w = 1.5, h = 0.3, padding = -0.05,
                             ref_table = Cartomancer.deck_view_stack_x_color, ref_value = 1, min = 0, max = 1,
                             decimal_places = 2, hide_value = true})),
@@ -156,7 +138,7 @@ Cartomancer.config_tab = function()
                             ref_table = Cartomancer.deck_view_stack_x_color, ref_value = 3, min = 0, max = 1,
                             decimal_places = 2, hide_value = true})),
                         }},
-
+            
                         -- inline this
                         {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
                             {n=G.UIT.C, config={align = "cl", padding = 0}, nodes={
@@ -176,8 +158,25 @@ Cartomancer.config_tab = function()
                         {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
                             {n=G.UIT.O, config={object = Cartomancer.get_view_deck_preview_area()}}
                         }}
-                    }}
+                    }},
                 }},
+
+                create_toggle_option {
+                    ref_value = 'deck_view_hide_drawn_cards',
+                    localization = 'carto_deck_view_hide_drawn_cards',
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_enabled',
+                    localization = 'carto_deck_view_stack_enabled',
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_modifiers',
+                    localization = 'carto_deck_view_stack_modifiers',
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_chips',
+                    localization = 'carto_deck_view_stack_chips',
+                },
             }}
         end
     })
