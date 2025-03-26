@@ -1,9 +1,11 @@
 local nan = math.huge/math.huge
 local big_numbah = 1e308
 
-function Cartomancer.get_flames_intensity()
+function Cartomancer.get_flames_intensity(preview)
     local value
-    if Cartomancer.SETTINGS.flames_relative_intensity then
+    if preview then
+        value = Cartomancer._INTERNAL_gasoline
+    elseif Cartomancer.SETTINGS.flames_relative_intensity then
         -- Scale intensity relative to the required score
         value = math.max(0., math.log(G.ARGS.score_intensity.earned_score/G.ARGS.score_intensity.required_score + 5, 5))
     else

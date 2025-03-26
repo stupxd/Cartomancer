@@ -72,6 +72,14 @@ position = "at"
 pattern = "self.config.chosen = true"
 payload = "self.config.chosen = chosen_temp or true"
 
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "before"
+pattern = '''{n=G.UIT.C, config={align = "cm", minh = args.h,r = 0.1, minw = 0.8, colour = args.colour,shadow = true}, nodes={'''
+payload = "not args.hide_value and "
+
 # Add dynamic label support to UIBox_button
 [[patches]]
 [patches.pattern]

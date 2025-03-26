@@ -105,4 +105,64 @@ Cartomancer.align_object = function (o)
     o:hard_set_T(x, y, w, h)
 end
 
+function Cartomancer.basen(n,b)
+    n = math.floor(n)
+    if not b or b == 10 then return tostring(n) end
+    local digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    local t = {}
+    local sign = ""
+    if n < 0 then
+        sign = "-"
+    n = -n
+    end
+    repeat
+        local d = (n % b) + 1
+        n = math.floor(n / b)
+        table.insert(t, 1, digits:sub(d,d))
+    until n == 0
+    return sign .. table.concat(t,"")
+end
+
+local function is_valid_hex(letter)
+    local byte_val = string.byte(string.upper(letter))
+    -- Between A-F or 0-9
+    return byte_val >= 65 and byte_val <= 70 or byte_val >= 48 and byte_val <= 57
+end
+
+function Cartomancer.hex_to_color(hex)
+    -- Make sure string length is always 8
+    while #hex < 8 do
+        hex = hex.."F"
+    end
+    hex = string.sub(hex, 1, 8)
+    -- Make sure string only contains 
+    for i = 1, #hex do
+        if not is_valid_hex(hex:sub(i,i)) then
+            -- insane way to replace char at given index 
+            hex = ("%sF%s"):format(hex:sub(1,i-1), hex:sub(i+1))
+        end
+    end
+    local _,_,r,g,b,a = hex:find('(%x%x)(%x%x)(%x%x)(%x%x)')
+    local color = {tonumber(r,16)/255,tonumber(g,16)/255,tonumber(b,16)/255,tonumber(a,16)/255 or 255}
+
+    return color
+end
+
+function Cartomancer.color_to_hex(color)
+    local hex = ""
+    for i = 1, 3 do
+        local base_16 = Cartomancer.basen(color[i] * 255, 16)
+        -- Numbers below 16 need 0 in front
+        if #base_16 == 1 then
+            base_16 = "0"..base_16
+        end
+        -- How would we ever get numbers above 255 :3c
+        base_16 = base_16:sub(#base_16 - 1, #base_16)
+
+        hex = hex .. base_16
+    end
+
+    return hex
+end
+
 return Cartomancer

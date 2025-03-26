@@ -37,7 +37,7 @@ pattern = '''_F.timer = _F.timer + G.real_dt*(1 + _F.intensity*0.2)'''
 position = 'before'
 payload = '''
 if v.id == 'flame_chips_cart' or v.id == 'flame_mult_cart' then
-    _F.intensity = Cartomancer._INTERNAL_gasoline
+    _F.intensity = Cartomancer.get_flames_intensity(true)
 end
 '''
 match_indent = true

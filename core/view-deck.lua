@@ -99,30 +99,6 @@ local function copy_values(to, from)
     end
 end
 
-local function is_valid_hex(letter)
-    local byte_val = string.byte(string.upper(letter))
-    -- Between A-F or 0-9
-    return byte_val >= 65 and byte_val <= 70 or byte_val >= 48 and byte_val <= 57
-end
-
-function safe_HEX(hex)
-    -- Make sure string length is always 8
-    while #hex < 8 do
-        hex = hex.."F"
-    end
-    hex = string.sub(hex, 1, 8)
-    -- Make sure string only contains 
-    for i = 1, #hex do
-        if not is_valid_hex(hex:sub(i,i)) then
-            -- insane way to replace char at given index 
-            hex = ("%sF%s"):format(hex:sub(1,i-1), hex:sub(i+1))
-        end
-    end
-    local _,_,r,g,b,a = hex:find('(%x%x)(%x%x)(%x%x)(%x%x)')
-    local color = {tonumber(r,16)/255,tonumber(g,16)/255,tonumber(b,16)/255,tonumber(a,16)/255 or 255}
-    return color
-  end
-
 local old_opacity
 local background_color = {}
 
@@ -130,17 +106,19 @@ local old_color
 local x_color = {}
 
 ----- Copied from incantation
-G.FUNCS.disable_quantity_display = function(e)
+G.FUNCS.cartomancer_deck_view_quantity = function(e)
     local preview_card = e.config.ref_table
     e.states.visible = preview_card.stacked_quantity > 1
-    
-    if old_opacity ~= Cartomancer.SETTINGS.deck_view_stack_background_opacity then
-        old_opacity = Cartomancer.SETTINGS.deck_view_stack_background_opacity
-        copy_values(background_color, adjust_alpha(darken(G.C.BLACK, 0.2), Cartomancer.SETTINGS.deck_view_stack_background_opacity / 100))
-    end
-    if old_color ~= Cartomancer.SETTINGS.deck_view_stack_x_color then
-        old_color = Cartomancer.SETTINGS.deck_view_stack_x_color
-        copy_values(x_color, safe_HEX(Cartomancer.SETTINGS.deck_view_stack_x_color))
+
+    if Cartomancer.INTERNAL_in_config then
+        if old_opacity ~= Cartomancer.SETTINGS.deck_view_stack_background_opacity then
+            old_opacity = Cartomancer.SETTINGS.deck_view_stack_background_opacity
+            copy_values(background_color, adjust_alpha(darken(G.C.BLACK, 0.2), Cartomancer.SETTINGS.deck_view_stack_background_opacity / 100))
+        end
+        if old_color ~= Cartomancer.SETTINGS.deck_view_stack_x_color then
+            old_color = Cartomancer.SETTINGS.deck_view_stack_x_color
+            copy_values(x_color, Cartomancer.hex_to_color(Cartomancer.SETTINGS.deck_view_stack_x_color))
+        end
     end
 end
 
@@ -151,7 +129,7 @@ function Card:create_quantity_display()
 
     if not self.children.stack_display and self.stacked_quantity > 1 then
         copy_values(background_color, adjust_alpha(darken(G.C.BLACK, 0.2), Cartomancer.SETTINGS.deck_view_stack_background_opacity / 100))
-        copy_values(x_color, safe_HEX(Cartomancer.SETTINGS.deck_view_stack_x_color))
+        copy_values(x_color, Cartomancer.hex_to_color(Cartomancer.SETTINGS.deck_view_stack_x_color))
         self.children.stack_display = UIBox {
             definition = {
                 n = G.UIT.ROOT,
@@ -165,7 +143,7 @@ function Card:create_quantity_display()
                     align = 'cm',
                     colour = background_color,
                     shadow = false,
-                    func = 'disable_quantity_display',
+                    func = 'cartomancer_deck_view_quantity',
                     ref_table = self
                 },
                 nodes = {

@@ -16,15 +16,14 @@ return {
             carto_deck_view_stack_modifiers = "Stack all modifiers",
             carto_deck_view_stack_chips = "Stack different chip values",
             -- carto_deck_view_stack_suits = "Stack all suits", -- Do not think this is necessary if steamodded adds suit pages.
-            carto_deck_view_stack_x_color = "Stack display color (hex)  ",
-            carto_deck_view_stack_background_opacity = "Stack display opacity ",
-            carto_deck_view_stack_pos_vertical = "Vertical stack alignment  ",
+            carto_deck_view_stack_x_color = "Color ",
+            carto_deck_view_stack_background_opacity = "Opacity ",
+            carto_deck_view_stack_pos = "Alignment ",
             carto_deck_view_stack_pos_vertical_options = {
                 "top",
                 "center",
                 "bottom"
             },
-            carto_deck_view_stack_pos_horizontal = "Horizontal stack alignment  ",
             carto_deck_view_stack_pos_horizontal_options = {
                 "left",
                 "middle",
@@ -42,8 +41,9 @@ return {
 
             carto_flames_intensity_min = "Min intensity ",
             carto_flames_intensity_max = "Max intensity ",
-            carto_flames_relative_intensity = "Relative score intensity",
-            carto_flames_intensity_vanilla = "Ignore intensity limit",
+            carto_flames_relative_intensity = "Score intensity relative to current blind",
+            carto_flames_intensity_vanilla = "Ignore min/max intensity",
+            carto_flames_gasoline_title = "Preview",
             carto_flames_gasoline = "",
             carto_flames_volume = "Flames volume ",
             
