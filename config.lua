@@ -29,7 +29,7 @@ return {
     flames_intensity_min = 0.5,
     flames_intensity_max = 10,
     flames_relative_intensity = false,
-    flames_slower_speed = false,
+    flames_intensity_vanilla = false,
     flames_volume = 100,
 
     jokers_controls_buttons = true,

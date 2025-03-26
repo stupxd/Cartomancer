@@ -1,5 +1,4 @@
 
--- Setting max intensity to this value disables limit.
 Cartomancer._INTERNAL_max_flames_intensity = 40
 
 local create_column_tabs,
@@ -122,8 +121,8 @@ Cartomancer.config_tab = function()
                     localization = 'carto_flames_relative_intensity',
                 },
                 create_toggle_option {
-                    ref_value = 'flames_slower_speed',
-                    localization = 'carto_flames_slower_speed',
+                    ref_value = 'flames_intensity_vanilla',
+                    localization = 'carto_flames_intensity_vanilla',
                 },
                 create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
                 -- 

@@ -17,12 +17,3 @@ local function recurse(target, ref_table)
 end
 recurse(loc_table, G.localization)
 
---local cas = CardArea.sort
---function CardArea:sort(method)
---    if method == 'sort_id' and self.cards[1] and self.cards[1].sort_id then
---        table.sort(self.cards, function (a, b) return a.sort_id > b.sort_id end )
---        return
---    end
---
---    return cas(self, method)
---end
