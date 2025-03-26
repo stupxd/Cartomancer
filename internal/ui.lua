@@ -10,6 +10,8 @@ local create_column_tabs,
       create_inline_options,
       create_option_cycle_custom
 
+local slider_callbacks = {}
+
 local create_UIBox_generic_options_custom = function (args)
     args = args or {}
     
@@ -65,38 +67,51 @@ Cartomancer.config_tab = function()
         label = localize('carto_settings_deck_view'),
         chosen = is_chosen("deck_view"),
         tab_definition_function = function (...)
+            Cartomancer.view_deck_preview_area = nil
             choose_tab "deck_view"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_toggle_option {
-                    ref_value = 'deck_view_hide_drawn_cards',
-                    localization = 'carto_deck_view_hide_drawn_cards',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_enabled',
-                    localization = 'carto_deck_view_stack_enabled',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_modifiers',
-                    localization = 'carto_deck_view_stack_modifiers',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_chips',
-                    localization = 'carto_deck_view_stack_chips',
-                },
-                --create_toggle_option('deck_view_stack_suits', 'carto_deck_view_stack_suits'),
-                create_inline_slider({ref_value = 'deck_view_stack_background_opacity', localization = 'carto_deck_view_stack_background_opacity',}),
-                create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
-
-                -- inline this
-                {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
+                {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
                     {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
-                        create_option_cycle_custom('deck_view_stack_pos_vertical', 'carto_deck_view_stack_pos_vertical',
-                        'cartomancer_deck_view_pos_vertical', 'carto_deck_view_stack_pos_vertical_options'),
+                        create_toggle_option {
+                            ref_value = 'deck_view_hide_drawn_cards',
+                            localization = 'carto_deck_view_hide_drawn_cards',
+                        },
+                        create_toggle_option {
+                            ref_value = 'deck_view_stack_enabled',
+                            localization = 'carto_deck_view_stack_enabled',
+                        },
+                        create_toggle_option {
+                            ref_value = 'deck_view_stack_modifiers',
+                            localization = 'carto_deck_view_stack_modifiers',
+                        },
+                        create_toggle_option {
+                            ref_value = 'deck_view_stack_chips',
+                            localization = 'carto_deck_view_stack_chips',
+                        },
+                        --create_toggle_option('deck_view_stack_suits', 'carto_deck_view_stack_suits'),
+                        create_inline_slider({
+                            ref_value = 'deck_view_stack_background_opacity',
+                            localization = 'carto_deck_view_stack_background_opacity',
+                        }),
+                        create_input_option('deck_view_stack_x_color', 'carto_deck_view_stack_x_color', 6),
+        
+                        -- inline this
+                        {n = G.UIT.R, config = {align = "cl", padding = 0.05}, nodes = {
+                            {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
+                                create_option_cycle_custom('deck_view_stack_pos_vertical', 'carto_deck_view_stack_pos_vertical',
+                                'cartomancer_deck_view_pos_vertical', 'carto_deck_view_stack_pos_vertical_options'),
+                            }},
+                            {n = G.UIT.C, config = {align = "r", padding = 0}, nodes = {
+                                create_option_cycle_custom('deck_view_stack_pos_horizontal', 'carto_deck_view_stack_pos_horizontal',
+                                                    'cartomancer_deck_view_pos_horizontal', 'carto_deck_view_stack_pos_horizontal_options'),
+                            }},
+                        }}
                     }},
-                    {n = G.UIT.C, config = {align = "r", padding = 0}, nodes = {
-                        create_option_cycle_custom('deck_view_stack_pos_horizontal', 'carto_deck_view_stack_pos_horizontal',
-                                            'cartomancer_deck_view_pos_horizontal', 'carto_deck_view_stack_pos_horizontal_options'),
-                    }},
+                    {n = G.UIT.C, config = {align = "l", padding = 0.1}, nodes = {
+                        {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
+                            {n=G.UIT.O, config={object = Cartomancer.get_view_deck_preview_area()}}
+                          }}
+                    }}
                 }}
             }}
         end
@@ -248,6 +263,10 @@ end
 create_inline_slider = function (args)
     local args = args or {}
 
+    if type(args.callback) == "function" then
+        slider_callbacks[args.ref_value] = args.callback
+    end
+
     local slider = create_slider({label = localize(args.localization), label_scale = 0.36, w = 3, h = 0.3, padding = -0.05,
                                   ref_table = Cartomancer.SETTINGS, ref_value = args.ref_value, min = args.min_value or 0, max = args.max_value or 100,
                                   decimal_places = args.decimal_places})
@@ -380,11 +399,30 @@ end
 
 G.FUNCS.cartomancer_deck_view_pos_vertical = function(args)
     Cartomancer.SETTINGS.deck_view_stack_pos_vertical = args.to_val
+    Cartomancer.update_view_deck_preview()
 end
 
 G.FUNCS.cartomancer_deck_view_pos_horizontal = function(args)
     Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = args.to_val
+    Cartomancer.update_view_deck_preview()
 end
+
+-- This gets called every frame when you move the slider, which causes a lot of lag if you create new objects here
+--[[local g_funcs_slider = G.FUNCS.slider
+G.FUNCS.slider = function(e)
+    local c = e.children[1]
+    local rt = c.config.ref_table
+    if G.CONTROLLER and G.CONTROLLER.dragging.target and
+        (G.CONTROLLER.dragging.target == e or
+         G.CONTROLLER.dragging.target == c) then
+
+        if slider_callbacks[rt.ref_value] then
+            print "hi"
+            slider_callbacks[rt.ref_value]()
+        end
+    end
+    g_funcs_slider(e)
+end]]
 
 G.FUNCS.cartomancer_settings_change_keybind = function(e)
     local name = e.config.ref_table.name
@@ -502,8 +540,6 @@ create_inline_options = function (ref_value, localization, change_function, opti
 
     return cycle
 end
-
-
 
 
 

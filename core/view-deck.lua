@@ -92,21 +92,66 @@ end
 
 -- Handle amount display
 
+
+local function copy_values(to, from)
+    for k, v in pairs(from) do
+        to[k] = v
+    end
+end
+
+local function is_valid_hex(letter)
+    local byte_val = string.byte(string.upper(letter))
+    -- Between A-F or 0-9
+    return byte_val >= 65 and byte_val <= 70 or byte_val >= 48 and byte_val <= 57
+end
+
+function safe_HEX(hex)
+    -- Make sure string length is always 8
+    while #hex < 8 do
+        hex = hex.."F"
+    end
+    hex = string.sub(hex, 1, 8)
+    -- Make sure string only contains 
+    for i = 1, #hex do
+        if not is_valid_hex(hex:sub(i,i)) then
+            -- insane way to replace char at given index 
+            hex = ("%sF%s"):format(hex:sub(1,i-1), hex:sub(i+1))
+        end
+    end
+    local _,_,r,g,b,a = hex:find('(%x%x)(%x%x)(%x%x)(%x%x)')
+    local color = {tonumber(r,16)/255,tonumber(g,16)/255,tonumber(b,16)/255,tonumber(a,16)/255 or 255}
+    return color
+  end
+
+local old_opacity
+local background_color = {}
+
+local old_color
+local x_color = {}
+
 ----- Copied from incantation
 G.FUNCS.disable_quantity_display = function(e)
     local preview_card = e.config.ref_table
     e.states.visible = preview_card.stacked_quantity > 1
+    
+    if old_opacity ~= Cartomancer.SETTINGS.deck_view_stack_background_opacity then
+        old_opacity = Cartomancer.SETTINGS.deck_view_stack_background_opacity
+        copy_values(background_color, adjust_alpha(darken(G.C.BLACK, 0.2), Cartomancer.SETTINGS.deck_view_stack_background_opacity / 100))
+    end
+    if old_color ~= Cartomancer.SETTINGS.deck_view_stack_x_color then
+        old_color = Cartomancer.SETTINGS.deck_view_stack_x_color
+        copy_values(x_color, safe_HEX(Cartomancer.SETTINGS.deck_view_stack_x_color))
+    end
 end
-
 
 function Card:create_quantity_display()
     if not Cartomancer.SETTINGS.deck_view_stack_enabled then
         return
     end
 
-    local X_COLOR = HEX(Cartomancer.SETTINGS.deck_view_stack_x_color)
-
     if not self.children.stack_display and self.stacked_quantity > 1 then
+        copy_values(background_color, adjust_alpha(darken(G.C.BLACK, 0.2), Cartomancer.SETTINGS.deck_view_stack_background_opacity / 100))
+        copy_values(x_color, safe_HEX(Cartomancer.SETTINGS.deck_view_stack_x_color))
         self.children.stack_display = UIBox {
             definition = {
                 n = G.UIT.ROOT,
@@ -118,7 +163,7 @@ function Card:create_quantity_display()
                     r = 0.001,
                     padding = 0.1,
                     align = 'cm',
-                    colour = adjust_alpha(darken(G.C.BLACK, 0.2), Cartomancer.SETTINGS.deck_view_stack_background_opacity / 100),
+                    colour = background_color,
                     shadow = false,
                     func = 'disable_quantity_display',
                     ref_table = self
@@ -126,7 +171,7 @@ function Card:create_quantity_display()
                 nodes = {
                     {
                         n = G.UIT.T, -- node type
-                        config = { text = 'x', scale = 0.35, colour = X_COLOR }
+                        config = { text = 'x', scale = 0.35, colour = x_color }
                         , padding = -1
                     },
                     {
@@ -148,5 +193,37 @@ function Card:create_quantity_display()
                 drag = { can = true }
             }
         }
+    end
+end
+
+function Cartomancer.get_view_deck_preview_area()
+    if not Cartomancer.view_deck_preview_area then
+        local preview = CardArea(
+        G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+        G.CARD_W,
+        G.CARD_H,
+        {card_limit = 1, type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7, draw_layers = {'card'}})
+        local card = Card(preview.T.x + preview.T.w/2, preview.T.y, G.CARD_W*0.7, G.CARD_H*0.7, G.P_CARDS.S_A, G.P_CENTERS.m_gold)
+
+        card.stacked_quantity = 69
+        card.no_ui = true
+        card:create_quantity_display()
+
+        card:hard_set_T()
+        preview:emplace(card)
+
+        Cartomancer.view_deck_preview_area = preview
+    end
+
+    return Cartomancer.view_deck_preview_area
+end
+
+Cartomancer.update_view_deck_preview = function ()
+    if not Cartomancer.view_deck_preview_area then
+        return
+    end
+    for _, card in pairs(Cartomancer.view_deck_preview_area.cards) do
+        card.children.stack_display = nil
+        card:create_quantity_display()
     end
 end
