@@ -127,20 +127,43 @@ Cartomancer.config_tab = function()
         label = localize('carto_settings_flames'),
         chosen = is_chosen("flames"),
         tab_definition_function = function (...)
+            Cartomancer._INTERNAL_gasoline = 5
+            local scale = 0.4
             choose_tab "flames"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                create_inline_slider({ref_value = 'flames_intensity_min', localization = 'carto_flames_intensity_min', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
-                create_inline_slider({ref_value = 'flames_intensity_max', localization = 'carto_flames_intensity_max', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
-                create_toggle_option {
-                    ref_value = 'flames_relative_intensity',
-                    localization = 'carto_flames_relative_intensity',
-                },
-                create_toggle_option {
-                    ref_value = 'flames_intensity_vanilla',
-                    localization = 'carto_flames_intensity_vanilla',
-                },
-                create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
-                -- 
+                {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+                    {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
+                        create_inline_slider({ref_value = 'flames_intensity_min', localization = 'carto_flames_intensity_min', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
+                        create_inline_slider({ref_value = 'flames_intensity_max', localization = 'carto_flames_intensity_max', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
+                        create_toggle_option {
+                            ref_value = 'flames_intensity_vanilla',
+                            localization = 'carto_flames_intensity_vanilla',
+                        },
+                        create_toggle_option {
+                            ref_value = 'flames_relative_intensity',
+                            localization = 'carto_flames_relative_intensity',
+                        },
+                        create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
+                    }},
+                    {n = G.UIT.C, config = {align = "cm", padding = 0}, nodes = {
+                        {n=G.UIT.R, config={align = "cm", minh = 1, padding = 0.1}, nodes={
+                            {n=G.UIT.C, config={align = "cr", minw = 2, minh =1, r = 0.1,colour = G.C.UI_CHIPS, id = 'hand_chip_area_cart', emboss = 0.05}, nodes={
+                                {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_chips_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
+                                {n=G.UIT.O, config={id = ':3_chips',object = DynaText({string = {{ref_table = {[":3"] = ":3" }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2.3})}},
+                                {n=G.UIT.B, config={w=0.1,h=0.1}},
+                            }},
+                            {n=G.UIT.C, config={align = "cm"}, nodes={
+                                {n=G.UIT.T, config={text = "X", lang = G.LANGUAGES['en-us'], scale = scale * 0.2, colour = G.C.UI_MULT, shadow = true}},
+                            }},
+                            {n=G.UIT.C, config={align = "cl", minw = 2, minh=1, r = 0.1,colour = G.C.UI_MULT, id = 'hand_mult_area_cart', emboss = 0.05}, nodes={
+                                {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_mult_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
+                                {n=G.UIT.B, config={w=0.1,h=0.1}},
+                                {n=G.UIT.O, config={id = ':3_mult',object = DynaText({string = {{ref_table = {[":3"] = ":3" }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2.3})}},
+                            }}
+                        }},
+                        create_inline_slider({ref_table = Cartomancer, ref_value = '_INTERNAL_gasoline', localization = 'carto_flames_gasoline', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
+                    }}
+                }}
             }}
         end
     })
@@ -153,13 +176,13 @@ Cartomancer.config_tab = function()
             choose_tab "other"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option {
+                    ref_value = 'dynamic_hand_align',
+                    localization = 'carto_dynamic_hand_align',
+                },
+                create_toggle_option {
                     ref_value = 'improved_hand_sorting',
                     localization = 'carto_improved_hand_sorting',
                     callback = function () G.FUNCS.change_play_discard_position {to_key = G.SETTINGS.play_button_pos} end
-                },
-                create_toggle_option {
-                    ref_value = 'dynamic_hand_align',
-                    localization = 'carto_dynamic_hand_align',
                 },
                 create_toggle_option {
                     ref_value = 'draw_non_essential_shaders',
@@ -267,8 +290,8 @@ create_inline_slider = function (args)
         slider_callbacks[args.ref_value] = args.callback
     end
 
-    local slider = create_slider({label = localize(args.localization), label_scale = 0.36, w = 3, h = 0.3, padding = -0.05,
-                                  ref_table = Cartomancer.SETTINGS, ref_value = args.ref_value, min = args.min_value or 0, max = args.max_value or 100,
+    local slider = create_slider({label = args.localization and localize(args.localization) or '', label_scale = 0.36, w = 3, h = 0.3, padding = -0.05,
+                                  ref_table = args.ref_table or Cartomancer.SETTINGS, ref_value = args.ref_value, min = args.min_value or 0, max = args.max_value or 100,
                                   decimal_places = args.decimal_places})
 
     slider.nodes[1].config.align = "cl"

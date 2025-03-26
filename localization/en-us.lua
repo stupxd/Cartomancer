@@ -44,6 +44,7 @@ return {
             carto_flames_intensity_max = "Max intensity ",
             carto_flames_relative_intensity = "Relative score intensity",
             carto_flames_intensity_vanilla = "Ignore intensity limit",
+            carto_flames_gasoline = "",
             carto_flames_volume = "Flames volume ",
             
             carto_jokers_controls_buttons = "Show joker area buttons",

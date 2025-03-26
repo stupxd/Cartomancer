@@ -28,6 +28,18 @@ function Cartomancer.handle_flames_volume(value)
     return Cartomancer.SETTINGS.flames_volume/100. * value
 end
 
-function Cartomancer.handle_flames_timer(timer, intensity)
-    return timer + G.real_dt*(1 + intensity*0.2)
+function Cartomancer.init_setting_flames()
+    G.ARGS.flame_handler.chips_cart = G.ARGS.flame_handler.chips_cart or {
+        id = 'flame_chips_cart',
+        arg_tab = 'chip_flames_cart',
+        colour = G.C.UI_CHIPS,
+        accent = G.C.UI_CHIPLICK
+    }
+
+    G.ARGS.flame_handler.mult_cart = G.ARGS.flame_handler.mult_cart or {
+        id = 'flame_mult_cart',
+        arg_tab = 'mult_flames_cart',
+        colour = G.C.UI_MULT,
+        accent = G.C.UI_MULTLICK
+    }
 end

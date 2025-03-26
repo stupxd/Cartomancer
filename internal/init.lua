@@ -95,5 +95,14 @@ end
 
 Cartomancer.do_nothing = function (...) end
 
+Cartomancer.align_object = function (o)
+    o:align_to_major()
+    local x = (o.T.x)
+    local y = (o.T.y)
+    local w = (o.T.w)
+    local h = (o.T.h)
+    Moveable.hard_set_T(o,x, y, w, h)
+    o:hard_set_T(x, y, w, h)
+end
 
 return Cartomancer

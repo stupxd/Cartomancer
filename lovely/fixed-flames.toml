@@ -23,8 +23,31 @@ payload = "Cartomancer.handle_flames_volume($value)"
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
-pattern = '''_F.timer = _F.timer + G.real_dt*(1 + _F.intensity*0.2)'''
-position = 'at'
+pattern = '''for k, v in pairs(G.ARGS.flame_handler) do'''
+position = 'before'
 payload = '''
-_F.timer = Cartomancer.handle_flames_timer(_F.timer, _F.intensity)'''
+Cartomancer.init_setting_flames()
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''_F.timer = _F.timer + G.real_dt*(1 + _F.intensity*0.2)'''
+position = 'before'
+payload = '''
+if v.id == 'flame_chips_cart' or v.id == 'flame_mult_cart' then
+    _F.intensity = Cartomancer._INTERNAL_gasoline
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''e.config.object:get_pos_pixel()'''
+position = 'after'
+payload = '''
+Cartomancer.align_object(e.config.object)
+'''
 match_indent = true

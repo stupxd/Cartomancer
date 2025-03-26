@@ -223,6 +223,7 @@ Cartomancer.update_view_deck_preview = function ()
         return
     end
     for _, card in pairs(Cartomancer.view_deck_preview_area.cards) do
+        card.children.stack_display:remove()
         card.children.stack_display = nil
         card:create_quantity_display()
     end
