@@ -35,7 +35,8 @@ for k, v in ipairs(G.playing_cards) do
     table.insert(SUITS_SORTED[v.base.suit], card_string)
 
     local _scale = 0.7
-    local copy = copy_card(v, nil, _scale)
+    local copy = BALIATRO and copy_card(v, nil, _scale, nil, nil, true)
+                or copy_card(v, nil, _scale)
 
     copy.greyed = greyed
     copy.stacked_quantity = 1
@@ -58,23 +59,23 @@ position = "at"
 payload = 'card_limit = #SUITS_SORTED[suit_map[j]],'
 
 [[patches]]
-[patches.pattern]
+[patches.regex]
 target = '=[SMODS _ "src/overrides.lua"]'
 match_indent = true
 pattern = '''
-			for i = 1, #SUITS[suit_map[j]] do
-				if SUITS[suit_map[j]][i] then
-					local greyed, _scale = nil, 0.7
-					if unplayed_only and not ((SUITS[suit_map[j]][i].area and SUITS[suit_map[j]][i].area == G.deck) or SUITS[suit_map[j]][i].ability.wheel_flipped) then
+			for i = 1\, \#SUITS\[suit_map\[j\]\] do
+				if SUITS\[suit_map\[j\]\]\[i\] then
+					local greyed\, _scale = nil\, 0\.7
+					if unplayed_only and not \(\(SUITS\[suit_map\[j\]\]\[i\]\.area and SUITS\[suit_map\[j\]\]\[i\]\.area == G\.deck\) or SUITS\[suit_map\[j\]\]\[i\]\.ability\.wheel_flipped\) then
 						greyed = true
 					end
-					local copy = copy_card(SUITS[suit_map[j]][i], nil, _scale)
-					copy.greyed = greyed
-					copy.T.x = view_deck.T.x + view_deck.T.w / 2
-					copy.T.y = view_deck.T.y
+					local copy = copy_card\(SUITS\[suit_map\[j\]\]\[i\]\, nil\, _scale[^\)\n]*\)
+					copy\.greyed = greyed
+					copy\.T\.x = view_deck\.T\.x \+ view_deck\.T\.w \/ 2
+					copy\.T\.y = view_deck\.T\.y
 
-					copy:hard_set_T()
-					view_deck:emplace(copy)
+					copy:hard_set_T\(\)
+					view_deck:emplace\(copy\)
 				end
 			end'''
 position = "at"
