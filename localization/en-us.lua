@@ -39,6 +39,8 @@ return {
             carto_hide_deck = "Hide deck",
             carto_hide_jokers = "Hide jokers",
 
+            carto_flames_chips = "Chips",
+            carto_flames_mult = "Mult",
             carto_flames_intensity_min = "Min intensity ",
             carto_flames_intensity_max = "Max intensity ",
             carto_flames_relative_intensity = "Score intensity relative to current blind",
