@@ -13,7 +13,7 @@ target = '=[SMODS _ "src/overrides.lua"]'
 match_indent = true
 pattern = '''
 	for k, v in ipairs(G.playing_cards) do
-		if v.base.suit then table.insert(SUITS[v.base.suit], v) end'''
+		if v.base.suit* then table.insert(SUITS[v.base.suit], v) end'''
 position = "at"
 payload = '''
 local SUITS_SORTED = Cartomancer.tablecopy(SUITS)
