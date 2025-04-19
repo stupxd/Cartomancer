@@ -8,7 +8,7 @@ priority = 69
 [[patches]] 
 [patches.pattern]
 target = "cardarea.lua"
-pattern = "local stay_flipped = G.GAME and G.GAME.blind and G.GAME.blind:stay_flipped(self, card)"
+pattern = "local stay_flipped = G.GAME and G.GAME.blind and G.GAME.blind:stay_flipped(self, card*)"
 position = "before"
 payload = '''
 if self == G.hand and not card.states.visible then
