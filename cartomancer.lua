@@ -15,6 +15,7 @@ Cartomancer.load_mod_file('core/flames.lua', 'core.flames')
 Cartomancer.load_mod_file('core/optimizations.lua', 'core.optimizations')
 Cartomancer.load_mod_file('core/jokers.lua', 'core.jokers')
 Cartomancer.load_mod_file('core/hand.lua', 'core.hand')
+Cartomancer.load_mod_file('core/expand-cardarea.lua', 'core.expand-cardarea')
 
 Cartomancer.load_config()
 

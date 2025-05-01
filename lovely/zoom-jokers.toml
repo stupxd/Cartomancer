@@ -24,6 +24,17 @@ if self == G.jokers and G.jokers.cart_jokers_expanded then
 elseif self.config.type == 'joker' or self.config.type == 'title_2' then'''
 match_indent = true
 
+# Replace align
+[[patches]] 
+[patches.pattern]
+target = "cardarea.lua"
+pattern = '''if not card.states.drag.is then'''
+position = "before"
+payload = '''
+if Cartomancer.expand_cardarea(self) then break end
+'''
+match_indent = true
+
 # Hide all cards that are off-screen
 [[patches]] 
 [patches.pattern]
