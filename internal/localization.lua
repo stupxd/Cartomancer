@@ -17,3 +17,9 @@ local function recurse(target, ref_table)
 end
 recurse(loc_table, G.localization)
 
+local init_localization_ref = init_localization
+function init_localization(...)
+    recurse(loc_table, G.localization)
+    return init_localization_ref(...)
+end
+
