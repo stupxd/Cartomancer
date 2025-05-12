@@ -252,6 +252,15 @@ function nativefs.unmount(archive)
 	return loveC.PHYSFS_unmount(archive) ~= 0
 end
 
+function nativefs.fileExists(name)
+	local file = nativefs.newFile(name)
+	local ok = file:open('r')
+	if not ok then return false end
+
+	file:close()
+	return true
+end
+
 function nativefs.read(containerOrName, nameOrSize, sizeOrNil)
 	local container, name, size
 	if sizeOrNil then
