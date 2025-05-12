@@ -16,8 +16,9 @@ payload = '''
 local min_ante = 1
 local max_ante = 16
 local spacing = 1 - 15*0.06
+local current_ante = nil
 if G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante then
-    local current_ante = G.GAME.round_resets.ante
+    current_ante = G.GAME.round_resets.ante
 
     if current_ante > 8 then
         min_ante = current_ante - 8 + 1
@@ -34,6 +35,16 @@ pattern = "for i = 1, math.min(16, math.max(16, G.PROFILES[G.SETTINGS.profile].h
 position = "at"
 payload = '''
 for i = min_ante, max_ante do
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''ante_amounts[#ante_amounts+1] = {n=G.UIT.R, config={align = "cm", padding = 0.03}, nodes={'''
+position = "at"
+payload = '''
+ante_amounts[#ante_amounts+1] = {n=G.UIT.R, config={align = "cm", padding = 0.03, colour = i == current_ante and Cartomancer.C.HALF_GRAY}, nodes={
 '''
 match_indent = true
 

@@ -1,4 +1,8 @@
 
+Cartomancer.C = {
+    HALF_GRAY = {G.C.GREY[1], G.C.GREY[2], G.C.GREY[3], 0.75},
+}
+
 Cartomancer._INTERNAL_max_flames_intensity = 40
 
 local create_column_tabs,
