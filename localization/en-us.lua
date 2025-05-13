@@ -31,8 +31,8 @@ return {
             },
             carto_deck_view_unique_cards = "Unique cards:",
 
-            carto_improved_hand_sorting = "Improved hand sorting",
-            carto_dynamic_hand_align = "Improved hand align for huge hand size",
+            carto_improved_hand_sorting = "More hand sorting options",
+            carto_dynamic_hand_align = "Better align for cards with huge hand size",
             carto_hide_tags = "Hide tags",
             carto_hide_consumables = "Hide consumables",
             carto_hide_deck = "Hide deck",
