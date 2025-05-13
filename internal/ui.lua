@@ -218,7 +218,7 @@ Cartomancer.config_tab = function()
                         {n=G.UIT.R, config={align = "cm", minh = 1, padding = 0.1}, nodes={
                             {n=G.UIT.C, config={align = "cr", minw = 2, minh =1, r = 0.1,colour = G.C.UI_CHIPS, id = 'hand_chip_area_cart', emboss = 0.05}, nodes={
                                 {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_chips_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
-                                {n=G.UIT.O, config={id = ':3_chips',object = DynaText({string = {{ref_table = {[":3"] = "Chips" }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2})}},
+                                {n=G.UIT.O, config={id = ':3_chips',object = DynaText({string = {{ref_table = {[":3"] = localize("carto_flames_chips") }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2})}},
                                 {n=G.UIT.B, config={w=0.1,h=0.1}},
                             }},
                             {n=G.UIT.C, config={align = "cm"}, nodes={
@@ -227,7 +227,7 @@ Cartomancer.config_tab = function()
                             {n=G.UIT.C, config={align = "cl", minw = 2, minh=1, r = 0.1,colour = G.C.UI_MULT, id = 'hand_mult_area_cart', emboss = 0.05}, nodes={
                                 {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_mult_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
                                 {n=G.UIT.B, config={w=0.1,h=0.1}},
-                                {n=G.UIT.O, config={id = ':3_mult',object = DynaText({string = {{ref_table = {[":3"] = "Mult" }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2})}},
+                                {n=G.UIT.O, config={id = ':3_mult',object = DynaText({string = {{ref_table = {[":3"] = localize("carto_flames_mult") }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2})}},
                             }}
                         }},
                         create_inline_slider({align = 'cm', ref_table = Cartomancer, ref_value = '_INTERNAL_gasoline', localization = 'carto_flames_gasoline', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
