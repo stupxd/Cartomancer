@@ -36,7 +36,6 @@ return {
         carto_hide_tags = "Ocultar etiquetas",
         carto_hide_consumables = "Ocultar consumibles",
         carto_hide_deck = "Ocultar baraja",
-        carto_hide_jokers = "Ocultar comodines",
       
         carto_flames_chips = "Fichas",
         carto_flames_mult = "Multi",

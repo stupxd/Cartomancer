@@ -36,7 +36,6 @@ return {
             carto_hide_tags = "Hide tags",
             carto_hide_consumables = "Hide consumables",
             carto_hide_deck = "Hide deck",
-            carto_hide_jokers = "Hide jokers",
 
             carto_flames_chips = "Chips",
             carto_flames_mult = "Mult",

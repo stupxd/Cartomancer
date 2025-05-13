@@ -269,10 +269,6 @@ Cartomancer.config_tab = function()
                     ref_value = 'hide_consumables',
                     localization = 'carto_hide_consumables',
                 },
-                create_toggle_option {
-                    ref_value = 'hide_jokers',
-                    localization = 'carto_hide_jokers',
-                },
             }}
         end
     })

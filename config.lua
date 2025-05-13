@@ -23,7 +23,6 @@ return {
     dynamic_hand_align = false,
     hide_tags = false,
     hide_consumables = false,
-    hide_jokers = false,
     
     flames_intensity_min = 0.5,
     flames_intensity_max = 10,

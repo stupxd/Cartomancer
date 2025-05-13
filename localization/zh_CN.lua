@@ -36,7 +36,6 @@ return {
             carto_hide_tags = "隐藏标签栏",
             carto_hide_consumables = "隐藏消耗品栏",
             carto_hide_deck = "隐藏牌堆区域",
-            carto_hide_jokers = "隐藏小丑牌区域",
 
             carto_flames_intensity_min = "火焰最小强度：",
             carto_flames_intensity_max = "火焰最大强度：",
