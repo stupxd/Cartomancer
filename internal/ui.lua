@@ -41,7 +41,7 @@ local function choose_tab(tab)
     end
 end
 
-local tab_config = {r = 0.1, align = "t", padding = 0.0, colour = G.C.CLEAR, minw = 8.5, minh = 6}
+local tab_config = {r = 0.1, align = "t", padding = 0.0, colour = G.C.CLEAR, minw = 8.5, minh = 6.6}
 
 Cartomancer.config_tab = function()
     Cartomancer.INTERNAL_in_config = true
@@ -87,6 +87,10 @@ Cartomancer.config_tab = function()
                             localization = 'carto_compact_deck_enabled',
                         },
                         create_inline_slider({ref_value = 'compact_deck_visible_cards', localization = 'carto_compact_deck_visible_cards', max_value = 300}),
+                        create_toggle_option {
+                            ref_value = 'hide_deck',
+                            localization = 'carto_hide_deck',
+                        },
                     }},
                     {n = G.UIT.C, config = {align = "r", minw = 2,padding = 0.1}, nodes = {
                         {n=G.UIT.R, config={align = "cr", padding = 0}, nodes={
@@ -120,6 +124,26 @@ Cartomancer.config_tab = function()
 
             choose_tab "deck_view"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
+
+                create_toggle_option {
+                    ref_value = 'deck_view_hide_drawn_cards',
+                    localization = 'carto_deck_view_hide_drawn_cards',
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_enabled',
+                    localization = 'carto_deck_view_stack_enabled',
+                    callback = function ()
+                        Cartomancer.update_view_deck_preview()
+                    end
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_modifiers',
+                    localization = 'carto_deck_view_stack_modifiers',
+                },
+                create_toggle_option {
+                    ref_value = 'deck_view_stack_chips',
+                    localization = 'carto_deck_view_stack_chips',
+                },
         
                 {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = G.C.GREY}, nodes = {
                     {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
@@ -164,26 +188,6 @@ Cartomancer.config_tab = function()
                         }}
                     }},
                 }},
-
-                create_toggle_option {
-                    ref_value = 'deck_view_hide_drawn_cards',
-                    localization = 'carto_deck_view_hide_drawn_cards',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_enabled',
-                    localization = 'carto_deck_view_stack_enabled',
-                    callback = function ()
-                        Cartomancer.update_view_deck_preview()
-                    end
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_modifiers',
-                    localization = 'carto_deck_view_stack_modifiers',
-                },
-                create_toggle_option {
-                    ref_value = 'deck_view_stack_chips',
-                    localization = 'carto_deck_view_stack_chips',
-                },
             }}
         end
     })
@@ -202,6 +206,12 @@ Cartomancer.config_tab = function()
             local scale = 0.4
             choose_tab "flames"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
+                create_toggle_option {
+                    ref_value = 'flames_relative_intensity',
+                    localization = 'carto_flames_relative_intensity',
+                },
+                create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
+
                 {n = G.UIT.R, config = {align = "cl", padding = 0.2, colour = G.C.GREY, r = 0.1}, nodes = {
                     {n = G.UIT.C, config = {align = "cl", padding = 0}, nodes = {
                         create_inline_slider({ref_value = 'flames_intensity_min', localization = 'carto_flames_intensity_min', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
@@ -212,9 +222,6 @@ Cartomancer.config_tab = function()
                         },
                     }},
                     {n = G.UIT.C, config = {align = "cm", padding = 0}, nodes = {
-                        --{n=G.UIT.R, config={align = "cm", minh = 1.1}, nodes={
-                        --    {n=G.UIT.O, config={id = ':3_preview', object = DynaText({string = {{ref_table = {[":3"] = localize('carto_flames_gasoline_title')}, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, float = true, scale = scale*1.4})}},
-                        --}},
                         {n=G.UIT.R, config={align = "cm", minh = 1, padding = 0.1}, nodes={
                             {n=G.UIT.C, config={align = "cr", minw = 2, minh =1, r = 0.1,colour = G.C.UI_CHIPS, id = 'hand_chip_area_cart', emboss = 0.05}, nodes={
                                 {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_chips_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
@@ -233,11 +240,6 @@ Cartomancer.config_tab = function()
                         create_inline_slider({align = 'cm', ref_table = Cartomancer, ref_value = '_INTERNAL_gasoline', localization = 'carto_flames_gasoline', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
                     }}
                 }},
-                create_toggle_option {
-                    ref_value = 'flames_relative_intensity',
-                    localization = 'carto_flames_relative_intensity',
-                },
-                create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
             }}
         end
     })
@@ -259,10 +261,6 @@ Cartomancer.config_tab = function()
                     callback = function () G.FUNCS.change_play_discard_position {to_key = G.SETTINGS.play_button_pos} end
                 },
                 create_toggle_option {
-                    ref_value = 'draw_non_essential_shaders',
-                    localization = 'carto_draw_non_essential_shaders',
-                },
-                create_toggle_option {
                     ref_value = 'hide_tags',
                     localization = 'carto_hide_tags',
                     callback = function () Cartomancer.update_tags_visibility() end
@@ -270,10 +268,6 @@ Cartomancer.config_tab = function()
                 create_toggle_option {
                     ref_value = 'hide_consumables',
                     localization = 'carto_hide_consumables',
-                },
-                create_toggle_option {
-                    ref_value = 'hide_deck',
-                    localization = 'carto_hide_deck',
                 },
                 create_toggle_option {
                     ref_value = 'hide_jokers',
@@ -377,18 +371,6 @@ create_inline_slider = function (args)
     end
 
     return (slider)
-end
-
-local function starts_with(str, start)
-    return str:sub(1, #start) == start
- end
-
-local function find_option(options, value)
-    for i, str in pairs(options) do
-        if starts_with(str, value) then
-            return i
-        end
-    end
 end
 
 create_option_cycle_custom = function (ref_value, localization, change_function, options)

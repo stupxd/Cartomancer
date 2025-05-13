@@ -31,7 +31,6 @@ return {
             },
             carto_deck_view_unique_cards = "唯一卡牌数量：",
 
-            carto_draw_non_essential_shaders = "渲染非必要着色效果",
             carto_improved_hand_sorting = "优化手牌排序算法",
             carto_dynamic_hand_align = "动态调整手牌对齐方式（适用于大量手牌）",
             carto_hide_tags = "隐藏标签栏",
@@ -44,7 +43,7 @@ return {
             carto_flames_relative_intensity = "根据当前盲注动态调整火焰强度",
             carto_flames_intensity_vanilla = "使用原版火焰强度（忽略最小/最大值）",
             carto_flames_gasoline_title = "汽油效果预览",
-            carto_flames_gasoline = "按住Shift查看火焰强度变化",
+            carto_flames_gasoline = "",
             carto_flames_volume = "火焰音效音量：",
             
             carto_jokers_controls_buttons = "显示小丑牌区域控制按钮",

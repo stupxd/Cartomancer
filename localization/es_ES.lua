@@ -31,7 +31,6 @@ return {
         },
         carto_deck_view_unique_cards = "Cartas únicas:",
         
-        carto_draw_non_essential_shaders = "Mostrar shaders no esenciales",
         carto_improved_hand_sorting = "Ordenación mejorada de la mano",
         carto_dynamic_hand_align = "Alineación mejorada para manos grandes",
         carto_hide_tags = "Ocultar etiquetas",

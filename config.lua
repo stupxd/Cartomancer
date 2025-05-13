@@ -2,6 +2,7 @@
 return {
     compact_deck_enabled = true,
     compact_deck_visible_cards = 100,
+    hide_deck = false,
 
     deck_view_stack_enabled = true,
     deck_view_stack_modifiers = false,
@@ -20,10 +21,8 @@ return {
 
     improved_hand_sorting = false,
     dynamic_hand_align = false,
-    draw_non_essential_shaders = true,
     hide_tags = false,
     hide_consumables = false,
-    hide_deck = false,
     hide_jokers = false,
     
     flames_intensity_min = 0.5,
