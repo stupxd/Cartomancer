@@ -91,8 +91,8 @@ local function fix_settings_values()
     if type(Cartomancer.SETTINGS.deck_view_stack_pos_horizontal) == "string" then
         Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = legacy_horizontal[Cartomancer.SETTINGS.deck_view_stack_pos_horizontal]
     end
-    if type(Cartomancer.SETTINGS.deck_view_stack_pos_vertical) ~= "number" then
-        Cartomancer.SETTINGS.deck_view_stack_pos_vertical = 2
+    if type(Cartomancer.SETTINGS.deck_view_stack_pos_horizontal) ~= "number" then
+        Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = 2
     end
 
 end
