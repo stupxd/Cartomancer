@@ -68,6 +68,55 @@ function Cartomancer.table_size(t)
     return size
 end
 
+-- Compatibility with old settings ;-; 
+-- should have made this properly at the very beginning :(
+local legacy_vertical = {
+    top = 1,
+    center = 2,
+    bottom = 3,
+}
+local legacy_horizontal = {
+    left = 1,
+    middle = 2,
+    right = 3,
+}
+local function fix_settings_values()
+    if type(Cartomancer.SETTINGS.deck_view_stack_pos_vertical) == "string" then
+        Cartomancer.SETTINGS.deck_view_stack_pos_vertical = legacy_vertical[Cartomancer.SETTINGS.deck_view_stack_pos_vertical]
+    end
+    if type(Cartomancer.SETTINGS.deck_view_stack_pos_vertical) ~= "number" then
+        Cartomancer.SETTINGS.deck_view_stack_pos_vertical = 1
+    end
+    
+    if type(Cartomancer.SETTINGS.deck_view_stack_pos_horizontal) == "string" then
+        Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = legacy_horizontal[Cartomancer.SETTINGS.deck_view_stack_pos_horizontal]
+    end
+    if type(Cartomancer.SETTINGS.deck_view_stack_pos_vertical) ~= "number" then
+        Cartomancer.SETTINGS.deck_view_stack_pos_vertical = 2
+    end
+
+end
+
+local vertical_options = {
+    "t", -- top
+    "c", -- center
+    "b"  -- bottom
+}
+local horizontal_options = {
+    "l", -- left
+    "m", -- middle
+    "r"  -- right
+}
+
+local function get_align_from_settings()
+    fix_settings_values()
+
+    local vertical = vertical_options[Cartomancer.SETTINGS.deck_view_stack_pos_vertical]
+    local horizontal = horizontal_options[Cartomancer.SETTINGS.deck_view_stack_pos_horizontal]
+
+    return vertical .. horizontal
+end
+
 function Cartomancer.add_unique_count()
     local unique_count = 0
 
@@ -162,7 +211,7 @@ function Card:create_quantity_display()
                 }
             },
             config = {
-                align = (Cartomancer.SETTINGS.deck_view_stack_pos_vertical:sub(1, 1)) .. (Cartomancer.SETTINGS.deck_view_stack_pos_horizontal:sub(1, 1)),
+                align = get_align_from_settings(),
                 bond = 'Strong',
                 parent = self
             },
@@ -201,8 +250,10 @@ Cartomancer.update_view_deck_preview = function ()
         return
     end
     for _, card in pairs(Cartomancer.view_deck_preview_area.cards) do
-        card.children.stack_display:remove()
-        card.children.stack_display = nil
+        if card.children.stack_display then
+            card.children.stack_display:remove()
+            card.children.stack_display = nil
+        end
         card:create_quantity_display()
     end
 end

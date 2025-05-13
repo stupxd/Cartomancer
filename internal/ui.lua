@@ -172,6 +172,9 @@ Cartomancer.config_tab = function()
                 create_toggle_option {
                     ref_value = 'deck_view_stack_enabled',
                     localization = 'carto_deck_view_stack_enabled',
+                    callback = function ()
+                        Cartomancer.update_view_deck_preview()
+                    end
                 },
                 create_toggle_option {
                     ref_value = 'deck_view_stack_modifiers',
@@ -392,7 +395,7 @@ create_option_cycle_custom = function (ref_value, localization, change_function,
     local options_loc = localize(options)
 
     local cycle = create_option_cycle({w = 2.75, label = localization and localize(localization),scale = 0.7, options = options_loc,
-                                       opt_callback = change_function, current_option = find_option(options_loc, Cartomancer.SETTINGS[ref_value])})
+                                       opt_callback = change_function, current_option = tonumber(Cartomancer.SETTINGS[ref_value])})
 
     cycle.config.padding = 0
 
@@ -497,12 +500,12 @@ end
 
 
 G.FUNCS.cartomancer_deck_view_pos_vertical = function(args)
-    Cartomancer.SETTINGS.deck_view_stack_pos_vertical = args.to_val
+    Cartomancer.SETTINGS.deck_view_stack_pos_vertical = args.to_key
     Cartomancer.update_view_deck_preview()
 end
 
 G.FUNCS.cartomancer_deck_view_pos_horizontal = function(args)
-    Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = args.to_val
+    Cartomancer.SETTINGS.deck_view_stack_pos_horizontal = args.to_key
     Cartomancer.update_view_deck_preview()
 end
 
