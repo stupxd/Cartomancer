@@ -16,14 +16,11 @@ payload = '''
 local min_ante = 1
 local max_ante = 16
 local spacing = 1 - 15*0.06
-local current_ante = nil
-if G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante then
-    current_ante = G.GAME.round_resets.ante
-
-    if current_ante > 8 then
-        min_ante = current_ante - 8 + 1
-        max_ante = current_ante + 8
-    end
+local current_ante = G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante or 1
+local ante_scaling = G.GAME and G.GAME.starting_params and G.GAME.starting_params.ante_scaling or 1
+if current_ante > 8 then
+    min_ante = current_ante - 8 + 1
+    max_ante = current_ante + 8
 end
 '''
 match_indent = true
@@ -35,6 +32,16 @@ pattern = "for i = 1, math.min(16, math.max(16, G.PROFILES[G.SETTINGS.profile].h
 position = "at"
 payload = '''
 for i = min_ante, max_ante do
+'''
+match_indent = true
+
+[[patches]]
+[patches.regex]
+target = "functions/UI_definitions.lua"
+pattern = '''number_format(get_blind_amount(i))'''
+position = "at"
+payload = '''
+number_format(get_blind_amount(i) * ante_scaling)
 '''
 match_indent = true
 
