@@ -32,6 +32,34 @@ if settings_icon then
 end
 '''
 
+# Add blinds info button to Run info menu
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "after"
+pattern = '''
+        {
+          label = localize('b_blinds'),
+          tab_definition_function = G.UIDEF.current_blinds,
+        },'''
+payload = '''
+        Cartomancer.SETTINGS.blinds_info and {
+          label = localize('carto_blinds_info_label'),
+          tab_definition_function = Cartomancer.view_blinds_info,
+          tab_definition_function_args = ''
+        } or Cartomancer.empty_table,
+'''
+
+# Remove empty tables from create_tabs()
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "before"
+pattern = "for k, v in ipairs(args.tabs) do"
+payload = "args.tabs = Cartomancer.remove_empty_tables(args.tabs)"
+
 # Use custom button
 [[patches]]
 [patches.pattern]

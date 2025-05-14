@@ -60,6 +60,10 @@ return {
             carto_kb_toggle_consumables = "Toggle consumables visibility",
             carto_kb_toggle_jokers = "Toggle jokers visibility",
             carto_kb_toggle_jokers_buttons = "Toggle jokers buttons",
+
+            carto_blinds_info_setting = "Show Blinds Info tab",
+            carto_blinds_info_label = "Blinds Info",
+            carto_blinds_info_title = "Previous Boss Blinds", -- Boss Blinds History? 
         }
     }
 }

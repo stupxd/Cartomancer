@@ -19,6 +19,7 @@ return {
     deck_view_hide_drawn_cards = false,
     -- todo: maybe custom shader for drawn cards to adjust opacity
 
+    blinds_info = true,
     improved_hand_sorting = false,
     dynamic_hand_align = false,
     hide_tags = false,

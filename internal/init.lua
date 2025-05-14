@@ -93,6 +93,19 @@ Cartomancer.table_join_keys = function (tab_, separator)
     return inline or "[empty]"
 end
 
+Cartomancer.empty_table = {}
+
+Cartomancer.remove_empty_tables = function (list)
+    local result = {}
+    for _, v in ipairs(list) do
+        if v ~= Cartomancer.empty_table then
+            result[#result+1] = v
+        end
+    end
+
+    return result
+end
+
 Cartomancer.do_nothing = function (...) end
 
 Cartomancer.align_object = function (o)

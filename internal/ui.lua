@@ -80,7 +80,7 @@ Cartomancer.config_tab = function()
             -- Yellow node. Align changes the position of modes inside
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 
-                {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = G.C.GREY}, nodes = {
+                {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = G.C.CLEAR}, nodes = {
                     {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
                         create_toggle_option {
                             ref_value = 'compact_deck_enabled',
@@ -145,7 +145,7 @@ Cartomancer.config_tab = function()
                     localization = 'carto_deck_view_stack_chips',
                 },
         
-                {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = G.C.GREY}, nodes = {
+                {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = darken(G.C.L_BLACK, 0.1)}, nodes = {
                     {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
                         create_inline_slider({
                             ref_value = 'deck_view_stack_background_opacity',
@@ -212,7 +212,7 @@ Cartomancer.config_tab = function()
                 },
                 create_inline_slider({ref_value = 'flames_volume', localization = 'carto_flames_volume',}),
 
-                {n = G.UIT.R, config = {align = "cl", padding = 0.2, colour = G.C.GREY, r = 0.1}, nodes = {
+                {n = G.UIT.R, config = {align = "cl", padding = 0.2, colour = darken(G.C.L_BLACK, 0.1), r = 0.1}, nodes = {
                     {n = G.UIT.C, config = {align = "cl", padding = 0}, nodes = {
                         create_inline_slider({ref_value = 'flames_intensity_min', localization = 'carto_flames_intensity_min', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
                         create_inline_slider({ref_value = 'flames_intensity_max', localization = 'carto_flames_intensity_max', max_value = Cartomancer._INTERNAL_max_flames_intensity, decimal_places = 1}),
@@ -251,6 +251,10 @@ Cartomancer.config_tab = function()
         tab_definition_function = function (...)
             choose_tab "other"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
+                create_toggle_option {
+                    ref_value = 'blinds_info',
+                    localization = 'carto_blinds_info_setting',
+                },
                 create_toggle_option {
                     ref_value = 'dynamic_hand_align',
                     localization = 'carto_dynamic_hand_align',
