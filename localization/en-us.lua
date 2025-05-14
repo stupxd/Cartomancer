@@ -63,7 +63,7 @@ return {
 
             carto_blinds_info_setting = "Show Blinds Info tab",
             carto_blinds_info_label = "Blinds Info",
-            carto_blinds_info_title = "Previous Boss Blinds", -- Boss Blinds History? 
+            carto_blinds_info_title = "Boss Blinds History",
         }
     }
 }

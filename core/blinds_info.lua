@@ -40,7 +40,7 @@ function Cartomancer.view_blinds_info()
 
   for k, v in ipairs(blind_tab) do
     local discovered = v.discovered
-    local temp_blind = AnimatedSprite(0,0,0.9,0.9, G.ANIMATION_ATLAS['blind_chips'], v.pos)
+    local temp_blind = AnimatedSprite(0,0,0.9,0.9, G.ANIMATION_ATLAS[v.atlas or 'blind_chips'], v.pos)
     temp_blind:define_draw_steps({
       {shader = 'dissolve', shadow_height = 0.05},
       {shader = 'dissolve'}
