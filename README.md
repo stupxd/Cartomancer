@@ -7,32 +7,43 @@
 3. Unzip the folder, and move it into the `%appdata%/Balatro/Mods` folder.
 4. Restart the game to load the mod.
 
+## TL;DR
+
+This mod is mainly aimed to improve your endless/heavily modded runs experience, providing quality of life & optimization features.
+
 ## Features
-1. Limit amount of cards visible in your deck pile, to make it appear smaller. Default limit is 100 cards, which can be modified in mod config menu.
+
+### 1. Limit amount of cards visible in your deck pile
 
 ![cards-pile-difference](git-assets/deck-pile.jpg)
 
 
-2. Improved deck view
+### 2. Improved deck view
 
-- Stack identical playing cards, which looks much cleaner and improves performance.
+- Hide drawn cards
+- Stack identical playing cards
 
 ![stackable-cards-difference](git-assets/stackable-cards.jpg)
 
-- Optionally, stack cards regardless of modifier, if your deck has tons of unique cards.
-- Hide drawn cards from deck view
+### 4. Custom scoring flames intensity and SFX volume.
 
-4. Custom scoring flames intensity and SFX volume.
 
-5. Hide non-essential (edition) shaders.
+### 5. Extended Blinds info in Run Info
 
-6. Improved jokers management
+- Boss Blinds History
+- Scoring requirements 8 ante ahead
+
+![zoom-jokers-difference](git-assets/blinds-info.jpg)
+
+### 6. Improved jokers management
 
 - Option to hide all jokers (improves performance at 100+ jokers).
 
 - Zoom into the jokers area for easier jokers management and navigation.
 
 ![zoom-jokers-difference](git-assets/zoom-jokers.jpg)
+
+...and more!
 
 Settings for this mod can be found under `Mods` tab, if you use Steamodded 1.0.0 - find `Cartomancer`, and open `Config` tab.
 
