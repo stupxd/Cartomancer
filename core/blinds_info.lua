@@ -15,7 +15,7 @@ function Cartomancer.create_vert_tabs(args)
       if v.chosen then args.current = {k = k, v = v} end
       local id = 'tab_but_'..(v.label or '')
       tab_buttons[#tab_buttons+1] = {n=G.UIT.R, config={align = "cm"}, nodes={
-        UIBox_button({id = id, ref_table = v, button = 'cartomancer_settings_change_tab', label = {v.label},
+        UIBox_button({id = id, ref_table = v, button = 'cartomancer_settings_change_tab', label = {v.label}, colour = lighten(G.C.GREY, 0.115),
                                                   padding = 0.1, minh = 2.8*args.scale, minw = 0.8*args.scale, col = true, choice = true, scale = args.text_scale,
                                                   vert = true, chosen = v.chosen and 'vert', func = v.func, focus_args = {type = 'none'}})
       }}
