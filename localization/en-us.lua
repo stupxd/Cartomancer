@@ -62,7 +62,8 @@ return {
             carto_kb_toggle_jokers_buttons = "Toggle jokers buttons",
 
             carto_blinds_info_setting = "Show Blinds Info tab",
-            carto_blinds_info_label = "Blinds Info",
+            carto_blinds_info_current = "Current",
+            carto_blinds_info_extra = "History",
             carto_blinds_info_title = "Boss Blinds History",
         }
     }

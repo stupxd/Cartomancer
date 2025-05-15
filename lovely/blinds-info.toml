@@ -1,0 +1,52 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+
+# Add blinds info button to Run info menu
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "at"
+pattern = '''
+        {
+          label = localize('b_blinds'),
+          tab_definition_function = G.UIDEF.current_blinds,
+        },'''
+payload = '''
+        {
+          label = localize('b_blinds'),
+          tab_definition_function = 
+          Cartomancer.SETTINGS.blinds_info and
+          function()
+          return 
+            {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR, padding = 0}, nodes={
+            Cartomancer.create_vert_tabs(
+              {tabs = {
+                  {
+                      chosen = true,
+                      label = localize('carto_blinds_info_current'),
+                      tab_definition_function = G.UIDEF.current_blinds,
+                  },
+                  {
+                      label = localize('carto_blinds_info_extra'),
+                      tab_definition_function = Cartomancer.view_blinds_info,
+                  },
+              }})
+            }}
+          end
+          or
+          G.UIDEF.current_blinds,
+        },
+'''
+
+# Support vertical buttons
+[[patches]]
+[patches.regex]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "after"
+pattern = "func = button_pip,"
+payload = "vert = args.vert,"
