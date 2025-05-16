@@ -58,6 +58,11 @@ return {
             carto_kb_toggle_consumables = "切换消耗品栏可见性",
             carto_kb_toggle_jokers = "切换小丑牌区域可见性",
             carto_kb_toggle_jokers_buttons = "切换小丑牌控制按钮",
+
+            carto_blinds_info_setting = "显示盲注信息",
+            carto_blinds_info_current = "当前",
+            carto_blinds_info_extra = "历史",
+            carto_blinds_info_title = "Boss盲注历史",
         }
     }
 }
