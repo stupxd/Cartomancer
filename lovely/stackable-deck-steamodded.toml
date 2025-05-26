@@ -54,35 +54,27 @@ for k, v in ipairs(G.playing_cards) do
 [patches.pattern]
 target = '=[SMODS _ "src/overrides.lua"]'
 match_indent = true
-pattern = 'card_limit = #SUITS[suit_map[j]],'
+pattern = 'card_limit = #SUITS[visible_suit[j]],'
 position = "at"
-payload = 'card_limit = #SUITS_SORTED[suit_map[j]],'
+payload = 'card_limit = #SUITS_SORTED[visible_suit[j]],'
 
 [[patches]]
 [patches.regex]
 target = '=[SMODS _ "src/overrides.lua"]'
 match_indent = true
 pattern = '''
-			for i = 1\, \#SUITS\[suit_map\[j\]\] do
-				if SUITS\[suit_map\[j\]\]\[i\] then
-					local greyed\, _scale = nil\, 0\.7
-					if unplayed_only and not \(\(SUITS\[suit_map\[j\]\]\[i\]\.area and SUITS\[suit_map\[j\]\]\[i\]\.area == G\.deck\) or SUITS\[suit_map\[j\]\]\[i\]\.ability\.wheel_flipped\) then
-						greyed = true
+				for i = 1\, \#SUITS\[visible_suit\[j\]\] do
+					if SUITS\[visible_suit\[j\]\]\[i\] then
+						local greyed\, _scale = nil\, 0\.7[\s\S]*
+						copy:hard_set_T\(\)
+						view_deck:emplace\(copy\)
 					end
-					local copy = copy_card\(SUITS\[suit_map\[j\]\]\[i\]\, nil\, _scale[^\)\n]*\)
-					copy\.greyed = greyed
-					copy\.T\.x = view_deck\.T\.x \+ view_deck\.T\.w \/ 2
-					copy\.T\.y = view_deck\.T\.y
-
-					copy:hard_set_T\(\)
-					view_deck:emplace\(copy\)
-				end
-			end'''
+				end'''
 position = "at"
 payload = '''
-for i = 1, #SUITS_SORTED[suit_map[j]] do
-  local card_string = SUITS_SORTED[suit_map[j]][i]
-  local card = SUITS[suit_map[j]][card_string]
+for i = 1, #SUITS_SORTED[visible_suit[j]] do
+  local card_string = SUITS_SORTED[visible_suit[j]][i]
+  local card = SUITS[visible_suit[j]][card_string]
 
   card.T.x = view_deck.T.x + view_deck.T.w/2
   card.T.y = view_deck.T.y
