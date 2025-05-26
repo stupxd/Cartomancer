@@ -50,6 +50,43 @@ for k, v in ipairs(G.playing_cards) do
   end
 '''
 
+# BACKWARDS COMPATIBILITY FOR OLDER STEAMODDED
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+match_indent = true
+pattern = 'card_limit = #SUITS[visible_suit[j]],'
+position = "at"
+payload = 'card_limit = #SUITS_SORTED[visible_suit[j]],'
+
+[[patches]]
+[patches.regex]
+target = '=[SMODS _ "src/overrides.lua"]'
+match_indent = true
+pattern = '''
+				for i = 1\, \#SUITS\[visible_suit\[j\]\] do
+					if SUITS\[visible_suit\[j\]\]\[i\] then
+						local greyed\, _scale = nil\, 0\.7[\s\S]*
+						copy:hard_set_T\(\)
+						view_deck:emplace\(copy\)
+					end
+				end'''
+position = "at"
+payload = '''
+for i = 1, #SUITS_SORTED[visible_suit[j]] do
+  local card_string = SUITS_SORTED[visible_suit[j]][i]
+  local card = SUITS[visible_suit[j]][card_string]
+
+  card.T.x = view_deck.T.x + view_deck.T.w/2
+  card.T.y = view_deck.T.y
+  card:create_quantity_display()
+
+  card:hard_set_T()
+  view_deck:emplace(card)
+end
+'''
+
+# FOR LATEST STEAMODDED
 [[patches]]
 [patches.pattern]
 target = '=[SMODS _ "src/overrides.lua"]'
