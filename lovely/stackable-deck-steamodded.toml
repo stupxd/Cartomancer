@@ -55,17 +55,17 @@ for k, v in ipairs(G.playing_cards) do
 [patches.pattern]
 target = '=[SMODS _ "src/overrides.lua"]'
 match_indent = true
-pattern = 'card_limit = #SUITS[visible_suit[j]],'
+pattern = 'card_limit = #SUITS[suit_map[j]],'
 position = "at"
-payload = 'card_limit = #SUITS_SORTED[visible_suit[j]],'
+payload = 'card_limit = #SUITS_SORTED[suit_map[j]],'
 
 [[patches]]
 [patches.regex]
 target = '=[SMODS _ "src/overrides.lua"]'
 match_indent = true
 pattern = '''
-				for i = 1\, \#SUITS\[visible_suit\[j\]\] do
-					if SUITS\[visible_suit\[j\]\]\[i\] then
+				for i = 1\, \#SUITS\[suit_map\[j\]\] do
+					if SUITS\[suit_map\[j\]\]\[i\] then
 						local greyed\, _scale = nil\, 0\.7[\s\S]*
 						copy:hard_set_T\(\)
 						view_deck:emplace\(copy\)
@@ -73,9 +73,9 @@ pattern = '''
 				end'''
 position = "at"
 payload = '''
-for i = 1, #SUITS_SORTED[visible_suit[j]] do
-  local card_string = SUITS_SORTED[visible_suit[j]][i]
-  local card = SUITS[visible_suit[j]][card_string]
+for i = 1, #SUITS_SORTED[suit_map[j]] do
+  local card_string = SUITS_SORTED[suit_map[j]][i]
+  local card = SUITS[suit_map[j]][card_string]
 
   card.T.x = view_deck.T.x + view_deck.T.w/2
   card.T.y = view_deck.T.y
