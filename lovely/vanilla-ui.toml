@@ -10,7 +10,7 @@ priority = 69
 target = "game.lua"
 pattern = "boot_timer('prep stage', 'splash prep',1)"
 position = "before"
-payload = "Cartomancer.load_mod_file('internal/localization.lua', 'localization')"
+payload = "Cartomancer.load_mod_file('internal/localization.lua', 'cartomancer.localization')"
 match_indent = true
 
 # Add tab button to settings menu

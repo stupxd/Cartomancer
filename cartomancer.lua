@@ -5,17 +5,17 @@ Cartomancer.path = assert(
     "Failed to find mod folder. Make sure that `Cartomancer` folder has `cartomancer.lua` file!"
 )
 
-Cartomancer.load_mod_file('internal/config.lua', 'internal.config')
-Cartomancer.load_mod_file('internal/atlas.lua', 'internal.atlas')
-Cartomancer.load_mod_file('internal/ui.lua', 'internal.ui')
-Cartomancer.load_mod_file('internal/keybinds.lua', 'internal.keybinds')
+Cartomancer.load_mod_file('internal/config.lua', 'cartomancer.config')
+Cartomancer.load_mod_file('internal/atlas.lua', 'cartomancer.atlas')
+Cartomancer.load_mod_file('internal/ui.lua', 'cartomancer.ui')
+Cartomancer.load_mod_file('internal/keybinds.lua', 'cartomancer.keybinds')
 
-Cartomancer.load_mod_file('core/view-deck.lua', 'core.view-deck')
-Cartomancer.load_mod_file('core/flames.lua', 'core.flames')
-Cartomancer.load_mod_file('core/optimizations.lua', 'core.optimizations')
-Cartomancer.load_mod_file('core/jokers.lua', 'core.jokers')
-Cartomancer.load_mod_file('core/hand.lua', 'core.hand')
-Cartomancer.load_mod_file('core/blinds_info.lua', 'core.blinds_info')
+Cartomancer.load_mod_file('core/view-deck.lua', 'cartomancer.view-deck')
+Cartomancer.load_mod_file('core/flames.lua', 'cartomancer.flames')
+Cartomancer.load_mod_file('core/optimizations.lua', 'cartomancer.optimizations')
+Cartomancer.load_mod_file('core/jokers.lua', 'cartomancer.jokers')
+Cartomancer.load_mod_file('core/hand.lua', 'cartomancer.hand')
+Cartomancer.load_mod_file('core/blinds_info.lua', 'cartomancer.blinds_info')
 
 Cartomancer.load_config()
 

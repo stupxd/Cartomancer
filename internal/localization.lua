@@ -27,7 +27,7 @@ local function add_defaults(default_table, target_table)
 end
 
 local function load_localization()
-    local default_table = Cartomancer.load_mod_file('localization/en-us.lua', 'localization')
+    local default_table = Cartomancer.load_mod_file('localization/en-us.lua', 'cartomancer.localization')
 
     local loc_file = Cartomancer.path.."/localization/"..G.SETTINGS.language..".lua"
 
