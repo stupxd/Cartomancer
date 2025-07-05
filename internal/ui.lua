@@ -52,61 +52,6 @@ Cartomancer.config_tab = function()
 
 
     table.insert(vertical_tabs, {
-        label = localize('carto_settings_compact_deck'),
-        chosen = is_chosen("compact_deck"),
-        tab_definition_function = function (...)
-            if Cartomancer.INTERNAL_compact_deck_area then
-                Cartomancer.INTERNAL_compact_deck_area:remove()
-                Cartomancer.INTERNAL_compact_deck_area = nil
-            end
-            local area = CardArea(
-              G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-              1.1*G.CARD_W,
-              1.1*G.CARD_H, 
-              {card_limit = 300, type = 'deck'}
-            )
-            area.draw_uibox = true
-        
-            for i = 1, 300 do
-              local card = Card(G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h, G.CARD_W, G.CARD_H, G.P_CARDS[1], G.P_CENTERS.c_base, {bypass_back = G.P_CENTERS['b_red'].pos, playing_card = i, viewed_back = true})
-              area:emplace(card)
-              card.b_red = true
-              card.sprite_facing = 'back'
-              card.facing = 'back'
-            end
-            Cartomancer.INTERNAL_compact_deck_area = area
-
-            choose_tab "compact_deck"
-            -- Yellow node. Align changes the position of modes inside
-            return {n = G.UIT.ROOT, config = tab_config, nodes = {
-                
-                {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = G.C.CLEAR}, nodes = {
-                    {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
-                        create_toggle_option {
-                            ref_value = 'compact_deck_enabled',
-                            localization = 'carto_compact_deck_enabled',
-                        },
-                        create_inline_slider({ref_value = 'compact_deck_visible_cards', localization = 'carto_compact_deck_visible_cards', max_value = 300}),
-                        create_toggle_option {
-                            ref_value = 'hide_deck',
-                            localization = 'carto_hide_deck',
-                        },
-                    }},
-                    {n = G.UIT.C, config = {align = "r", minw = 2,padding = 0.1}, nodes = {
-                        {n=G.UIT.R, config={align = "cr", padding = 0}, nodes={
-                        }}
-                    }},
-                    {n = G.UIT.C, config = {align = "r", padding = 0.1}, nodes = {
-                        {n=G.UIT.R, config={align = "cr", padding = 0}, nodes={
-                            {n=G.UIT.O, config={object = area}}
-                        }}
-                    }},
-                }}
-            }}
-        end
-    })
-
-    table.insert(vertical_tabs, {
         label = localize('carto_settings_deck_view'),
         chosen = is_chosen("deck_view"),
         tab_definition_function = function (...)
@@ -188,6 +133,61 @@ Cartomancer.config_tab = function()
                         }}
                     }},
                 }},
+            }}
+        end
+    })
+
+    table.insert(vertical_tabs, {
+        label = localize('carto_settings_compact_deck'),
+        chosen = is_chosen("compact_deck"),
+        tab_definition_function = function (...)
+            if Cartomancer.INTERNAL_compact_deck_area then
+                Cartomancer.INTERNAL_compact_deck_area:remove()
+                Cartomancer.INTERNAL_compact_deck_area = nil
+            end
+            local area = CardArea(
+              G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+              1.1*G.CARD_W,
+              1.1*G.CARD_H, 
+              {card_limit = 300, type = 'deck'}
+            )
+            area.draw_uibox = true
+        
+            for i = 1, 300 do
+              local card = Card(G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h, G.CARD_W, G.CARD_H, G.P_CARDS[1], G.P_CENTERS.c_base, {bypass_back = G.P_CENTERS['b_red'].pos, playing_card = i, viewed_back = true})
+              area:emplace(card)
+              card.b_red = true
+              card.sprite_facing = 'back'
+              card.facing = 'back'
+            end
+            Cartomancer.INTERNAL_compact_deck_area = area
+
+            choose_tab "compact_deck"
+            -- Yellow node. Align changes the position of modes inside
+            return {n = G.UIT.ROOT, config = tab_config, nodes = {
+                
+                {n = G.UIT.R, config = {align = "cl", padding = 0.2, r = 0.1, colour = G.C.CLEAR}, nodes = {
+                    {n = G.UIT.C, config = {align = "l", padding = 0}, nodes = {
+                        create_toggle_option {
+                            ref_value = 'compact_deck_enabled',
+                            localization = 'carto_compact_deck_enabled',
+                        },
+                        create_inline_slider({ref_value = 'compact_deck_visible_cards', localization = 'carto_compact_deck_visible_cards', max_value = 300}),
+                        create_toggle_option {
+                            ref_value = 'hide_deck',
+                            localization = 'carto_hide_deck',
+                        },
+                    }},
+                    {n = G.UIT.C, config = {align = "r", minw = 2,padding = 0.1}, nodes = {
+                        {n=G.UIT.R, config={align = "cr", padding = 0}, nodes={
+                        }}
+                    }},
+                    {n = G.UIT.C, config = {align = "r", padding = 0.1}, nodes = {
+                        {n=G.UIT.R, config={align = "cr", padding = 0}, nodes={
+                            {n=G.UIT.O, config={object = area}}
+                        }}
+                    }},
+                }}
             }}
         end
     })
