@@ -16,11 +16,12 @@ pattern = '''
 		if v.base.suit* then table.insert(SUITS[v.base.suit], v) end'''
 position = "at"
 payload = '''
+local visible_suits_carto = Cartomancer.get_visible_suits_smods(view_deck_unplayed_only, args and args.cycle_config.current_option or 1)
 local SUITS_SORTED = Cartomancer.tablecopy(SUITS)
 for k, v in ipairs(G.playing_cards) do
   if v.base.suit then
   local greyed
-  if unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
+  if view_deck_unplayed_only and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
     greyed = true
   end
   local card_string = v:cart_to_string {deck_view = true, greyed = true}
@@ -34,18 +35,24 @@ for k, v in ipairs(G.playing_cards) do
     -- Initiate stack
     table.insert(SUITS_SORTED[v.base.suit], card_string)
 
-    local _scale = 0.7
-    local copy = BALIATRO and copy_card(v, nil, _scale, nil, nil, true)
-                or copy_card(v, nil, _scale)
+    if visible_suits_carto[v.base.suit] then
+      local _scale = 0.7
+      local copy = BALIATRO and copy_card(v, nil, _scale, nil, nil, true)
+                  or copy_card(v, nil, _scale)
 
-    copy.greyed = greyed
-    copy.stacked_quantity = 1
+      copy.greyed = greyed
+      copy.stacked_quantity = 1
 
-    SUITS[v.base.suit][card_string] = copy
+      SUITS[v.base.suit][card_string] = copy
+    else
+      SUITS[v.base.suit][card_string] = "uhhh don't ever crash from this code pretty please?"
+    end
   else
     -- Stack cards
     local stacked_card = SUITS[v.base.suit][card_string]
-    stacked_card.stacked_quantity = stacked_card.stacked_quantity + 1
+    if type(stacked_card) == 'table' then -- it crashed from that code above :(
+      stacked_card.stacked_quantity = stacked_card.stacked_quantity + 1
+    end
   end
   end
 '''
@@ -117,6 +124,7 @@ pattern = '''
 				end'''
 position = "at"
 payload = '''
+-- -- -- -- -- -- -- -- -- --
 for i = 1, #SUITS_SORTED[visible_suit[j]] do
   local card_string = SUITS_SORTED[visible_suit[j]][i]
   local card = SUITS[visible_suit[j]][card_string]
@@ -128,7 +136,44 @@ for i = 1, #SUITS_SORTED[visible_suit[j]] do
   card:hard_set_T()
   view_deck:emplace(card)
 end
-'''
+-- -- -- -- -- -- -- -- -- --'''
+
+# FOR MODDED SUITS PAGES
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+match_indent = true
+pattern = 'card_limit = #SUITS[visible_suit[j]],'
+position = "at"
+payload = 'card_limit = #SUITS_SORTED[visible_suit[j]],'
+
+[[patches]]
+[patches.regex]
+target = '=[SMODS _ "src/overrides.lua"]'
+match_indent = true
+pattern = '''
+			for i = 1\, \#SUITS\[visible_suit\[j\]\] do
+				if SUITS\[visible_suit\[j\]\]\[i\] then
+					local greyed\, _scale = nil\, 0\.7[\s\S]*
+					copy:hard_set_T\(\)
+					view_deck:emplace\(copy\)
+				end
+			end'''
+position = "at"
+payload = '''
+-- -- -- -- -- -- -- -- -- --
+for i = 1, #SUITS_SORTED[visible_suit[j]] do
+  local card_string = SUITS_SORTED[visible_suit[j]][i]
+  local card = SUITS[visible_suit[j]][card_string]
+
+  card.T.x = view_deck.T.x + view_deck.T.w/2
+  card.T.y = view_deck.T.y
+  card:create_quantity_display()
+
+  card:hard_set_T()
+  view_deck:emplace(card)
+end
+-- -- -- -- -- -- -- -- -- --'''
 
 [[patches]]
 [patches.pattern]
@@ -137,5 +182,5 @@ match_indent = true
 pattern = '			modded and {n = G.UIT.R, config = {align = "cm"}, nodes = {'
 position = "at"
 payload = '''
-      not unplayed_only and Cartomancer.add_unique_count() or nil,
+      not view_deck_unplayed_only and Cartomancer.add_unique_count() or nil,
 			modded and {n = G.UIT.R, config = {align = "cm"}, nodes = {'''

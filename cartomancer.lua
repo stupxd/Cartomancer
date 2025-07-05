@@ -16,6 +16,9 @@ Cartomancer.load_mod_file('core/optimizations.lua', 'cartomancer.optimizations')
 Cartomancer.load_mod_file('core/jokers.lua', 'cartomancer.jokers')
 Cartomancer.load_mod_file('core/hand.lua', 'cartomancer.hand')
 Cartomancer.load_mod_file('core/blinds_info.lua', 'cartomancer.blinds_info')
+if SMODS then
+    Cartomancer.load_mod_file('core/view-deck-steamodded.lua', 'cartomancer.view-deck-steamodded')
+end
 
 Cartomancer.load_config()
 
