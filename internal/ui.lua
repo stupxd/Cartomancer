@@ -48,7 +48,7 @@ Cartomancer.config_tab = function()
     Cartomancer.log "Opened cartomancer config"
     local vertical_tabs = {}
 
-    choose_tab "compact_deck"
+    choose_tab "deck_view"
 
 
     table.insert(vertical_tabs, {
