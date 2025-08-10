@@ -51,21 +51,12 @@ function Cartomancer.blinds_info_icon()
           }}
 end
 
-local last_boss, last_boss_round = nil, nil
-
 local gnb = get_new_boss
 function get_new_boss(...)
     local ret = gnb(...)
 
-    local new_boss, new_boss_round = ret, G.GAME.round
-
-    -- Next Ante Preview compatibility
-    if new_boss == last_boss and new_boss_round == last_boss_round then
-    else
-      last_boss, last_boss_round = new_boss, new_boss_round
-      G.GAME.cartomancer_bosses_list = G.GAME.cartomancer_bosses_list or {}
-      G.GAME.cartomancer_bosses_list[#G.GAME.cartomancer_bosses_list+1] = ret
-    end
+    G.GAME.cartomancer_bosses_list = G.GAME.cartomancer_bosses_list or {}
+    G.GAME.cartomancer_bosses_list[#G.GAME.cartomancer_bosses_list+1] = ret
 
     return ret
 end
