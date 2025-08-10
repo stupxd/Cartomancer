@@ -51,12 +51,22 @@ function Cartomancer.blinds_info_icon()
           }}
 end
 
+local last_boss, last_boss_round = nil, nil
+
 local gnb = get_new_boss
 function get_new_boss(...)
     local ret = gnb(...)
 
-    G.GAME.cartomancer_bosses_list = G.GAME.cartomancer_bosses_list or {}
-    G.GAME.cartomancer_bosses_list[#G.GAME.cartomancer_bosses_list+1] = ret
+    local new_boss, new_boss_round = ret, G.GAME.round
+
+    -- Next Ante Preview compatibility
+    if new_boss == last_boss and new_boss_round == last_boss_round then
+      print "skipped new boss because already generated"
+    else
+      last_boss, last_boss_round = new_boss, new_boss_round
+      G.GAME.cartomancer_bosses_list = G.GAME.cartomancer_bosses_list or {}
+      G.GAME.cartomancer_bosses_list[#G.GAME.cartomancer_bosses_list+1] = ret
+    end
 
     return ret
 end
