@@ -202,6 +202,11 @@ Cartomancer.config_tab = function()
         label = localize('carto_settings_flames'),
         chosen = is_chosen("flames"),
         tab_definition_function = function (...)
+            local minw = 2
+            local minh = 1
+            local w = minw * 1.25
+            local h = minh * 2.5
+
             Cartomancer._INTERNAL_gasoline = 5
             local scale = 0.4
             choose_tab "flames"
@@ -223,16 +228,16 @@ Cartomancer.config_tab = function()
                     }},
                     {n = G.UIT.C, config = {align = "cm", padding = 0}, nodes = {
                         {n=G.UIT.R, config={align = "cm", minh = 1, padding = 0.1}, nodes={
-                            {n=G.UIT.C, config={align = "cr", minw = 2, minh =1, r = 0.1,colour = G.C.UI_CHIPS, id = 'hand_chip_area_cart', emboss = 0.05}, nodes={
-                                {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_chips_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
+                            {n=G.UIT.C, config={align = "cr", minw = minw, minh =minh, r = 0.1,colour = G.C.UI_CHIPS, id = 'hand_chip_area_cart', emboss = 0.05}, nodes={
+                                {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_chips_cart', object = Moveable(0,0,0,0), w = 0, h = 0, _w = w, _h = h}},
                                 {n=G.UIT.O, config={id = ':3_chips',object = DynaText({string = {{ref_table = {[":3"] = localize("carto_flames_chips") }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2})}},
                                 {n=G.UIT.B, config={w=0.1,h=0.1}},
                             }},
                             {n=G.UIT.C, config={align = "cm"}, nodes={
                                 {n=G.UIT.T, config={text = "X", lang = G.LANGUAGES['en-us'], scale = scale * 2, colour = G.C.UI_MULT, shadow = true}},
                             }},
-                            {n=G.UIT.C, config={align = "cl", minw = 2, minh=1, r = 0.1,colour = G.C.UI_MULT, id = 'hand_mult_area_cart', emboss = 0.05}, nodes={
-                                {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_mult_cart', object = Moveable(0,0,0,0), w = 0, h = 0}},
+                            {n=G.UIT.C, config={align = "cl", minw = minw, minh=minh, r = 0.1,colour = G.C.UI_MULT, id = 'hand_mult_area_cart', emboss = 0.05}, nodes={
+                                {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_mult_cart', object = Moveable(0,0,0,0), w = 0, h = 0, _w = w, _h = h}},
                                 {n=G.UIT.B, config={w=0.1,h=0.1}},
                                 {n=G.UIT.O, config={id = ':3_mult',object = DynaText({string = {{ref_table = {[":3"] = localize("carto_flames_mult") }, ref_value = ":3"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2})}},
                             }}

@@ -35,13 +35,13 @@ function Cartomancer.init_setting_flames()
         id = 'flame_chips_cart',
         arg_tab = 'chip_flames_cart',
         colour = G.C.UI_CHIPS,
-        accent = G.C.UI_CHIPLICK
+        accent = G.C.UI_CHIPLICK or SMODS and SMODS.Scoring_Parameters and SMODS.Scoring_Parameters.chips and SMODS.Scoring_Parameters.chips.lick or {1, 1, 1, 1}
     }
 
     G.ARGS.flame_handler.mult_cart = G.ARGS.flame_handler.mult_cart or {
         id = 'flame_mult_cart',
         arg_tab = 'mult_flames_cart',
         colour = G.C.UI_MULT,
-        accent = G.C.UI_MULTLICK
+        accent = G.C.UI_MULTLICK or SMODS and SMODS.Scoring_Parameters and SMODS.Scoring_Parameters.mult and SMODS.Scoring_Parameters.mult.lick or {1, 1, 1, 1}
     }
 end
