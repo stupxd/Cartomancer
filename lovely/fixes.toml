@@ -1,0 +1,25 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+# Fix memory leak (moveables being added twice)
+[[patches]]
+[patches.pattern]
+target = "engine/moveable.lua"
+position = "at"
+pattern = '''
+    table.insert(G.MOVEABLES, self)
+    if getmetatable(self) == Moveable then 
+        table.insert(G.I.MOVEABLE, self)
+    end'''
+payload = '''
+    if not self.added_moveable then
+        self.added_moveable = true
+        table.insert(G.MOVEABLES, self)
+        if getmetatable(self) == Moveable then 
+            table.insert(G.I.MOVEABLE, self)
+        end
+    end
+'''
+match_indent = true
