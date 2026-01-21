@@ -175,6 +175,10 @@ function Cartomancer.juice_joker_before_discard(joker)
 end
 
 local function juice_jokers_permanently()
+    if not G.jokers then
+        return
+    end
+
     for _, v in pairs(G.jokers.cards) do
         local name = v.config.center.name
 
@@ -212,7 +216,9 @@ local ca_e = CardArea.emplace
 function CardArea:emplace(...)
     ca_e(self, ...)
 
-    juice_jokers_permanently()
+    if self == G.jokers then
+        juice_jokers_permanently()
+    end
 end
 
 local g_sr = Game.start_run
