@@ -3,6 +3,18 @@ version = "1.0.0"
 dump_lua = true
 priority = 69
 
+# Change color for hands played this round in Run Info
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''{n=G.UIT.C, config={align = "cm", padding = 0.05, colour = G.C.L_BLACK,r = 0.1, minw = 0.9}, nodes={'''
+position = "at"
+payload = '''
+{n=G.UIT.C, config={align = "cm", padding = 0.05, colour =
+    (G.GAME.facing_blind and G.GAME.hands[handname].played_this_round >= 1) and G.C.SECONDARY_SET.Spectral or 
+    G.C.L_BLACK,r = 0.1, minw = 0.9}, nodes={'''
+match_indent = true
+
 # Add score hover popup
 [[patches]]
 [patches.pattern]
