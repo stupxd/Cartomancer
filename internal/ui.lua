@@ -403,6 +403,8 @@ create_toggle_option = function (args)
       }}
 end
 
+Cartomancer.create_toggle_option = create_toggle_option
+
 create_keybind = function (args)
     assert(args.name, "Missing `name` in create_keybind " .. Cartomancer.dump(args))
 

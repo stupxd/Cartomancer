@@ -12,4 +12,4 @@ match_indent = true
 pattern = "modded and {"
 position = "before"
 payload = '''
-not unplayed_only and Cartomancer.add_unique_count() or nil, -- Cartomancer Steamodded 0.9.8 compatibility'''
+Cartomancer.add_view_deck_ui(unplayed_only), -- Cartomancer Steamodded 0.9.8 compatibility'''

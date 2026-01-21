@@ -182,5 +182,5 @@ match_indent = true
 pattern = '			modded and {n = G.UIT.R, config = {align = "cm"}, nodes = {'
 position = "at"
 payload = '''
-      not (view_deck_unplayed_only or unplayed_only) and Cartomancer.add_unique_count() or nil,
+      Cartomancer.add_view_deck_ui(view_deck_unplayed_only or unplayed_only),
 			modded and {n = G.UIT.R, config = {align = "cm"}, nodes = {'''

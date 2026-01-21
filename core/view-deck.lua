@@ -117,6 +117,24 @@ local function get_align_from_settings()
     return vertical .. horizontal
 end
 
+function Cartomancer.add_view_deck_ui(unplayed_only)
+
+    return {n=G.UIT.R, config={align = "cm"}, nodes={
+        {n=G.UIT.C, config={align = "lm", minw = 3}, nodes = {
+            Cartomancer.create_toggle_option {
+                    ref_value = 'deck_view_stack_enabled',
+                    localization = 'carto_deck_view_stack_compact',
+                    callback = function ()
+                        local label = localize(unplayed_only and 'b_remaining' or 'b_full_deck')
+                        local tab_but = G.OVERLAY_MENU:get_UIE_by_ID('tab_but_'..label)
+                        G.FUNCS.change_tab(tab_but)
+                    end
+                },
+        }},
+        not unplayed_only and Cartomancer.add_unique_count() or {n=G.UIT.C, config={align = "lm", minw = 6.5*G.CARD_W}, nodes = {} },
+      }}
+end
+
 function Cartomancer.add_unique_count()
     local unique_count = 0
 
@@ -134,7 +152,7 @@ function Cartomancer.add_unique_count()
     --     unique_count = unique_count + #cards
     -- end
     
-    return {n=G.UIT.R, config={align = "cm"}, nodes={
+    return {n=G.UIT.C, config={align = "cm", minw = 6.5*G.CARD_W}, nodes={
         {n=G.UIT.T, config={text = localize('carto_deck_view_unique_cards')..' '..tostring(unique_count), colour = G.C.WHITE, scale = 0.3}},
       }}
 end

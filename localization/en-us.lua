@@ -12,6 +12,7 @@ return {
             carto_compact_deck_visible_cards = "Cards limit ",
 
             carto_deck_view_stack_enabled = "Stack cards in deck view",
+            carto_deck_view_stack_compact = "Stack cards",
             carto_deck_view_hide_drawn_cards = "Hide drawn cards",
             carto_deck_view_stack_modifiers = "Stack all modifiers",
             carto_deck_view_stack_chips = "Stack different chip values",

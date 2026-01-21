@@ -103,7 +103,7 @@ match_indent = true
 target = "functions/UI_definitions.lua"
 pattern = '''modded and {n=G.UIT.R, config={align = "cm"}, nodes={'''
 position = "before"
-payload = "not unplayed_only and Cartomancer.add_unique_count() or nil,"
+payload = "Cartomancer.add_view_deck_ui(unplayed_only),"
 match_indent = true
 
 # Overwrite cards copy and display code
