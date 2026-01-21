@@ -1,4 +1,6 @@
 
+--#region Show high scores when hovering Blind Score
+
 local g_igo = Game.init_game_object
 function Game:init_game_object()
     local g = g_igo(self)
@@ -94,3 +96,165 @@ G.FUNCS.carto_latest_score = function(e)
         G.GAME.carto_high_scores.latest_text = new_chips_text
     end
 end
+--#endregion
+
+
+--#region Juice jokers logic
+
+-- Card Sharp
+function Cartomancer.highlighted_hand_played_this_round(joker)
+    return function ()
+        if joker.debuff then
+            return false
+        end
+        if joker.facing ~= "front" then
+            return false
+        end
+    
+        local highlighted_hand = G.GAME.current_round.current_hand.handname
+        return G.GAME.hands[highlighted_hand] and G.GAME.hands[highlighted_hand].played_this_round >= 1
+    end
+end
+
+-- Obelisk
+function Cartomancer.highlighted_hand_most_played(joker)
+    return function ()
+        if joker.debuff then
+            return false
+        end
+        if joker.facing ~= "front" then
+            return false
+        end
+    
+        local highlighted_hand = G.GAME.current_round.current_hand.handname
+
+        if G.GAME.hands[highlighted_hand] then
+            local reset = true
+            local play_more_than = (G.GAME.hands[highlighted_hand].played or 0)
+            for k, v in pairs(G.GAME.hands) do
+                if k ~= highlighted_hand and v.played >= play_more_than and v.visible then
+                    reset = false
+                end
+            end
+            return reset
+        end
+    end
+end
+
+-- Madness + Dagger
+function Cartomancer.juice_joker_during_blind_select(joker)
+    local madness = joker.config.center.name == "Madness"
+    return function ()
+        if joker.debuff then
+            return false
+        end
+        if joker.facing ~= "front" then
+            return false
+        end
+
+        if madness then
+            return G.GAME.round_resets.blind_states.Small == "Select" or G.GAME.round_resets.blind_states.Big == "Select"
+        end
+
+        return G.STATE == G.STATES.BLIND_SELECT
+    end
+end
+
+-- Burnt Joker
+function Cartomancer.juice_joker_before_discard(joker)
+    return function ()
+        if joker.debuff then
+            return false
+        end
+        if joker.facing ~= "front" then
+            return false
+        end
+
+        return G.STATE == G.STATES.SELECTING_HAND and G.GAME.current_round.discards_used <= 0 and G.GAME.current_round.discards_left > 0
+    end
+end
+
+local function juice_jokers_permanently()
+    for _, v in pairs(G.jokers.cards) do
+        local name = v.config.center.name
+
+        if name == 'Card Sharp' then
+            Cartomancer.juice_card_while(
+                v,
+                Cartomancer.highlighted_hand_played_this_round(v)
+            )
+        elseif name == 'Obelisk' then
+            Cartomancer.juice_card_while(
+                v,
+                Cartomancer.highlighted_hand_most_played(v)
+            )
+        elseif name == 'Ceremonial Dagger' then
+            Cartomancer.juice_card_while(
+                v,
+                Cartomancer.juice_joker_during_blind_select(v)
+            )
+        elseif name == 'Madness' then
+            Cartomancer.juice_card_while(
+                v,
+                Cartomancer.juice_joker_during_blind_select(v)
+            )
+        elseif name == 'Burnt Joker' then
+            Cartomancer.juice_card_while(
+                v,
+                Cartomancer.juice_joker_before_discard(v)
+            )
+        end
+    end
+
+end
+
+local ca_e = CardArea.emplace
+function CardArea:emplace(...)
+    ca_e(self, ...)
+
+    juice_jokers_permanently()
+end
+
+local g_sr = Game.start_run
+function Game:start_run(args)
+    g_sr(self, args)
+
+    juice_jokers_permanently()
+end
+
+
+--#endregion
+
+
+
+--#region juice_card_while
+local juiced_while = { }
+
+local function juice_card_while(card, eval_func, delay)
+    if card.removed then
+        juiced_while[card.sort_id] = nil
+        return
+    end
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',delay = delay or 0.1, blocking = false, blockable = false, timer = 'REAL',
+        func = (function()
+            if eval_func(card) then
+                card:juice_up(0.1, 0.1)
+            end
+            juice_card_while(card, eval_func, 0.8)
+            return true
+        end)
+    }))
+end
+
+function Cartomancer.juice_card_while(card, eval_func, delay)
+    -- Ignore if called on same card multiple times
+    if juiced_while[card.sort_id] then
+        return
+    end
+    juiced_while[card.sort_id] = true
+
+    juice_card_while(card, eval_func, delay)
+end
+--#endregion
