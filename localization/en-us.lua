@@ -65,6 +65,9 @@ return {
             carto_blinds_info_current = "Current",
             carto_blinds_info_extra = "History",
             carto_blinds_info_title = "Boss Blinds History",
+
+            carto_score_highest = "Highest Score",
+            carto_score_last = "Last Hand",
         }
     }
 }
