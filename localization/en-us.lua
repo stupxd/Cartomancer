@@ -69,6 +69,10 @@ return {
 
             carto_score_highest = "Highest Score",
             carto_score_last = "Last Hand",
+
+            carto_peek_shop_1 = "Peek",
+            carto_peek_shop_2 = "Shop",
+            carto_peek_shop_vanilla_label = "Shop",
         }
     }
 }
