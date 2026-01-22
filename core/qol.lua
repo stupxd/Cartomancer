@@ -174,6 +174,20 @@ function Cartomancer.juice_joker_before_discard(joker)
     end
 end
 
+-- Sixth Sense
+function Cartomancer.juice_joker_before_hand(joker)
+    return function ()
+        if joker.debuff then
+            return false
+        end
+        if joker.facing ~= "front" then
+            return false
+        end
+
+        return G.STATE == G.STATES.SELECTING_HAND and G.GAME.current_round.hands_used <= 0
+    end
+end
+
 local function juice_jokers_permanently()
     if not G.jokers then
         return
@@ -207,6 +221,11 @@ local function juice_jokers_permanently()
                 v,
                 Cartomancer.juice_joker_before_discard(v)
             )
+        elseif name == 'Sixth Sense' then
+            Cartomancer.juice_card_while(
+                v,
+                Cartomancer.juice_joker_before_hand(v)
+            )
         end
     end
 
@@ -237,7 +256,7 @@ end
 local juiced_while = { }
 
 local function juice_card_while(card, eval_func, delay)
-    if card.removed then
+    if card.removed or not (card.area == G.jokers) then
         juiced_while[card.sort_id] = nil
         return
     end
