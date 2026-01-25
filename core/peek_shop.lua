@@ -1,4 +1,6 @@
 
+-- watch lua Mods/Cartomancer/core/peek_shop.lua
+
 G.FUNCS.carto_can_peek_shop = function (e)
     if not G.shop or G.CONTROLLER.locks.toggle_shop then
         e.config.colour = G.C.UI.BACKGROUND_INACTIVE
@@ -17,12 +19,21 @@ G.FUNCS.carto_peek_shop = function (e)
     }
 
 end
-
+ 
 function create_UIBox_peek_shop()
-    local tabs = create_tabs {
+    local raw_tabs = Cartomancer.get_shop_tabs()
+    local tabs
+
+    if #raw_tabs == 1 then
+      tabs = {n=G.UIT.R, config={align = 'cm', padding = 0.1, no_fill = true, minh = 0, minw = 0}, nodes={
+        {n=G.UIT.O, config={id = 'ab', object = UIBox{definition = raw_tabs[1].tab_definition_function(), config = {offset = {x=0,y=0}}}}}
+      }}
+    else
+      tabs = create_tabs {
         snap_to_nav = true,
-        tabs = Cartomancer.get_shop_tabs()
+        tabs = raw_tabs
     }
+    end
 
     return create_UIBox_generic_options {
         contents = {tabs}
@@ -61,15 +72,70 @@ local function add_card_price(card)
     }))
 end
 
-local function copy_cards(from, to)
+local function copy_cards(from, to, scale)
     for _, card in pairs(from.cards) do
-        local _card = copy_card(card)
+        local _card = copy_card(card, nil, scale)
         _card:start_materialize()
         _card:add_to_deck()
         to:emplace(_card)
-
+        _card.cart_overlay_card = true
         add_card_price(_card)
     end
+end
+
+function Cartomancer.get_hover_tab()
+  local shop_area = CardArea(
+    G.hand.T.x+0,
+    G.hand.T.y+G.ROOM.T.y + 9,
+    math.min(4, G.GAME.shop.joker_max)*1.02*G.CARD_W,
+    0.7*G.CARD_H,
+    {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 0})
+  copy_cards(G.shop_jokers, shop_area, 0.8)
+
+  local vouchers_area = CardArea(
+    G.hand.T.x+0,
+    G.hand.T.y+G.ROOM.T.y + 9,
+    1.*G.CARD_W,
+    0.7*G.CARD_H, 
+    {card_limit = 1, type = 'shop', highlight_limit = 0})
+  copy_cards(G.shop_vouchers, vouchers_area, 0.8)
+
+  local boosters_area = CardArea(
+    G.hand.T.x+0,
+    G.hand.T.y+G.ROOM.T.y + 9,
+    1.2*G.CARD_W,
+    0.7*G.CARD_H, 
+    {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 1.27*G.CARD_W})
+  copy_cards(G.shop_booster, boosters_area)
+
+  local tab = {
+      n = G.UIT.ROOT,
+      config = {
+          emboss = 0.05,
+          minh = 2.5,
+          r = 0.1,
+          minw = 10,
+          align = "cm",
+          padding = 0.2,
+          colour = G.C.BLACK
+      },
+      nodes = {
+            {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
+              {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+                {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = vouchers_area.T.h+0.3}, nodes={
+                  {n=G.UIT.O, config={object = vouchers_area}},
+                }},
+              }},
+              {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 5.9}, nodes={
+                  {n=G.UIT.O, config={object = shop_area}},
+              }},
+              {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+                {n=G.UIT.O, config={object = boosters_area}},
+              }},
+            }}
+        },
+    }
+  return tab
 end
 
 function Cartomancer.get_shop_tabs()
@@ -83,26 +149,26 @@ function Cartomancer.get_shop_tabs()
           local shop_area = CardArea(
             G.hand.T.x+0,
             G.hand.T.y+G.ROOM.T.y + 9,
-            G.GAME.shop.joker_max*1.02*G.CARD_W,
-            1.05*G.CARD_H, 
+            math.min(4, G.GAME.shop.joker_max)*1.02*G.CARD_W,
+            0.95*G.CARD_H, 
             {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 0})
           copy_cards(G.shop_jokers, shop_area)
 
           local vouchers_area = CardArea(
             G.hand.T.x+0,
             G.hand.T.y+G.ROOM.T.y + 9,
-            2.1*G.CARD_W,
-            1.05*G.CARD_H, 
+            1.2*G.CARD_W,
+            0.95*G.CARD_H, 
             {card_limit = 1, type = 'shop', highlight_limit = 0})
           copy_cards(G.shop_vouchers, vouchers_area)
 
           local boosters_area = CardArea(
             G.hand.T.x+0,
             G.hand.T.y+G.ROOM.T.y + 9,
-            2.4*G.CARD_W,
-            1.15*G.CARD_H, 
-            {card_limit = 2, type = 'shop', highlight_limit = 1, card_w = 1.27*G.CARD_W})
-          copy_cards(G.shop_booster, boosters_area)
+            1.7*G.CARD_W,
+            0.95*G.CARD_H, 
+            {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 1.27*G.CARD_W})
+          copy_cards(G.shop_booster, boosters_area, 1.2)
 
           local tab = {
               n = G.UIT.ROOT,
@@ -122,14 +188,14 @@ function Cartomancer.get_shop_tabs()
                             {n=G.UIT.O, config={object = shop_area}},
                         }},
                       }},
-                      {n=G.UIT.R, config={align = "cm", minh = 0.2}, nodes={}},
+                      {n=G.UIT.R, config={align = "cm", minh = 0.1}, nodes={}},
                       {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
                         {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
                           {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = vouchers_area.T.h+0.4}, nodes={
                             {n=G.UIT.O, config={object = vouchers_area}},
                           }},
                         }},
-                        {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+                        {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = boosters_area.T.w + 1.5}, nodes={
                           {n=G.UIT.O, config={object = boosters_area}},
                         }},
                       }}
