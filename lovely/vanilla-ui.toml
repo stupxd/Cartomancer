@@ -104,8 +104,8 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "engine/ui.lua"
-pattern = '''if self.config and self.config.on_demand_tooltip then'''
-position = "before"
+pattern = '''function UIElement:hover()'''
+position = "after"
 payload = '''
 if self.config and self.config.cart_hover_func then
   self.config.h_popup = self.config.cart_hover_func()
