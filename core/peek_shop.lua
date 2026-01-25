@@ -107,8 +107,8 @@ function Cartomancer.get_hover_tab()
     G.hand.T.y+G.ROOM.T.y + 9,
     1.2*G.CARD_W,
     0.7*G.CARD_H, 
-    {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 1.27*G.CARD_W})
-  copy_cards(G.shop_booster, boosters_area)
+    {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 0.85*G.CARD_W})
+  copy_cards(G.shop_booster, boosters_area, 0.9)
 
   local tab = {
       n = G.UIT.ROOT,
@@ -167,9 +167,9 @@ function Cartomancer.get_shop_tabs()
           local boosters_area = CardArea(
             G.hand.T.x+0,
             G.hand.T.y+G.ROOM.T.y + 9,
-            1.7*G.CARD_W,
+            2.*G.CARD_W,
             0.95*G.CARD_H, 
-            {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 1.27*G.CARD_W})
+            {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 1*G.CARD_W})
           copy_cards(G.shop_booster, boosters_area, 1.2)
 
           local tab = {
@@ -186,7 +186,7 @@ function Cartomancer.get_shop_tabs()
               nodes = {
                     {n=G.UIT.C, config={align = "cm", padding = 0.1, emboss = 0.05, r = 0.1, colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                       {n=G.UIT.R, config={align = "cm", padding = 0.05}, nodes={
-                        {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 8.2}, nodes={
+                        {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 8.5}, nodes={
                             {n=G.UIT.O, config={object = shop_area}},
                         }},
                       }},
