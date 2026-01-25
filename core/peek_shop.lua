@@ -19,7 +19,21 @@ G.FUNCS.carto_peek_shop = function (e)
     }
 
 end
- 
+
+local temp_movables = {}
+
+local nsh = Node.stop_hover
+function Node:stop_hover()
+  
+  nsh(self)
+  if self.config.cart_hover_func then
+    remove_all(temp_movables)
+    self.config.h_popup = nil
+    self.children.h_popup = nil
+    print("stopped hovering")
+  end
+end
+
 function create_UIBox_peek_shop()
     local raw_tabs = Cartomancer.get_shop_tabs()
     local tabs
@@ -107,6 +121,10 @@ function Cartomancer.get_hover_tab()
     0.7*G.CARD_H, 
     {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 1.27*G.CARD_W})
   copy_cards(G.shop_booster, boosters_area)
+
+  table.insert(temp_movables, shop_area)
+  table.insert(temp_movables, vouchers_area)
+  table.insert(temp_movables, boosters_area)
 
   local tab = {
       n = G.UIT.ROOT,
