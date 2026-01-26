@@ -11,7 +11,7 @@ return {
             carto_compact_deck_enabled = "Limit cards in deck pile",
             carto_compact_deck_visible_cards = "Cards limit ",
 
-            carto_deck_view_stack_enabled = "Stack cards in deck view",
+            carto_deck_view_stack_enabled = "Enable cards stacking",
             carto_deck_view_stack_compact = "Stack cards",
             carto_deck_view_hide_drawn_cards = "Hide drawn cards",
             carto_deck_view_stack_modifiers = "Stack all modifiers",
@@ -33,7 +33,7 @@ return {
             carto_deck_view_unique_cards = "Unique cards:",
 
             carto_improved_hand_sorting = "More hand sorting options",
-            carto_dynamic_hand_align = "Better align for cards with huge hand size",
+            carto_dynamic_hand_align = "Improved align for cards with huge hand size",
             carto_hide_tags = "Hide tags",
             carto_hide_consumables = "Hide consumables",
             carto_hide_deck = "Hide deck",
@@ -42,8 +42,8 @@ return {
             carto_flames_mult = "Mult",
             carto_flames_intensity_min = "Min intensity ",
             carto_flames_intensity_max = "Max intensity ",
-            carto_flames_relative_intensity = "Score intensity relative to current blind",
-            carto_flames_intensity_vanilla = "Ignore min/max intensity",
+            carto_flames_relative_intensity = "Flames intensity relative to current blind",
+            carto_flames_intensity_vanilla = "Disable custom flames",
             carto_flames_gasoline_title = "Preview",
             carto_flames_gasoline = "",
             carto_flames_volume = "Flames volume ",
