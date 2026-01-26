@@ -80,6 +80,7 @@ local function copy_cards(from, to, scale)
         local _card = copy_card(card, nil, scale)
         _card:add_to_deck()
         to:emplace(_card)
+        _card:start_materialize()
         _card.cart_overlay_card = true
         add_card_price(_card)
     end
@@ -99,7 +100,7 @@ function Cartomancer.get_hover_tab()
     G.hand.T.y+G.ROOM.T.y + 9,
     1.*G.CARD_W,
     0.7*G.CARD_H, 
-    {card_limit = 1, type = 'shop', highlight_limit = 0})
+    {card_limit = 1, type = 'shop', highlight_limit = 0, card_w = 0.7*G.CARD_W})
   copy_cards(G.shop_vouchers, vouchers_area, 0.8)
 
   local boosters_area = CardArea(
@@ -118,22 +119,24 @@ function Cartomancer.get_hover_tab()
           r = 0.1,
           minw = 10,
           align = "cm",
-          padding = 0.2,
-          colour = G.C.BLACK
+          padding = 0.05,
+          colour = G.C.DYN_UI.MAIN
       },
       nodes = {
-            {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
-              {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = vouchers_area.T.h+0.3}, nodes={
-                  {n=G.UIT.O, config={object = vouchers_area}},
+            {n=G.UIT.C, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes={
+              {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
+                {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+                  {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = vouchers_area.T.h}, nodes={
+                    {n=G.UIT.O, config={object = vouchers_area}},
+                  }},
                 }},
-              }},
-              {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 5.9}, nodes={
-                  {n=G.UIT.O, config={object = shop_area}},
-              }},
-              {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                {n=G.UIT.O, config={object = boosters_area}},
-              }},
+                {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 5.9}, nodes={
+                    {n=G.UIT.O, config={object = shop_area}},
+                }},
+                {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+                  {n=G.UIT.O, config={object = boosters_area}},
+                }},
+              }}
             }}
         },
     }
@@ -161,7 +164,7 @@ function Cartomancer.get_shop_tabs()
             G.hand.T.y+G.ROOM.T.y + 9,
             1.2*G.CARD_W,
             0.95*G.CARD_H, 
-            {card_limit = 1, type = 'shop', highlight_limit = 0})
+            {card_limit = 1, type = 'shop', highlight_limit = 0, card_w = 0.8*G.CARD_W})
           copy_cards(G.shop_vouchers, vouchers_area)
 
           local boosters_area = CardArea(
@@ -193,7 +196,7 @@ function Cartomancer.get_shop_tabs()
                       {n=G.UIT.R, config={align = "cm", minh = 0.1}, nodes={}},
                       {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
                         {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                          {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = vouchers_area.T.h+0.4}, nodes={
+                          {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = vouchers_area.T.h}, nodes={
                             {n=G.UIT.O, config={object = vouchers_area}},
                           }},
                         }},
