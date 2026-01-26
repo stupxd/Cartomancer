@@ -110,6 +110,9 @@ function Cartomancer.highlighted_hand_played_this_round(joker)
         if joker.facing ~= "front" then
             return false
         end
+        if not (G.STATE == G.STATES.SELECTING_HAND) then
+            return
+        end
     
         local highlighted_hand = G.GAME.current_round.current_hand.handname
         return G.GAME.hands[highlighted_hand] and G.GAME.hands[highlighted_hand].played_this_round >= 1
@@ -124,6 +127,9 @@ function Cartomancer.highlighted_hand_most_played(joker)
         end
         if joker.facing ~= "front" then
             return false
+        end
+        if not (G.STATE == G.STATES.SELECTING_HAND) then
+            return
         end
     
         local highlighted_hand = G.GAME.current_round.current_hand.handname
