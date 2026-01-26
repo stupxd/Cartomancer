@@ -67,6 +67,16 @@ G.FUNCS.options = function(e)
     return cart_options_ref(e)
 end
 
+local exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
+G.FUNCS.exit_overlay_menu = function (e)
+    if Cartomancer.INTERNAL_in_config then
+        Cartomancer.INTERNAL_in_config = false
+        Cartomancer.save_config()
+    end
+    return exit_overlay_menu_ref(e)
+end
+
+
 local settings_tab_ref = G.UIDEF.settings_tab
 function G.UIDEF.settings_tab(tab)
     if Cartomancer._recording_keybind then

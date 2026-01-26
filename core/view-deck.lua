@@ -128,6 +128,8 @@ function Cartomancer.add_view_deck_ui(unplayed_only)
                         local label = localize(unplayed_only and 'b_remaining' or 'b_full_deck')
                         local tab_but = G.OVERLAY_MENU:get_UIE_by_ID('tab_but_'..label)
                         G.FUNCS.change_tab(tab_but)
+                        Cartomancer.INTERNAL_in_config = true
+                        Cartomancer.INTERNAL_force_save_config = true
                     end
                 },
         }},

@@ -12,7 +12,7 @@ position = "after"
 payload = '''
     if key == "escape" and Cartomancer.INTERNAL_in_config then
         Cartomancer.INTERNAL_in_config = false
-        if not Cartomancer.use_smods() then
+        if not Cartomancer.use_smods() or Cartomancer.INTERNAL_force_save_config then
             Cartomancer.save_config()
         end
     end
