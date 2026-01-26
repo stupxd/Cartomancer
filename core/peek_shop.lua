@@ -90,17 +90,17 @@ function Cartomancer.get_hover_tab()
   local shop_area = CardArea(
     G.hand.T.x+0,
     G.hand.T.y+G.ROOM.T.y + 9,
-    math.min(4, G.GAME.shop.joker_max)*1.02*G.CARD_W,
+    2.55*1.02*G.CARD_W,
     0.7*G.CARD_H,
-    {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 0})
+    {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 0, card_w = 0.35*G.CARD_W})
   copy_cards(G.shop_jokers, shop_area, 0.8)
 
   local vouchers_area = CardArea(
     G.hand.T.x+0,
     G.hand.T.y+G.ROOM.T.y + 9,
-    1.*G.CARD_W,
+    1*G.CARD_W,
     0.7*G.CARD_H, 
-    {card_limit = 1, type = 'shop', highlight_limit = 0, card_w = 0.7*G.CARD_W})
+    {card_limit = 1, type = 'shop', highlight_limit = 0, card_w = 0.8*G.CARD_W})
   copy_cards(G.shop_vouchers, vouchers_area, 0.8)
 
   local boosters_area = CardArea(
@@ -126,11 +126,11 @@ function Cartomancer.get_hover_tab()
             {n=G.UIT.C, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes={
               {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
                 {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                  {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = vouchers_area.T.h}, nodes={
+                  {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK}, nodes={
                     {n=G.UIT.O, config={object = vouchers_area}},
                   }},
                 }},
-                {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 5.9}, nodes={
+                {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 6.2}, nodes={
                     {n=G.UIT.O, config={object = shop_area}},
                 }},
                 {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
