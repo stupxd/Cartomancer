@@ -27,7 +27,7 @@ payload = '''
 {n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={
   {n=G.UIT.R,config={minh =0.2}, nodes={}},
   {n=G.UIT.R,config={align = "tm",padding = 0.2, minh = 1.2, minw = 1.8, r=0.15,colour = G.C.GREY, button = 'carto_peek_shop', func = 'carto_can_peek_shop', hover = true,
-  hover_offset = {x = 3.5, y = 2},
+  hover_offset = {x = 3.5, y = 1},
   hover_ease_to = {x = 3.5, y = -3.8},
   hover_align = 'tm',
   cart_hover_func = Cartomancer.get_hover_tab,
@@ -112,7 +112,7 @@ if self.config and self.config.cart_hover_func then
   self.config.h_popup = self.config.cart_hover_func()
   self.config.h_popup_config = {
       align = self.config.hover_align or 'cr',
-      offset = Cartomancer.tablecopy(self.config.hover_offset or {x=0.1,y=0}),
+      offset = Cartomancer.tablecopy(self.config.hover_offset or {x=0.2,y=0}),
       parent = self,
   }
 end

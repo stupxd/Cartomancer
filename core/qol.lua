@@ -29,8 +29,8 @@ function Cartomancer.score_hover()
     local stake_sprite2 = get_stake_sprite(2, 0.15)
 
     return {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
-        {n=G.UIT.R, config={padding = 0.05, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07}, nodes={
-          {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = adjust_alpha(darken(G.C.BLACK, 0.1), 0.8)}, nodes={
+        {n=G.UIT.R, config={padding = 0.05, r = 0.12, colour = G.C.DYN_UI.MAIN, emboss = 0.07}, nodes={
+          {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = lighten(G.C.BLACK, 0.1)}, nodes={
 
             {n=G.UIT.R, config={align = "cm", padding = 0.01, colour = G.C.CLEAR}, nodes={
                 {n=G.UIT.T, config={align="cm", scale = 0.4, colour = G.C.WHITE, text = localize('carto_score_highest'), }}
