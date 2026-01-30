@@ -25,7 +25,13 @@ This mod is mainly aimed to improve your endless/heavily modded runs experience,
 
 ![stackable-cards-difference](git-assets/stackable-cards.jpg)
 
-### 4. Custom scoring flames intensity and SFX volume.
+### 4. Peek shop while in a Booster pack
+
+- Quick preview on hover
+- Click button to open menu and view details
+- Peek shop menu has mods compatibility; I might add compatibilities with some popular mods later 
+
+![peek-shop](git-assets/peek-shop.jpg)
 
 
 ### 5. Extended Blinds info in Run Info
@@ -42,6 +48,8 @@ This mod is mainly aimed to improve your endless/heavily modded runs experience,
 - Zoom into the jokers area for easier jokers management and navigation.
 
 ![zoom-jokers-difference](git-assets/zoom-jokers.jpg)
+
+### 7. Custom scoring flames intensity and SFX volume.
 
 ...and more!
 
