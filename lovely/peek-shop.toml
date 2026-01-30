@@ -3,7 +3,7 @@ version = "1.0.0"
 dump_lua = true
 priority = 69
 
-# Add Peek Shop button to packs
+# Don't remove cards from Quick Peek from used_jokers
 [[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
