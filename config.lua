@@ -33,6 +33,10 @@ return {
 
     jokers_controls_buttons = true,
     jokers_controls_show_after = 13,
+    jokers_jiggling = true,
+
+    highlight_played_hands = false,
+    peek_shop = true,
 
     keybinds = {
         hide_joker = {

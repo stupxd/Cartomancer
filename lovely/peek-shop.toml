@@ -1,0 +1,69 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 69
+
+# Add Peek Shop button to packs
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+    if not G.OVERLAY_MENU then
+        for k, v in pairs(G.P_CENTERS) do'''
+position = "at"
+payload = '''
+    if not G.OVERLAY_MENU and not self.cart_overlay_card then
+        for k, v in pairs(G.P_CENTERS) do
+'''
+match_indent = true
+
+# Add Peek Shop button to packs
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},'''
+position = "at"
+payload = '''
+{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes= not Cartomancer.SETTINGS.peek_shop and {} or {
+  {n=G.UIT.R,config={minh =0.2}, nodes={}},
+  {n=G.UIT.R,config={align = "tm",padding = 0.2, minh = 1.2, minw = 1.8, r=0.15,colour = G.C.GREY, button = 'carto_peek_shop', func = 'carto_can_peek_shop', hover = true,
+  hover_offset = {x = 3.5, y = 1},
+  hover_ease_to = {x = 3.5, y = -3.8},
+  hover_align = 'tm',
+  cart_hover_func = Cartomancer.get_hover_tab,
+  shadow = true, }, nodes = {
+    {n=G.UIT.C, config={align = "tm"}, nodes= {
+      {n=G.UIT.R, config={align = "tm"}, nodes = {
+        {n=G.UIT.T, config={text = localize('carto_peek_shop_1'), scale = 0.5, colour = G.C.WHITE, shadow = true, }},
+      }},
+      {n=G.UIT.R, config={align = "tm"}, nodes = {
+        {n=G.UIT.T, config={text = localize('carto_peek_shop_2'), scale = 0.5, colour = G.C.WHITE, shadow = true, }}
+      }},
+    }}
+  }}
+}},
+'''
+match_indent = true
+
+# Add Peek Shop button to packs SMODS
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/game_object.lua"]'
+pattern = '''{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},'''
+position = "at"
+payload = '''
+{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes= not Cartomancer.SETTINGS.peek_shop and {} or {
+  {n=G.UIT.R,config={minh =0.2}, nodes={}},
+  {n=G.UIT.R,config={align = "tm",padding = 0.2, minh = 1.2, minw = 1.8, r=0.15,colour = G.C.GREY, button = 'carto_peek_shop', func = 'carto_can_peek_shop', hover = true,shadow = true, }, nodes = {
+    {n=G.UIT.C, config={align = "tm"}, nodes= {
+      {n=G.UIT.R, config={align = "tm"}, nodes = {
+        {n=G.UIT.T, config={text = localize('carto_peek_shop_1'), scale = 0.5, colour = G.C.WHITE, shadow = true, }},
+      }},
+      {n=G.UIT.R, config={align = "tm"}, nodes = {
+        {n=G.UIT.T, config={text = localize('carto_peek_shop_2'), scale = 0.5, colour = G.C.WHITE, shadow = true, }}
+      }},
+    }}
+  }}
+}},
+'''
+match_indent = true

@@ -188,6 +188,9 @@ local function juice_jokers_permanently()
     if not G.jokers then
         return "stop"
     end
+    if not Cartomancer.SETTINGS.jokers_jiggling then
+        return
+    end
 
     for _, v in pairs(G.jokers.cards) do
         local name = v.config.center.name

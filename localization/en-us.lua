@@ -50,29 +50,34 @@ return {
             
             carto_jokers_controls_buttons = "Show joker area buttons",
             carto_jokers_controls_show_after = "after total # of jokers above ",
+            carto_jokers_jiggle = "Jiggle some vanilla Jokers",
             --carto_jokers_hide_keybind = "Hide hovered joker with Alt + 1",
             carto_jokers_hide = "Hide",
             carto_jokers_show = "Show",
             carto_jokers_zoom = "Zoom",
-
+            
             carto_waiting_keybind = "Waiting for input...",
             carto_kb_hide_joker =  "Hide joker",
             carto_kb_toggle_tags = "Toggle tags visibility",
             carto_kb_toggle_consumables = "Toggle consumables visibility",
             carto_kb_toggle_jokers = "Toggle jokers visibility",
             carto_kb_toggle_jokers_buttons = "Toggle jokers buttons",
-
+            
             carto_blinds_info_setting = "Show Blinds Info tab",
             carto_blinds_info_current = "Current",
             carto_blinds_info_extra = "History",
             carto_blinds_info_title = "Boss Blinds History",
 
+            carto_highlight_played_hands = "Highlight hands played this round",
+
             carto_score_highest = "Highest Score",
             carto_score_last = "Last Hand",
 
+            carto_peek_shop_setting = "Peek Shop from Booster packs",
             carto_peek_shop_1 = "Peek",
             carto_peek_shop_2 = "Shop",
             carto_peek_shop_vanilla_label = "Shop",
         }
     }
 }
+-- I should restructure this at some point

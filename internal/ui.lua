@@ -257,6 +257,14 @@ Cartomancer.config_tab = function()
             choose_tab "other"
             return {n = G.UIT.ROOT, config = tab_config, nodes = {
                 create_toggle_option {
+                    ref_value = 'highlight_played_hands',
+                    localization = 'carto_highlight_played_hands',
+                },
+                create_toggle_option {
+                    ref_value = 'peek_shop',
+                    localization = 'carto_peek_shop_setting',
+                },
+                create_toggle_option {
                     ref_value = 'blinds_info',
                     localization = 'carto_blinds_info_setting',
                 },
@@ -351,6 +359,10 @@ Cartomancer.jokers_visibility_menu = function ()
             localization = 'carto_jokers_controls_buttons',
         },
         create_inline_slider({ref_value = 'jokers_controls_show_after', localization = 'carto_jokers_controls_show_after',}),
+        create_toggle_option {
+            ref_value = 'jokers_jiggling',
+            localization = 'carto_jokers_jiggle',
+        },
         --create_text_line{ loc = 'carto_jokers_hide_keybind' },
     }}
 end
