@@ -181,6 +181,8 @@ function Cartomancer.juice_joker_before_hand(joker)
         return false
     end
 
+    -- Maybe check if your deck has any 6s?
+    -- I guess you could have a rock 6 or a 5 that could be strengthened, so probably shouldn't
     return G.STATE == G.STATES.SELECTING_HAND and G.GAME.current_round.hands_played <= 0
 end
 
