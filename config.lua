@@ -19,6 +19,8 @@ return {
     deck_view_hide_drawn_cards = false,
     -- todo: maybe custom shader for drawn cards to adjust opacity
 
+    highlight_played_hands = false,
+    peek_shop = true,
     blinds_info = true,
     improved_hand_sorting = false,
     dynamic_hand_align = false,
@@ -32,11 +34,8 @@ return {
     flames_volume = 100,
 
     jokers_controls_buttons = true,
-    jokers_controls_show_after = 13,
+    jokers_controls_show_after = 15,
     jokers_jiggling = true,
-
-    highlight_played_hands = false,
-    peek_shop = true,
 
     keybinds = {
         hide_joker = {

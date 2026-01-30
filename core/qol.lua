@@ -131,7 +131,7 @@ function Cartomancer.highlighted_hand_most_played(joker)
 
     local highlighted_hand = G.GAME.current_round.current_hand.handname
 
-    if G.GAME.hands[highlighted_hand] then
+    if G.GAME.hands[highlighted_hand] and joker.ability and joker.ability.x_mult and joker.ability.x_mult > 1 then
         local reset = true
         local play_more_than = (G.GAME.hands[highlighted_hand].played or 0)
         for k, v in pairs(G.GAME.hands) do
