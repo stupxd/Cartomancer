@@ -90,7 +90,7 @@ function Cartomancer.get_hover_tab()
   local shop_area = CardArea(
     G.hand.T.x+0,
     G.hand.T.y+G.ROOM.T.y + 9,
-    2.55*1.02*G.CARD_W,
+    (SMODS and math.min(4, G.GAME.shop.joker_max)*0.6 or 2.55*1.02)*G.CARD_W,
     0.7*G.CARD_H,
     {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 0, card_w = 0.35*G.CARD_W})
   copy_cards(G.shop_jokers, shop_area, 0.8)

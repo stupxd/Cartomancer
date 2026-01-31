@@ -17,6 +17,20 @@ payload = '''
 '''
 match_indent = true
 
+# Don't remove cards from Quick Peek from used_jokers -- SMODS
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+    if not G.OVERLAY_MENU then
+        if not next(SMODS.find_card(self.config.center.key, true)) then'''
+position = "at"
+payload = '''
+    if not G.OVERLAY_MENU and not self.cart_overlay_card then
+        if not next(SMODS.find_card(self.config.center.key, true)) then
+'''
+match_indent = true
+
 # Fix context.card_added triggering for SMODS
 [[patches]]
 [patches.pattern]
