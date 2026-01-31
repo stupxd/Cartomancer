@@ -1,14 +1,11 @@
 
 -- watch lua Mods/Cartomancer/core/peek_shop.lua
 
-G.FUNCS.carto_can_peek_shop = function (e)
-    if not G.shop or G.CONTROLLER.locks.toggle_shop then
-        e.config.colour = G.C.UI.BACKGROUND_INACTIVE
-        e.config.button = nil
-    else
-        e.config.colour = G.C.GREY
-        e.config.button = 'carto_peek_shop'
-    end
+function Cartomancer.show_peek_shop()
+  if Cartomancer.SETTINGS.peek_shop then
+    return G.shop and not G.CONTROLLER.locks.toggle_shop
+  end
+  return false
 end
 
 G.FUNCS.carto_peek_shop = function (e)

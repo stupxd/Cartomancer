@@ -50,7 +50,7 @@ target = "functions/UI_definitions.lua"
 pattern = '''{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},'''
 position = "at"
 payload = '''
-{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes= not Cartomancer.SETTINGS.peek_shop and {} or {
+{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes= not Cartomancer.show_peek_shop() and {} or {
   {n=G.UIT.R,config={minh =0.2}, nodes={}},
   {n=G.UIT.R,config={align = "tm",padding = 0.2, minh = 1.2, minw = 1.8, r=0.15,colour = G.C.GREY, button = 'carto_peek_shop', func = 'carto_can_peek_shop', hover = true,
   hover_offset = {x = 3.5, y = 1},
@@ -78,7 +78,7 @@ target = '=[SMODS _ "src/game_object.lua"]'
 pattern = '''{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},'''
 position = "at"
 payload = '''
-{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes= not Cartomancer.SETTINGS.peek_shop and {} or {
+{n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes= not Cartomancer.show_peek_shop() and {} or {
   {n=G.UIT.R,config={minh =0.2}, nodes={}},
   {n=G.UIT.R,config={align = "tm",padding = 0.2, minh = 1.2, minw = 1.8, r=0.15,colour = G.C.GREY, button = 'carto_peek_shop', func = 'carto_can_peek_shop', hover = true,
   hover_offset = {x = 3.5, y = 1},
