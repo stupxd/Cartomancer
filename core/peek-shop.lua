@@ -76,7 +76,6 @@ local function copy_cards(from, to, scale)
     for _, card in pairs(from.cards) do
         local _card = copy_card(card, nil, scale)
         _card.cart_overlay_card = true
-        _card:add_to_deck()
         to:emplace(_card)
         _card:start_materialize()
         add_card_price(_card)

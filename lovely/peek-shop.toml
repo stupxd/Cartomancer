@@ -31,18 +31,6 @@ payload = '''
 '''
 match_indent = true
 
-# Fix context.card_added triggering for SMODS
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = '''
-if not from_debuff and G.hand then'''
-position = "at"
-payload = '''
-if not from_debuff and G.hand and not self.cart_overlay_card then
-'''
-match_indent = true
-
 # Add Peek Shop button to packs
 [[patches]]
 [patches.pattern]
