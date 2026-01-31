@@ -46,7 +46,6 @@ payload = '''
 [[patches]]
 [patches.regex]
 target = "functions/UI_definitions.lua"
-match_indent = true
 position = "after"
 pattern = "func = button_pip,"
 payload = "vert = args.vert,"

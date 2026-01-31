@@ -6,7 +6,7 @@ priority = 69
 # Don't remove cards from Quick Peek from used_jokers
 [[patches]]
 [patches.pattern]
-target = "functions/UI_definitions.lua"
+target = "card.lua"
 pattern = '''
     if not G.OVERLAY_MENU then
         for k, v in pairs(G.P_CENTERS) do'''

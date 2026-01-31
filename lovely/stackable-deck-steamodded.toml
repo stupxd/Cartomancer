@@ -69,7 +69,6 @@ payload = 'card_limit = #SUITS_SORTED[suit_map[j]],'
 [[patches]]
 [patches.regex]
 target = '=[SMODS _ "src/overrides.lua"]'
-match_indent = true
 pattern = '''
 			for i = 1\, \#SUITS\[suit_map\[j\]\] do
 				if SUITS\[suit_map\[j\]\]\[i\] then
@@ -113,7 +112,6 @@ payload = 'card_limit = #SUITS_SORTED[visible_suit[j]],'
 [[patches]]
 [patches.regex]
 target = '=[SMODS _ "src/overrides.lua"]'
-match_indent = true
 pattern = '''
 				for i = 1\, \#SUITS\[visible_suit\[j\]\] do
 					if SUITS\[visible_suit\[j\]\]\[i\] then
@@ -150,7 +148,6 @@ payload = 'card_limit = #SUITS_SORTED[visible_suit[j]],'
 [[patches]]
 [patches.regex]
 target = '=[SMODS _ "src/overrides.lua"]'
-match_indent = true
 pattern = '''
 			for i = 1\, \#SUITS\[visible_suit\[j\]\] do
 				if SUITS\[visible_suit\[j\]\]\[i\] then
