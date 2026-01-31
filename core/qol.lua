@@ -58,18 +58,22 @@ function Cartomancer.score_hover()
       }}
 end
 
+to_big = to_big or function (a)
+    return a
+end
+
 -- Update hand score
 local cashs = check_and_set_high_score
 function check_and_set_high_score(score, amt)
     if score == 'hand' then
-        if amt == math.huge then
+        if amt == to_big(math.huge) then
             G.GAME.carto_high_scores.latest = "inf"
             G.GAME.carto_high_scores.highest = "inf"
         else
             G.GAME.carto_high_scores.latest = amt
 
             local highest = G.GAME.carto_high_scores.highest == "inf" and math.huge or G.GAME.carto_high_scores.highest or 0
-            if amt > highest then
+            if amt > to_big(highest) then
                 G.GAME.carto_high_scores.highest = amt
             end
         end
