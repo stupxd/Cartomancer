@@ -14,10 +14,10 @@ Cartomancer.load_mod_file('core/view-deck.lua', 'cartomancer.view-deck')
 Cartomancer.load_mod_file('core/flames.lua', 'cartomancer.flames')
 Cartomancer.load_mod_file('core/optimizations.lua', 'cartomancer.optimizations')
 Cartomancer.load_mod_file('core/qol.lua', 'cartomancer.qol')
-Cartomancer.load_mod_file('core/peek_shop.lua', 'cartomancer.peek_shop')
+Cartomancer.load_mod_file('core/peek-shop.lua', 'cartomancer.peek-shop')
 Cartomancer.load_mod_file('core/jokers.lua', 'cartomancer.jokers')
 Cartomancer.load_mod_file('core/hand.lua', 'cartomancer.hand')
-Cartomancer.load_mod_file('core/blinds_info.lua', 'cartomancer.blinds_info')
+Cartomancer.load_mod_file('core/blinds-info.lua', 'cartomancer.blinds-info')
 if SMODS then
     Cartomancer.load_mod_file('core/view-deck-steamodded.lua', 'cartomancer.view-deck-steamodded')
 end
