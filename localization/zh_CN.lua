@@ -12,6 +12,7 @@ return {
             carto_compact_deck_visible_cards = "卡牌数量限制：",
 
             carto_deck_view_stack_enabled = "在牌堆视图中堆叠卡牌",
+            carto_deck_view_stack_compact = "堆叠卡牌",
             carto_deck_view_hide_drawn_cards = "隐藏已抽取卡牌",
             carto_deck_view_stack_modifiers = "堆叠所有效果修饰卡",
             carto_deck_view_stack_chips = "堆叠不同筹码值的卡牌",
@@ -47,6 +48,7 @@ return {
             
             carto_jokers_controls_buttons = "显示小丑牌区域控制按钮",
             carto_jokers_controls_show_after = "当小丑牌数量超过：",
+            carto_jokers_jiggle = "抖动部分原版小丑牌(依据小丑牌功能)",
             --carto_jokers_hide_keybind = "使用 Alt + 1 隐藏当前悬停的小丑牌",
             carto_jokers_hide = "隐藏",
             carto_jokers_show = "显示",
@@ -63,6 +65,16 @@ return {
             carto_blinds_info_current = "当前",
             carto_blinds_info_extra = "历史",
             carto_blinds_info_title = "Boss盲注历史",
+
+            carto_highlight_played_hands = "高亮显示本回合已打出的牌型",
+
+            carto_score_highest = "最高得分",
+            carto_score_last = "上一次出牌",
+
+            carto_peek_shop_setting = "从补充包中查看商店内容",
+            carto_peek_shop_1 = "查看",
+            carto_peek_shop_2 = "商店",
+            carto_peek_shop_vanilla_label = "商店",
         }
     }
 }
