@@ -71,8 +71,8 @@ return {
             carto_score_highest = "最高得分",
             carto_score_last = "上一次出牌",
 
-            carto_peek_shop_setting = "从补充包中预览商店",
-            carto_peek_shop_1 = "预览",
+            carto_peek_shop_setting = "从补充包中查看商店内容",
+            carto_peek_shop_1 = "查看",
             carto_peek_shop_2 = "商店",
             carto_peek_shop_vanilla_label = "商店",
         }
