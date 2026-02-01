@@ -38,8 +38,6 @@ return {
             carto_hide_consumables = "隐藏消耗品栏",
             carto_hide_deck = "隐藏牌堆区域",
 
-            carto_flames_chips = "筹码",
-            carto_flames_mult = "倍率",
             carto_flames_intensity_min = "火焰最小强度：",
             carto_flames_intensity_max = "火焰最大强度：",
             carto_flames_relative_intensity = "根据当前盲注动态调整火焰强度",
