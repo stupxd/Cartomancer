@@ -238,8 +238,12 @@ end
 local identifiers = {}
 
 local function run_permanently(func, delay)
-    G.E_MANAGER:add_event(Event({
-        trigger = 'after',delay = delay or 0.1, blocking = false, blockable = false, timer = 'REAL',
+    G.E_MANAGER:add_event(Event {
+        trigger = 'after',
+        delay = delay or 0.1,
+        blocking = false,
+        blockable = false,
+        timer = 'REAL',
         func = (function()
             local res = func()
             if res == "stop" then
@@ -248,7 +252,7 @@ local function run_permanently(func, delay)
             run_permanently(func, delay or 0.8)
             return true
         end)
-    }))
+    }, 'cartomancer')
 end
 
 function Cartomancer.run_permanently(identifier, func, delay)
