@@ -238,6 +238,7 @@ end
 local identifiers = {}
 
 local function run_permanently(func, delay)
+    G.E_MANAGER.queues.cartomancer = G.E_MANAGER.queues.cartomancer or {}
     G.E_MANAGER:add_event(Event {
         trigger = 'after',
         delay = delay or 0.1,
