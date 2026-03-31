@@ -59,7 +59,15 @@ If you play vanilla, go to `Settings` and open ![cartomancer](assets/1x/modicon.
 
 ## Credits
 
+[HuyTheKiller](https://github.com/HuyTheKiller/) for Vietnamese localization.
+
+[kmirass](https://github.com/kmirass/) for Spanish localization.
+
+[HONE13](https://github.com/HONE13/) and [liafonx](https://github.com/liafonx/) for Chineese localization.
+
+[koukichi-kkc](https://github.com/koukichi-kkc/) for Japanese localization.
+
 [Jen Walter](https://github.com/jenwalter666/) for the code for UI box on stacked cards.
 
-[Mysthaps](https://github.com/Mysthaps/) for most of the initial mod config code.
+[Mysthaps](https://github.com/Mysthaps/) for the initial settings tab code.
 
