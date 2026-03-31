@@ -10,11 +10,11 @@ end
 
 G.FUNCS.carto_peek_shop = function (e)
 
+  G.SETTINGS.paused = true
     G.FUNCS.overlay_menu {
         definition = create_UIBox_peek_shop(),
         config = {offset = {x=0,y=10}}
     }
-
 end
 
 function create_UIBox_peek_shop()
@@ -38,7 +38,7 @@ function create_UIBox_peek_shop()
 end
 
 local function add_card_price(card)
-    G.E_MANAGER:add_event(Event({
+    G.E_MANAGER:add_event(Event {
         trigger = 'after',
         delay = 0.43,
         blocking = false,
@@ -69,7 +69,7 @@ local function add_card_price(card)
             card.children.price.alignment.offset.y = card.ability.set == 'Booster' and 0.5 or 0.38
             return true
         end)
-    }))
+    })
 end
 
 local function copy_cards(from, to, scale)
