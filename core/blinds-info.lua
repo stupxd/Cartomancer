@@ -91,13 +91,13 @@ function Cartomancer.view_blinds_info()
       {shader = 'dissolve'}
     })
     if k == 1 then 
-      G.E_MANAGER:add_event(Event({
+      G.E_MANAGER:add_event(Event {
         trigger = 'immediate',
         func = (function()
           G.CONTROLLER:snap_to{node = temp_blind}
             return true
         end)
-      }))
+      })
     end
     temp_blind.float = true
     temp_blind.states.hover.can = true

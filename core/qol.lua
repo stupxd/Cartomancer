@@ -25,8 +25,8 @@ function Game:start_run(args)
 end
 
 function Cartomancer.score_hover()
-    local stake_sprite = get_stake_sprite(2, 0.15)
-    local stake_sprite2 = get_stake_sprite(2, 0.15)
+    local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.15)
+    local stake_sprite2 = get_stake_sprite(G.GAME.stake or 1, 0.15)
 
     return {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
         {n=G.UIT.R, config={padding = 0.05, r = 0.12, colour = G.C.DYN_UI.MAIN, emboss = 0.07}, nodes={
