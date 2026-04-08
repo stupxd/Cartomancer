@@ -19,7 +19,7 @@ payload = '''
 local visible_suits_carto = Cartomancer.get_visible_suits_smods((view_deck_unplayed_only or unplayed_only), args and args.cycle_config.current_option or 1)
 local SUITS_SORTED = Cartomancer.tablecopy(SUITS)
 for k, v in ipairs(G.playing_cards) do
-  if v.base.suit then
+  if SUITS[v.base.suit] then
   local greyed
   if (view_deck_unplayed_only or unplayed_only) and not ((v.area and v.area == G.deck) or v.ability.wheel_flipped) then
     greyed = true
