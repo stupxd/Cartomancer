@@ -107,10 +107,6 @@ function Cartomancer.get_hover_tab()
     {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 0.85*G.CARD_W})
   copy_cards(G.shop_booster, boosters_area, 0.9)
 
-  shop_area.config.collection = true
-  vouchers_area.config.collection = true
-  boosters_area.config.collection = true
-
   local tab = {
       n = G.UIT.ROOT,
       config = {
@@ -174,6 +170,10 @@ function Cartomancer.get_shop_tabs()
             0.95*G.CARD_H, 
             {card_limit = 2, type = 'shop', highlight_limit = 0, card_w = 1*G.CARD_W})
           copy_cards(G.shop_booster, boosters_area, 1.2)
+          
+          shop_area.config.collection = true
+          vouchers_area.config.collection = true
+          boosters_area.config.collection = true
 
           local tab = {
               n = G.UIT.ROOT,
