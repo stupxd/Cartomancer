@@ -65,6 +65,8 @@ return {
             carto_blinds_info_current = "Hiện tại",
             carto_blinds_info_extra = "Lịch sử",
             carto_blinds_info_title = "Lịch sử Boss Blind",
+
+            carto_reset_settings = "Đặt lại về mặc định",
         }
     }
 }

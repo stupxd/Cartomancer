@@ -77,6 +77,8 @@ return {
             carto_peek_shop_1 = "Peek",
             carto_peek_shop_2 = "Shop",
             carto_peek_shop_vanilla_label = "Shop",
+
+            carto_reset_settings = "Reset to defaults",
         }
     }
 }

@@ -60,6 +60,8 @@ return {
         carto_kb_toggle_consumables = "Alternar visibilidad de consumibles",
         carto_kb_toggle_jokers = "Alternar visibilidad de comodines",
         carto_kb_toggle_jokers_buttons = "Alternar botones de comodines",
+
+        carto_reset_settings = "Restablecer valores predeterminados",
       }
     }
   }

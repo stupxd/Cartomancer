@@ -75,6 +75,8 @@ return {
             carto_peek_shop_1 = "查看",
             carto_peek_shop_2 = "商店",
             carto_peek_shop_vanilla_label = "商店",
+
+            carto_reset_settings = "恢复默认设置",
         }
     }
 }

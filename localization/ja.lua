@@ -67,6 +67,8 @@ return {
             carto_blinds_info_current = "現在",
             carto_blinds_info_extra = "履歴",
             carto_blinds_info_title = "ボスブラインド履歴",
+
+            carto_reset_settings = "デフォルトに戻す",
         }
     }
 }

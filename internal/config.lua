@@ -4,6 +4,27 @@ Cartomancer.save_config = function ()
     love.filesystem.write('config/cartomancer.jkr', "return " .. Cartomancer.dump(Cartomancer.SETTINGS))
 end
 
+Cartomancer.reset_config = function ()
+    Cartomancer.log "Resetting config to defaults..."
+    local defaults = Cartomancer.load_mod_file('config.lua', 'default-config-reset')
+
+    -- Update SETTINGS in-place so existing ref_table bindings in the UI remain valid
+    for k, v in pairs(defaults) do
+        if k ~= 'keybinds' then
+            Cartomancer.SETTINGS[k] = v
+        end
+    end
+    for k, v in pairs(defaults.keybinds) do
+        Cartomancer.SETTINGS.keybinds[k] = v
+    end
+
+    -- Sync the derived color table used by the deck-view color sliders
+    Cartomancer.deck_view_stack_x_color = Cartomancer.hex_to_color(Cartomancer.SETTINGS.deck_view_stack_x_color)
+
+    Cartomancer.save_config()
+    Cartomancer.log "Config reset to defaults"
+end
+
 -- Logic for keeping config tables up to date
 local function remove_unused_keys(from_table, template)
     for k, v in pairs(from_table) do

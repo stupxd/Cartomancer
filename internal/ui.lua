@@ -338,6 +338,19 @@ Cartomancer.config_tab = function()
                     })
                 }
             },
+            {
+                n = G.UIT.R,
+                config = { padding = 0.05, align = "cr", colour = G.C.CLEAR },
+                nodes = {
+                    UIBox_button({
+                        id = 'cartomancer_reset_settings_btn',
+                        button = 'cartomancer_reset_settings',
+                        label = {localize('carto_reset_settings')},
+                        colour = G.C.RED,
+                        minh = 0.5, minw = 3.5, col = true, scale = 0.35,
+                    })
+                }
+            },
         }
     })
 end
@@ -574,6 +587,25 @@ G.FUNCS.cartomancer_settings_change_tab = function(e)
       }
     tab_contents.UIBox:recalculate()
 
+end
+
+G.FUNCS.cartomancer_reset_settings = function(e)
+    Cartomancer.reset_config()
+
+    -- Rebuild the current tab content so toggles and sliders reflect the new defaults
+    local tab_contents = e.UIBox:get_UIE_by_ID('cartomancer_settings_tab_contents')
+    if tab_contents and tab_contents.config.old_chosen then
+        -- Clear the cached ID so the tab rebuild is not skipped as a "same tab" switch
+        tab_contents.config.oid = nil
+        tab_contents.config.object:remove()
+        tab_contents.config.object = UIBox{
+            definition = tab_contents.config.old_chosen.config.ref_table.tab_definition_function(
+                tab_contents.config.old_chosen.config.ref_table.tab_definition_function_args
+            ),
+            config = {offset = {x=0,y=0}, parent = tab_contents, type = 'cm'}
+        }
+        tab_contents.UIBox:recalculate()
+    end
 end
 
 Cartomancer.add_settings_icon = function ()
