@@ -18,8 +18,32 @@ Cartomancer.load_mod_file('core/peek-shop.lua', 'cartomancer.peek-shop')
 Cartomancer.load_mod_file('core/jokers.lua', 'cartomancer.jokers')
 Cartomancer.load_mod_file('core/hand.lua', 'cartomancer.hand')
 Cartomancer.load_mod_file('core/blinds-info.lua', 'cartomancer.blinds-info')
+
 if SMODS then
     Cartomancer.load_mod_file('core/view-deck-steamodded.lua', 'cartomancer.view-deck-steamodded')
+end
+
+
+-- This does not require smods but will load after it if it's present
+function Cartomancer.load_after_smods()
+    Cartomancer.load_mod_file('internal/localization.lua', 'cartomancer.localization')
+
+    -- WAAA WAAA WAAA this nonsense 
+    if Ortalab then
+        local card_cart_to_string = Card.cart_to_string
+        function Card:cart_to_string(args)
+            local ret = card_cart_to_string(self, args)
+
+            if args.deck_view and Cartomancer.SETTINGS.deck_view_stack_modifiers then
+                return ret
+            end
+
+            if self.curse then
+                return ret .. self.curse
+            end
+            return ret
+        end
+    end
 end
 
 Cartomancer.load_config()
