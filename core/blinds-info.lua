@@ -51,15 +51,45 @@ function Cartomancer.blinds_info_icon()
           }}
 end
 
+local function add_boss(boss)
+  G.GAME.cartomancer_bosses_list = G.GAME.cartomancer_bosses_list or {}
+  G.GAME.cartomancer_bosses_list[#G.GAME.cartomancer_bosses_list+1] = boss
+end
+
 local gnb = get_new_boss
 function get_new_boss(...)
     local ret = gnb(...)
 
-    G.GAME.cartomancer_bosses_list = G.GAME.cartomancer_bosses_list or {}
-    G.GAME.cartomancer_bosses_list[#G.GAME.cartomancer_bosses_list+1] = ret
-
+    add_boss(ret)
     return ret
 end
+
+
+if loadAPIs then
+  local smods_loadAPIs = loadAPIs
+  function loadAPIs()
+    smods_loadAPIs()
+  
+    -- New smods logic
+    -- k = 'Boss'
+    -- SMODS.get_new_blind(string.lower(k))
+    if SMODS.get_new_blind then
+      local smods_gnb = SMODS.get_new_blind
+      function SMODS.get_new_blind(blind_type, ...)
+        if blind_type == 'boss' then
+          local ret = smods_gnb(blind_type, ...)
+          add_boss(ret)
+          return ret
+        end
+        return smods_gnb(blind_type, ...)
+      end
+    end
+  end
+else
+  Cartomancer.log("Failed to hook SMODS.get_new_blind (added in smods-26.829.0)")
+end
+
+
 
 function Cartomancer.view_blinds_info()
   local blind_matrix = {
