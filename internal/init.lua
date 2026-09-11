@@ -38,7 +38,7 @@ Cartomancer.load_mod_file = function (path, name, as_txt)
 
 Get latest release here: https://github.com/stupxd/Cartomancer/releases ]=], path, name, tostring(err)))
 
-    return as_txt and file or load(file, string.format(" Cartomancer - %s ", name))()
+    return as_txt and file or assert(load(file, string.format(" Cartomancer - %s ", name)))()
 end
 
 Cartomancer.log = function (msg)
