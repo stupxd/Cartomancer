@@ -33,12 +33,12 @@ Cartomancer.load_mod_file = function (path, name, as_txt)
 
     local file, err = Cartomancer.nfs.read(Cartomancer.path..'/'..path)
 
-    assert(file, string.format([=[[Cartomancer] Failed to load mod file %s (%s).:
+    assert(file, string.format([=[[Cartomancer] Failed to read mod file %s (%s).:
 %s
 
 Get latest release here: https://github.com/stupxd/Cartomancer/releases ]=], path, name, tostring(err)))
 
-    return as_txt and file or load(file, string.format(" Cartomancer - %s ", name))()
+    return as_txt and file or assert(load(file, string.format(" Cartomancer - %s ", name)), "[Cartomancer]  Failed to load mod file at "..path)()
 end
 
 Cartomancer.log = function (msg)
