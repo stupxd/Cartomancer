@@ -9,5 +9,8 @@
   "badge_colour": "FFD700",
   "badge_text_colour": "FFFFFF",
   "priority": 69,
-  "version": "4.17.5"
+  "version": "4.17.5",
+
+  "version_number": "4.17.5",
+  "website_url": "https://github.com/stupxd/Cartomancer"
 }
