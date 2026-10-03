@@ -1,6 +1,6 @@
 {
   "id": "cartomancer",
-  "name": "Cartomancer",
+  "name": "Cartomancer", 
   "display_name": "Cartomancer",
   "author": ["stupxd aka stupid"],
   "description": "Quality of life features and optimizations",
@@ -9,5 +9,5 @@
   "badge_colour": "FFD700",
   "badge_text_colour": "FFFFFF",
   "priority": 69,
-  "version": "4.17e"
+  "version": "4.17.5"
 }
