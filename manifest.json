@@ -12,5 +12,6 @@
   "version": "4.17.5",
 
   "version_number": "4.17.5",
-  "website_url": "https://github.com/stupxd/Cartomancer"
+  "website_url": "https://github.com/stupxd/Cartomancer",
+  "dependencies": []
 }
