@@ -1,15 +1,16 @@
 ## Requirements
 - [Lovely](https://github.com/ethangreen-dev/lovely-injector) - a Balatro injector.
 
-## Installation
+## Manual installation
+
 1. Install [Lovely](https://github.com/ethangreen-dev/lovely-injector?tab=readme-ov-file#manual-installation).
 2. Download the [latest release](https://github.com/stupxd/Cartomancer/releases/) of this mod.
 3. Unzip the folder, and move it into the `%appdata%/Balatro/Mods` folder.
 4. Restart the game to load the mod.
 
-## TL;DR
+## About
 
-This mod is mainly aimed to improve your endless/heavily modded runs experience, providing quality of life & optimization features.
+Useful features for endless/heavily modded runs, but recent additions have been intended for gold stake/multiplayer also :D
 
 ## Features
 
@@ -53,7 +54,7 @@ This mod is mainly aimed to improve your endless/heavily modded runs experience,
 
 ...and more!
 
-Settings for this mod can be found under `Mods` tab, if you use Steamodded 1.0.0 - find `Cartomancer`, and open `Config` tab.
+Settings for this mod can be found under `Mods` tab, if you use Steamodded - find `Cartomancer`, and open `Config` tab.
 
 If you play vanilla, go to `Settings` and open ![cartomancer](assets/1x/modicon.png) tab.
 
@@ -69,5 +70,5 @@ If you play vanilla, go to `Settings` and open ![cartomancer](assets/1x/modicon.
 
 [Jen Walter](https://github.com/jenwalter666/) for the code for UI box on stacked cards.
 
-[Mysthaps](https://github.com/Mysthaps/) for the initial settings tab code.
+[Mysthaps](https://github.com/Mysthaps/) for the original settings tab code.
 
