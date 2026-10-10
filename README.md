@@ -16,7 +16,7 @@ Useful features for endless/heavily modded runs, but recent additions have been 
 
 ### 1. Limit amount of cards visible in your deck pile
 
-![cards-pile-difference](git-assets/deck-pile.jpg)
+![cards-pile-difference](https://raw.githubusercontent.com/stupxd/Cartomancer/refs/heads/main/git-assets/deck-pile.jpg)
 
 
 ### 2. Improved deck view
@@ -24,7 +24,7 @@ Useful features for endless/heavily modded runs, but recent additions have been 
 - Hide drawn cards
 - Stack identical playing cards
 
-![stackable-cards-difference](git-assets/stackable-cards.jpg)
+![stackable-cards-difference](https://raw.githubusercontent.com/stupxd/Cartomancer/refs/heads/main/git-assets/stackable-cards.jpg)
 
 ### 4. Peek shop while in a Booster pack
 
@@ -32,7 +32,7 @@ Useful features for endless/heavily modded runs, but recent additions have been 
 - Click button to open menu and view details
 - Peek shop menu has mods compatibility; I might add compatibilities with some popular mods later 
 
-![peek-shop](git-assets/peek-shop.jpg)
+![peek-shop](https://raw.githubusercontent.com/stupxd/Cartomancer/refs/heads/main/git-assets/peek-shop.jpg)
 
 
 ### 5. Extended Blinds info in Run Info
@@ -40,7 +40,7 @@ Useful features for endless/heavily modded runs, but recent additions have been 
 - Boss Blinds History
 - Scoring requirements 8 ante ahead
 
-![zoom-jokers-difference](git-assets/blinds-info.jpg)
+![zoom-jokers-difference](https://raw.githubusercontent.com/stupxd/Cartomancer/refs/heads/main/git-assets/blinds-info.jpg)
 
 ### 6. Improved jokers management
 
@@ -48,7 +48,7 @@ Useful features for endless/heavily modded runs, but recent additions have been 
 
 - Zoom into the jokers area for easier jokers management and navigation.
 
-![zoom-jokers-difference](git-assets/zoom-jokers.jpg)
+![zoom-jokers-difference](https://raw.githubusercontent.com/stupxd/Cartomancer/refs/heads/main/git-assets/zoom-jokers.jpg)
 
 ### 7. Custom scoring flames intensity and SFX volume.
 
@@ -56,7 +56,7 @@ Useful features for endless/heavily modded runs, but recent additions have been 
 
 Settings for this mod can be found under `Mods` tab, if you use Steamodded - find `Cartomancer`, and open `Config` tab.
 
-If you play vanilla, go to `Settings` and open ![cartomancer](assets/1x/modicon.png) tab.
+If you play vanilla, go to `Settings` and open ![cartomancer](https://raw.githubusercontent.com/stupxd/Cartomancer/refs/heads/main/assets/1x/modicon.png) tab.
 
 ## Credits
 
