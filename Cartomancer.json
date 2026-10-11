@@ -1,0 +1,13 @@
+{
+  "id": "cartomancer",
+  "name": "Cartomancer", 
+  "display_name": "Cartomancer",
+  "author": ["stupxd aka stupid"],
+  "description": "Quality of life features and optimizations",
+  "prefix": "cart",
+  "main_file": "mod.lua",
+  "badge_colour": "FFD700",
+  "badge_text_colour": "FFFFFF",
+  "priority": 69,
+  "version": "4.17.8",
+}
